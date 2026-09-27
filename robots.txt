@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://freemoser.github.io/gdt-viewer/sitemap.xml
+Sitemap: https://freimoser.github.io/gdt-viewer/sitemap.xml
