@@ -27,50 +27,119 @@
   <meta name="twitter:image" content="https://freimoser.github.io/gdt-viewer/og-image.png" />
   <meta name="twitter:image:alt" content="GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle" />
   <!-- seo:end -->
+  <!-- seo-ld:start -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://freimoser.github.io/gdt-viewer/#organization",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/icon-192.png",
+        "width": 192,
+        "height": 192
+      },
+      "sameAs": [
+        "https://github.com/freimoser/gdt-viewer"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://freimoser.github.io/gdt-viewer/#website",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "inLanguage": "de-DE",
+      "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer (GDT) für Praxissoftware und Medizintechnik in Deutschland.",
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://freimoser.github.io/gdt-viewer/#webpage",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "name": "GDT Viewer – GDT-Dateien online lesen & Testdaten erzeugen",
+      "description": "Kostenloser GDT Viewer: GDT-Dateien im Browser lesen, Felder verstehen und GDT 2.1/3.x-Testdaten erzeugen. 100 % lokal – nichts wird hochgeladen.",
+      "inLanguage": "de-DE",
+      "isPartOf": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-07-18",
+      "dateModified": "2026-10-26",
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      },
+      "mainEntity": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#app"
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://freimoser.github.io/gdt-viewer/#app",
+      "name": "GDT Viewer",
+      "alternateName": [
+        "GDT Online Viewer",
+        "Gerätedatentransfer Viewer"
+      ],
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "description": "Kostenloser Online-Viewer und Generator für GDT-Dateien (Gerätedatentransfer). Unterstützt GDT 2.1 und 3.x, verarbeitet Dateien lokal im Browser.",
+      "applicationCategory": "HealthApplication",
+      "applicationSubCategory": "GDT-Viewer und Testdaten-Generator",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "inLanguage": "de-DE",
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
+      "screenshot": "https://freimoser.github.io/gdt-viewer/og-image.png",
+      "featureList": [
+        "GDT-Dateien per Drag-and-Drop lesen",
+        "Feldtabelle mit Bedeutungen",
+        "Zufällige GDT 2.1 und 3.x Testdateien",
+        "Download als .gdt",
+        "Keine Server-Speicherung der Dateiinhalte"
+      ],
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      },
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      }
+    }
+  ]
+}
+  </script>
+  <!-- seo-ld:end -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180" />
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "GDT Viewer",
-    "alternateName": ["GDT Online Viewer", "Gerätedatentransfer Viewer"],
-    "url": "https://freimoser.github.io/gdt-viewer/",
-    "description": "Kostenloser Online-Viewer und Generator für GDT-Dateien (Gerätedatentransfer). Unterstützt GDT 2.1 und 3.x, verarbeitet Dateien lokal im Browser.",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "browserRequirements": "Requires JavaScript",
-    "inLanguage": "de-DE",
-    "isAccessibleForFree": true,
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-    "featureList": [
-      "GDT-Dateien per Drag-and-Drop lesen",
-      "Feldtabelle mit Bedeutungen",
-      "Zufällige GDT 2.1 und 3.x Testdateien",
-      "Download als .gdt",
-      "Keine Server-Speicherung der Dateiinhalte"
-    ],
-    "about": {
-      "@type": "Thing",
-      "name": "Gerätedatentransfer",
-      "alternateName": "GDT"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "GDT Viewer",
-    "url": "https://freimoser.github.io/gdt-viewer/",
-    "inLanguage": "de-DE",
-    "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer für Praxissoftware und Medizintechnik in Deutschland.",
-    "publisher": { "@type": "Organization", "name": "GDT Viewer", "url": "https://github.com/freimoser/gdt-viewer" }
-  }
-  </script>
 </head>
 <body>
   <!-- site-header:start -->

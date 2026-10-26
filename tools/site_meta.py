@@ -1,10 +1,11 @@
-"""Write the SEO/social <head> block (title, description, canonical, Open Graph, Twitter) into every page.
+"""Write the SEO/social <head> block (title, description, canonical, Open Graph, Twitter, JSON-LD) into every page.
 
 Usage (from the repo root):  python3 tools/site_meta.py
 Edit the texts in PAGES here, never the generated block between the seo markers in the HTML files.
 The script warns when a title or description is longer than search engines display.
 """
 import html
+import json
 import pathlib
 import re
 
@@ -15,6 +16,8 @@ THEME_COLOR = "#0f1419"
 # Social preview, rendered from tools/og-image.html (render command in that file)
 OG_IMAGE = BASE + "og-image.png"
 OG_IMAGE_ALT = "GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle"
+LOGO = BASE + "icon-192.png"
+REPO = "https://github.com/freimoser/gdt-viewer"
 TITLE_MAX = 60
 DESC_MAX = 155
 
@@ -68,6 +71,137 @@ PAGES = {
         "og_description": "Debugging, Schulung und Testdaten für GDT 2.1 und 3.x – lokal im Browser, ohne Upload.",
     },
 }
+
+# Structured data per page. "modified" must match the visible "Aktualisiert" date on the page.
+# FAQPage / HowTo blocks stay hand-written in the pages next to the content they describe.
+LD = {
+    "index.html": {"schema": "WebPage", "published": "2026-07-18", "modified": "2026-10-26", "app": True},
+    "wissen/index.html": {"schema": "CollectionPage", "crumb": "Wissen", "published": "2026-07-20", "modified": "2026-07-20"},
+    "wissen/was-ist-gdt.html": {"schema": "Article", "crumb": "Was ist GDT?", "published": "2026-07-20", "modified": "2026-07-20",
+                                "headline": "Was ist GDT? Gerätedatentransfer erklärt"},
+    "wissen/anbindung.html": {"schema": "Article", "crumb": "Anbindung", "published": "2026-07-20", "modified": "2026-07-20",
+                              "headline": "GDT-Anbindung: So funktioniert der Datenaustausch"},
+    "wissen/tutorial.html": {"schema": "Article", "crumb": "Tutorial", "published": "2026-07-20", "modified": "2026-07-20",
+                             "headline": "GDT Tutorial für Anfänger"},
+    "wissen/tool.html": {"schema": "Article", "crumb": "Tool-Hilfe", "published": "2026-07-20", "modified": "2026-07-20",
+                         "headline": "Wie der GDT Viewer hilft", "app": True},
+}
+
+ORG = {
+    "@type": "Organization",
+    "@id": BASE + "#organization",
+    "name": SITE_NAME,
+    "url": BASE,
+    "logo": {"@type": "ImageObject", "url": LOGO, "width": 192, "height": 192},
+    "sameAs": [REPO],
+}
+WEBSITE = {
+    "@type": "WebSite",
+    "@id": BASE + "#website",
+    "name": SITE_NAME,
+    "url": BASE,
+    "inLanguage": "de-DE",
+    "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer (GDT) für Praxissoftware und Medizintechnik in Deutschland.",
+    "publisher": {"@id": ORG["@id"]},
+}
+GDT_TOPIC = {"@type": "Thing", "name": "Gerätedatentransfer", "alternateName": ["GDT", "GDT-Schnittstelle"]}
+APP = {
+    "@type": "WebApplication",
+    "@id": BASE + "#app",
+    "name": SITE_NAME,
+    "alternateName": ["GDT Online Viewer", "Gerätedatentransfer Viewer"],
+    "url": BASE,
+    "description": "Kostenloser Online-Viewer und Generator für GDT-Dateien (Gerätedatentransfer). Unterstützt GDT 2.1 und 3.x, verarbeitet Dateien lokal im Browser.",
+    "applicationCategory": "HealthApplication",
+    "applicationSubCategory": "GDT-Viewer und Testdaten-Generator",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "inLanguage": "de-DE",
+    "isAccessibleForFree": True,
+    "license": "https://opensource.org/licenses/MIT",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+    "image": OG_IMAGE,
+    "screenshot": OG_IMAGE,
+    "featureList": [
+        "GDT-Dateien per Drag-and-Drop lesen",
+        "Feldtabelle mit Bedeutungen",
+        "Zufällige GDT 2.1 und 3.x Testdateien",
+        "Download als .gdt",
+        "Keine Server-Speicherung der Dateiinhalte",
+    ],
+    "about": GDT_TOPIC,
+    "publisher": {"@id": ORG["@id"]},
+}
+# Hand-written blocks of these types are replaced by the generated graph
+LD_REPLACED = {"WebApplication", "SoftwareApplication", "WebSite", "CollectionPage", "WebPage", "Article"}
+
+
+def ld_graph(rel, cfg):
+    ld = LD[rel]
+    url = BASE + cfg["path"]
+    page_id = url + "#webpage"
+    page = {
+        "@type": "CollectionPage" if ld["schema"] == "CollectionPage" else "WebPage",
+        "@id": page_id,
+        "url": url,
+        "name": cfg["title"],
+        "description": cfg["description"],
+        "inLanguage": "de-DE",
+        "isPartOf": {"@id": WEBSITE["@id"]},
+        "primaryImageOfPage": {"@type": "ImageObject", "url": OG_IMAGE, "width": 1200, "height": 630},
+        "datePublished": ld["published"],
+        "dateModified": ld["modified"],
+        "about": GDT_TOPIC,
+    }
+    graph = [ORG, WEBSITE, page]
+    if "crumb" in ld:
+        crumbs = [("GDT Viewer", BASE)]
+        if rel != "wissen/index.html":
+            crumbs.append(("Wissen", BASE + "wissen/"))
+        crumbs.append((ld["crumb"], url))
+        page["breadcrumb"] = {"@id": url + "#breadcrumb"}
+        graph.append({
+            "@type": "BreadcrumbList",
+            "@id": url + "#breadcrumb",
+            "itemListElement": [
+                {"@type": "ListItem", "position": i, "name": name, "item": item}
+                for i, (name, item) in enumerate(crumbs, start=1)
+            ],
+        })
+    if ld["schema"] == "Article":
+        graph.append({
+            "@type": "Article",
+            "@id": url + "#article",
+            "headline": ld["headline"],
+            "description": cfg["description"],
+            "inLanguage": "de-DE",
+            "image": OG_IMAGE,
+            "datePublished": ld["published"],
+            "dateModified": ld["modified"],
+            "author": {"@id": ORG["@id"]},
+            "publisher": {"@id": ORG["@id"]},
+            "mainEntityOfPage": {"@id": page_id},
+            "isPartOf": {"@id": WEBSITE["@id"]},
+            "about": GDT_TOPIC,
+        })
+    if ld.get("app"):
+        graph.append(APP)
+        if rel == "index.html":
+            page["mainEntity"] = {"@id": APP["@id"]}
+    body = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=2)
+    body = body.replace("</", "<\\/")
+    return "<!-- seo-ld:start -->\n  <script type=\"application/ld+json\">\n" + body + "\n  </script>\n  <!-- seo-ld:end -->"
+
+
+def strip_replaced_ld(head):
+    def keep(m):
+        try:
+            data = json.loads(m.group(1))
+        except ValueError:
+            return m.group(0)
+        return "" if data.get("@type") in LD_REPLACED else m.group(0)
+    return re.sub(r'\s*<script type="application/ld\+json">(.*?)</script>', keep, head, flags=re.S)
+
 
 # Tags this script owns; older hand-written copies are removed before the block is inserted
 OWNED = re.compile(
@@ -125,13 +259,15 @@ for rel, cfg in PAGES.items():
     head_end = s.index("</head>")
     head, rest = s[:head_end], s[head_end:]
     head = re.sub(r"\s*<!-- seo:start -->.*?<!-- seo:end -->", "", head, flags=re.S)
+    head = re.sub(r"\s*<!-- seo-ld:start -->.*?<!-- seo-ld:end -->", "", head, flags=re.S)
+    head = strip_replaced_ld(head)
     # Only strip owned tags outside JSON-LD blocks
     parts = re.split(r'(<script type="application/ld\+json">.*?</script>)', head, flags=re.S)
     parts = [p if p.startswith("<script") else OWNED.sub("", p) for p in parts]
     head = "".join(parts)
     head = re.sub(
         r'(<meta name="viewport"[^>]*>)',
-        lambda m: m.group(1) + "\n  " + head_block(cfg),
+        lambda m: m.group(1) + "\n  " + head_block(cfg) + "\n  " + ld_graph(rel, cfg),
         head,
         count=1,
     )
