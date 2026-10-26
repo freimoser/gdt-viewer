@@ -67,32 +67,39 @@
   </script>
 </head>
 <body>
+  <!-- site-header:start -->
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-brand" href="./">
+        <span class="site-brand-mark" aria-hidden="true">GDT</span>
+        <span class="site-brand-name">GDT Viewer</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="./" aria-current="page">Viewer</a>
+        <a href="wissen/">Wissen</a>
+        <a href="wissen/was-ist-gdt.html">Was ist GDT?</a>
+        <a href="wissen/anbindung.html">Anbindung</a>
+        <a href="wissen/tutorial.html">Tutorial</a>
+        <a href="wissen/tool.html">Tool-Hilfe</a>
+      </nav>
+    </div>
+  </header>
+  <!-- site-header:end -->
   <div class="page">
-    <nav class="site-nav" aria-label="Hauptnavigation">
-      <a href="./" aria-current="page">Viewer</a>
-      <a href="wissen/">Wissen</a>
-      <a href="wissen/was-ist-gdt.html">Was ist GDT?</a>
-      <a href="wissen/anbindung.html">Anbindung</a>
-      <a href="wissen/tutorial.html">Tutorial</a>
-      <a href="wissen/tool.html">Tool-Hilfe</a>
-    </nav>
 
-    <header class="header header-top">
-      <div class="brand">
-        <span class="logo" aria-hidden="true">GDT</span>
-        <div>
+    <main id="main">
+      <div class="header header-top">
+        <div class="brand">
           <h1>GDT Viewer</h1>
           <p class="tagline">Gerätedatentransfer-Dateien online lesen &amp; Testdaten erzeugen</p>
         </div>
+        <p class="privacy-badge">
+          <span class="dot" aria-hidden="true"></span>
+          100 % lokal – nichts wird hochgeladen
+        </p>
       </div>
-      <p class="privacy-badge">
-        <span class="dot" aria-hidden="true"></span>
-        100 % lokal – nichts wird hochgeladen
-      </p>
-    </header>
 
-    <main id="main">
       <section
         id="dropzone"
         class="dropzone"
@@ -203,36 +210,38 @@
       </div>
     </main>
 
+    <!-- site-footer:start -->
     <footer class="site-footer">
       <div class="site-footer-grid">
         <div>
-          <h3>Tool</h3>
+          <h2>Tool</h2>
           <ul>
             <li><a href="./">GDT Viewer</a></li>
+            <li><a href="wissen/tool.html">Tool-Hilfe</a></li>
             <li><a href="https://github.com/freimoser/gdt-viewer">GitHub Repository</a></li>
           </ul>
         </div>
         <div>
-          <h3>Wissen</h3>
+          <h2>Wissen</h2>
           <ul>
             <li><a href="wissen/">Übersicht</a></li>
             <li><a href="wissen/was-ist-gdt.html">Was ist GDT?</a></li>
-            <li><a href="wissen/anbindung.html">Anbindung</a></li>
-            <li><a href="wissen/tutorial.html">Tutorial</a></li>
-            <li><a href="wissen/tool.html">Tool-Hilfe</a></li>
+            <li><a href="wissen/anbindung.html">GDT-Anbindung</a></li>
+            <li><a href="wissen/tutorial.html">Tutorial für Anfänger</a></li>
           </ul>
         </div>
         <div>
-          <h3>Rechtliches</h3>
+          <h2>Hinweise</h2>
           <ul>
             <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
             <li>Dateiinhalte bleiben im Browser</li>
-            <li>Lizenz: MIT</li>
+            <li>Open Source · Lizenz: MIT</li>
           </ul>
         </div>
       </div>
-      <p class="site-footer-note">Open Source · GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
+      <p class="site-footer-note">GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
     </footer>
+    <!-- site-footer:end -->
   </div>
   <script src="generator.js"></script>
   <script src="app.js"></script>
