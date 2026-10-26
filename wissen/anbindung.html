@@ -146,7 +146,7 @@
 }
   </script>
   <!-- seo-ld:end -->
-  <link rel="stylesheet" href="../styles.css?v=ee77aced" />
+  <link rel="stylesheet" href="../styles.css?v=862c683f" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
@@ -276,44 +276,46 @@
       </p>
 
       <h2 id="konfiguration">Was in der Anbindung konfiguriert wird</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Einstellung</th>
-            <th>Warum sie wichtig ist</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Exportpfad (PVS → Gerät)</td>
-            <td>Wo die Anforderungsdatei landet</td>
-          </tr>
-          <tr>
-            <td>Importpfad (Gerät → PVS)</td>
-            <td>Wo Ergebnisse erwartet werden</td>
-          </tr>
-          <tr>
-            <td>Dateiname / Muster</td>
-            <td>Muss auf beiden Seiten übereinstimmen</td>
-          </tr>
-          <tr>
-            <td>GDT-Version 2.1 oder 3.x</td>
-            <td>Andere Feldlängen-Felder (<a href="was-ist-gdt.html#versionen">8100 vs. 8004</a>), optionale Felder</td>
-          </tr>
-          <tr>
-            <td>Programmpfad + Parameter</td>
-            <td>Start des Gerätemoduls, oft mit <code>/load:</code> o. Ä. und Dateipfad</td>
-          </tr>
-          <tr>
-            <td>Zeichensatz</td>
-            <td>Umlaute (ISO-8859-1 / Windows-1252 / UTF-8)</td>
-          </tr>
-          <tr>
-            <td>Sender-/Empfänger-IDs</td>
-            <td>Felder <code>8315</code> / <code>8316</code> – je nach Gerät Pflicht</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Was in der Anbindung konfiguriert wird">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Einstellung</th>
+              <th scope="col">Warum sie wichtig ist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exportpfad (PVS → Gerät)</td>
+              <td>Wo die Anforderungsdatei landet</td>
+            </tr>
+            <tr>
+              <td>Importpfad (Gerät → PVS)</td>
+              <td>Wo Ergebnisse erwartet werden</td>
+            </tr>
+            <tr>
+              <td>Dateiname / Muster</td>
+              <td>Muss auf beiden Seiten übereinstimmen</td>
+            </tr>
+            <tr>
+              <td>GDT-Version 2.1 oder 3.x</td>
+              <td>Andere Feldlängen-Felder (<a href="was-ist-gdt.html#versionen">8100 vs. 8004</a>), optionale Felder</td>
+            </tr>
+            <tr>
+              <td>Programmpfad + Parameter</td>
+              <td>Start des Gerätemoduls, oft mit <code>/load:</code> o. Ä. und Dateipfad</td>
+            </tr>
+            <tr>
+              <td>Zeichensatz</td>
+              <td>Umlaute (ISO-8859-1 / Windows-1252 / UTF-8)</td>
+            </tr>
+            <tr>
+              <td>Sender-/Empfänger-IDs</td>
+              <td>Felder <code>8315</code> / <code>8316</code> – je nach Gerät Pflicht</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
         Die genauen Dialoge unterscheiden sich je PVS (z. B. „Externes Modul“,
         „Geräteschnittstelle“, „GDT-Konfiguration“). Die Spezifikation des
@@ -333,36 +335,38 @@
       </ul>
 
       <h2 id="fehler">Häufige Fehler bei der GDT-Anbindung</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Symptom</th>
-            <th>Mögliche Ursache</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Gerät startet ohne Patient</td>
-            <td>Falscher Parameter, leere/ungültige GDT-Datei, falscher Pfad</td>
-          </tr>
-          <tr>
-            <td>Ergebnis erscheint nicht im PVS</td>
-            <td>Importordner falsch, Dateiname, Import nicht ausgelöst, falsche Patienten-ID</td>
-          </tr>
-          <tr>
-            <td>Umlaute kaputt</td>
-            <td>Zeichensatz-Mismatch (Feld <code>9206</code> / Encoding der Datei)</td>
-          </tr>
-          <tr>
-            <td>Parser meldet Längenfehler</td>
-            <td>Falsche 3-stellige Zeilenlänge, gemischte CRLF/LF, manuell editierte Datei</td>
-          </tr>
-          <tr>
-            <td>Version abgelehnt</td>
-            <td>Gerät erwartet 02.10, PVS sendet 03.10 (oder umgekehrt)</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Häufige Fehler bei der GDT-Anbindung">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Symptom</th>
+              <th scope="col">Mögliche Ursache</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gerät startet ohne Patient</td>
+              <td>Falscher Parameter, leere/ungültige GDT-Datei, falscher Pfad</td>
+            </tr>
+            <tr>
+              <td>Ergebnis erscheint nicht im PVS</td>
+              <td>Importordner falsch, Dateiname, Import nicht ausgelöst, falsche Patienten-ID</td>
+            </tr>
+            <tr>
+              <td>Umlaute kaputt</td>
+              <td>Zeichensatz-Mismatch (Feld <code>9206</code> / Encoding der Datei)</td>
+            </tr>
+            <tr>
+              <td>Parser meldet Längenfehler</td>
+              <td>Falsche 3-stellige Zeilenlänge, gemischte CRLF/LF, manuell editierte Datei</td>
+            </tr>
+            <tr>
+              <td>Version abgelehnt</td>
+              <td>Gerät erwartet 02.10, PVS sendet 03.10 (oder umgekehrt)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
         Zum Debuggen eignet sich der Viewer besonders gut: Datei öffnen, Felder prüfen,
         mit dem Generator eine <a href="tool.html">kontrollierte Testdatei</a> erzeugen und

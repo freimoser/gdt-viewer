@@ -146,7 +146,7 @@
 }
   </script>
   <!-- seo-ld:end -->
-  <link rel="stylesheet" href="../styles.css?v=ee77aced" />
+  <link rel="stylesheet" href="../styles.css?v=862c683f" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
@@ -276,7 +276,7 @@
 
       <h2 id="aufbau">Wie ist eine GDT-Datei aufgebaut?</h2>
       <p>Eine GDT-Datei enthält einen oder mehrere <strong>Sätze</strong>. Jeder Satz besteht aus Feldern, jedes Feld ist eine Zeile:</p>
-      <pre>01380006301
+      <pre tabindex="0">01380006301
 014810000357
 014921802.10
 0153000P-1042
@@ -289,32 +289,34 @@
         immer fünfstellig mit führenden Nullen, z. B. <code>00357</code>.
       </p>
       <p>Bedeutung einer Standardzeile (GDT mit Längenpräfix):</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Teil</th>
-            <th>Länge</th>
-            <th>Bedeutung</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Länge</td>
-            <td>3 Ziffern</td>
-            <td>Gesamtlänge der Zeile inkl. dieser 3 Ziffern und des Zeilenendes (CR+LF oder LF)</td>
-          </tr>
-          <tr>
-            <td>Feldkennung</td>
-            <td>4 Ziffern</td>
-            <td>z. B. <code>3101</code> = Nachname, <code>8000</code> = Satzart</td>
-          </tr>
-          <tr>
-            <td>Inhalt</td>
-            <td>variabel</td>
-            <td>eigentliche Daten (Text, Zahl, Datum)</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Wie ist eine GDT-Datei aufgebaut?">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Teil</th>
+              <th scope="col">Länge</th>
+              <th scope="col">Bedeutung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Länge</td>
+              <td>3 Ziffern</td>
+              <td>Gesamtlänge der Zeile inkl. dieser 3 Ziffern und des Zeilenendes (CR+LF oder LF)</td>
+            </tr>
+            <tr>
+              <td>Feldkennung</td>
+              <td>4 Ziffern</td>
+              <td>z. B. <code>3101</code> = Nachname, <code>8000</code> = Satzart</td>
+            </tr>
+            <tr>
+              <td>Inhalt</td>
+              <td>variabel</td>
+              <td>eigentliche Daten (Text, Zahl, Datum)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
         Manche Systeme exportieren vereinfacht <strong>ohne Längenpräfix</strong>
         (nur Feldkennung + Inhalt). Der <a href="../">GDT Viewer</a> kann beide Varianten lesen.
@@ -322,93 +324,99 @@
 
       <h2 id="satzarten">Wichtige Satzarten (Feld 8000)</h2>
       <p>Die Satzart steht im Feld <code>8000</code> und bestimmt den Zweck des Datensatzes:</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Satzart</th>
-            <th>Typische Bedeutung</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>6301</code></td>
-            <td>Stammdaten / Patientendaten übermitteln</td>
-          </tr>
-          <tr>
-            <td><code>6302</code></td>
-            <td>Anforderung einer Untersuchung inkl. Patientendaten</td>
-          </tr>
-          <tr>
-            <td><code>6310</code></td>
-            <td>Übergabe von Untersuchungsergebnissen / Befunddaten</td>
-          </tr>
-          <tr>
-            <td><code>6311</code></td>
-            <td>u. a. digitale Unterschrift / erweiterte Ergebnisübergabe (je nach Spezifikation)</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Wichtige Satzarten (Feld 8000)">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Satzart</th>
+              <th scope="col">Typische Bedeutung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>6301</code></td>
+              <td>Stammdaten / Patientendaten übermitteln</td>
+            </tr>
+            <tr>
+              <td><code>6302</code></td>
+              <td>Anforderung einer Untersuchung inkl. Patientendaten</td>
+            </tr>
+            <tr>
+              <td><code>6310</code></td>
+              <td>Übergabe von Untersuchungsergebnissen / Befunddaten</td>
+            </tr>
+            <tr>
+              <td><code>6311</code></td>
+              <td>u. a. digitale Unterschrift / erweiterte Ergebnisübergabe (je nach Spezifikation)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2 id="felder">Häufige Feldkennungen</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Feld</th>
-            <th>Inhalt</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><code>8000</code></td><td>Satzart</td></tr>
-          <tr><td><code>8100</code></td><td>Satzlänge (vor allem GDT 2.x)</td></tr>
-          <tr><td><code>8004</code></td><td>Satzlänge (GDT 3.x)</td></tr>
-          <tr><td><code>9218</code></td><td>GDT-Version (z. B. 02.10, 03.10)</td></tr>
-          <tr><td><code>3000</code></td><td>Patienten-ID / -nummer</td></tr>
-          <tr><td><code>3101</code> / <code>3102</code></td><td>Nachname / Vorname</td></tr>
-          <tr><td><code>3103</code></td><td>Geburtsdatum (oft TTMMJJJJ)</td></tr>
-          <tr><td><code>3110</code></td><td>Geschlecht</td></tr>
-          <tr><td><code>3618</code> / <code>3619</code></td><td>Mobil / E-Mail (häufig GDT 3.1)</td></tr>
-          <tr><td><code>8410</code> / <code>8420</code></td><td>Testkennung / Messwert</td></tr>
-          <tr><td><code>6200</code></td><td>Tag der Untersuchung (in 3.x oft JJJJMMTT)</td></tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Häufige Feldkennungen">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Feld</th>
+              <th scope="col">Inhalt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>8000</code></td><td>Satzart</td></tr>
+            <tr><td><code>8100</code></td><td>Satzlänge (vor allem GDT 2.x)</td></tr>
+            <tr><td><code>8004</code></td><td>Satzlänge (GDT 3.x)</td></tr>
+            <tr><td><code>9218</code></td><td>GDT-Version (z. B. 02.10, 03.10)</td></tr>
+            <tr><td><code>3000</code></td><td>Patienten-ID / -nummer</td></tr>
+            <tr><td><code>3101</code> / <code>3102</code></td><td>Nachname / Vorname</td></tr>
+            <tr><td><code>3103</code></td><td>Geburtsdatum (oft TTMMJJJJ)</td></tr>
+            <tr><td><code>3110</code></td><td>Geschlecht</td></tr>
+            <tr><td><code>3618</code> / <code>3619</code></td><td>Mobil / E-Mail (häufig GDT 3.1)</td></tr>
+            <tr><td><code>8410</code> / <code>8420</code></td><td>Testkennung / Messwert</td></tr>
+            <tr><td><code>6200</code></td><td>Tag der Untersuchung (in 3.x oft JJJJMMTT)</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2 id="versionen">GDT 2.1 vs. GDT 3.0 / 3.1</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Aspekt</th>
-            <th>GDT 2.1</th>
-            <th>GDT 3.0 / 3.1</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Version (<code>9218</code>)</td>
-            <td><code>02.10</code></td>
-            <td><code>03.00</code> / <code>03.10</code></td>
-          </tr>
-          <tr>
-            <td>Satzlänge</td>
-            <td>Feld <code>8100</code></td>
-            <td>Feld <code>8004</code></td>
-          </tr>
-          <tr>
-            <td>Feldlängen</td>
-            <td>oft streng begrenzt</td>
-            <td>variabler</td>
-          </tr>
-          <tr>
-            <td>Kontaktdaten</td>
-            <td>selten / begrenzt</td>
-            <td>u. a. Mobil, E-Mail</td>
-          </tr>
-          <tr>
-            <td>Untersuchungsdatum</td>
-            <td>häufig <code>2002</code> TTMMJJJJ</td>
-            <td>häufig <code>6200</code> JJJJMMTT</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: GDT 2.1 vs. GDT 3.0 / 3.1">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Aspekt</th>
+              <th scope="col">GDT 2.1</th>
+              <th scope="col">GDT 3.0 / 3.1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Version (<code>9218</code>)</td>
+              <td><code>02.10</code></td>
+              <td><code>03.00</code> / <code>03.10</code></td>
+            </tr>
+            <tr>
+              <td>Satzlänge</td>
+              <td>Feld <code>8100</code></td>
+              <td>Feld <code>8004</code></td>
+            </tr>
+            <tr>
+              <td>Feldlängen</td>
+              <td>oft streng begrenzt</td>
+              <td>variabler</td>
+            </tr>
+            <tr>
+              <td>Kontaktdaten</td>
+              <td>selten / begrenzt</td>
+              <td>u. a. Mobil, E-Mail</td>
+            </tr>
+            <tr>
+              <td>Untersuchungsdatum</td>
+              <td>häufig <code>2002</code> TTMMJJJJ</td>
+              <td>häufig <code>6200</code> JJJJMMTT</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
         Details zur praktischen Dateiübergabe finden Sie unter
         <a href="anbindung.html">GDT-Anbindung</a>. Zum Einlesen und Testen:
