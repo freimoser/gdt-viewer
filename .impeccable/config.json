@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "tools/og-image.html"
+        ],
+        "createdAt": "2026-10-26T22:42:26.512Z",
+        "reason": "Claude: render-only template for og-image.png; rendered PNG checked visually, detector misreads the rgba radial glow on #0f1419 as a light background"
+      }
+    ]
+  }
+}

@@ -12,6 +12,9 @@ root = pathlib.Path(__file__).resolve().parent.parent
 BASE = "https://freimoser.github.io/gdt-viewer/"
 SITE_NAME = "GDT Viewer"
 THEME_COLOR = "#0f1419"
+# Social preview, rendered from tools/og-image.html (render command in that file)
+OG_IMAGE = BASE + "og-image.png"
+OG_IMAGE_ALT = "GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle"
 TITLE_MAX = 60
 DESC_MAX = 155
 
@@ -95,9 +98,16 @@ def head_block(cfg):
         f'<meta property="og:title" content="{attr(cfg["og_title"])}" />',
         f'<meta property="og:description" content="{attr(cfg["og_description"])}" />',
         f'<meta property="og:url" content="{url}" />',
-        '<meta name="twitter:card" content="summary" />',
+        f'<meta property="og:image" content="{OG_IMAGE}" />',
+        '<meta property="og:image:type" content="image/png" />',
+        '<meta property="og:image:width" content="1200" />',
+        '<meta property="og:image:height" content="630" />',
+        f'<meta property="og:image:alt" content="{attr(OG_IMAGE_ALT)}" />',
+        '<meta name="twitter:card" content="summary_large_image" />',
         f'<meta name="twitter:title" content="{attr(cfg["og_title"])}" />',
         f'<meta name="twitter:description" content="{attr(cfg["og_description"])}" />',
+        f'<meta name="twitter:image" content="{OG_IMAGE}" />',
+        f'<meta name="twitter:image:alt" content="{attr(OG_IMAGE_ALT)}" />',
         "<!-- seo:end -->",
     ]
     return "\n  ".join(lines)

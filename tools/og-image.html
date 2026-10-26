@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+  Source for og-image.png (1200x630 social preview). Render with:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+    --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 \
+    --screenshot=og-image.png tools/og-image.html
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex" />
+<title>GDT Viewer OG image</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --bg-elevated: #1a222c;
+    --bg-soft: #232d3a;
+    --border: #2e3a4a;
+    --text: #e8eef4;
+    --muted: #8b9aab;
+    --accent: #14b8a6;
+    --accent-hover: #2dd4bf;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(ellipse 70% 60% at 15% -10%, rgba(20, 184, 166, 0.28), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 100% 110%, rgba(20, 184, 166, 0.12), transparent 70%),
+      var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 470px;
+    gap: 56px;
+    align-items: center;
+    padding: 0 72px;
+  }
+  .brand { display: flex; align-items: center; gap: 18px; margin-bottom: 40px; }
+  .mark {
+    display: grid; place-items: center;
+    width: 76px; height: 76px; border-radius: 20px;
+    background: linear-gradient(145deg, var(--accent-hover), var(--accent) 45%, #0f766e);
+    color: #fff; font-weight: 800; font-size: 22px; letter-spacing: 0.04em;
+    box-shadow: 0 10px 30px rgba(20, 184, 166, 0.35);
+  }
+  .brand-name { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
+  h1 {
+    margin: 0 0 22px;
+    font-size: 58px; line-height: 1.08; font-weight: 750; letter-spacing: -0.035em;
+  }
+  h1 em { font-style: normal; color: var(--accent-hover); }
+  .sub { margin: 0 0 36px; font-size: 26px; line-height: 1.4; color: var(--muted); }
+  .pills { display: flex; gap: 12px; }
+  .pill {
+    padding: 10px 18px; border-radius: 999px;
+    background: rgba(20, 184, 166, 0.15); color: var(--accent-hover);
+    font-size: 21px; font-weight: 600;
+  }
+  .table {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .row {
+    display: grid; grid-template-columns: 78px 1fr; gap: 4px 16px;
+    padding: 15px 24px; border-bottom: 1px solid var(--border);
+  }
+  .row:last-child { border-bottom: none; }
+  .row.head {
+    background: var(--bg-soft); color: var(--muted);
+    font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    padding-block: 13px;
+  }
+  .id { font-family: "SF Mono", Menlo, monospace; color: var(--accent-hover); font-size: 21px; }
+  .label { color: var(--muted); font-size: 18px; }
+  .val { grid-column: 2; font-family: "SF Mono", Menlo, monospace; font-size: 21px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="brand">
+      <div class="mark">GDT</div>
+      <div class="brand-name">GDT Viewer</div>
+    </div>
+    <h1>GDT-Dateien online lesen &amp; <em>Testdaten erzeugen</em></h1>
+    <p class="sub">Gerätedatentransfer für Praxis-IT und Medizintechnik – Felder verständlich erklärt.</p>
+    <div class="pills">
+      <span class="pill">100 % lokal</span>
+      <span class="pill">GDT 2.1 &amp; 3.x</span>
+      <span class="pill">kostenlos</span>
+    </div>
+  </div>
+  <div class="table" aria-hidden="true">
+    <div class="row head"><span>Feld</span><span>Bedeutung · Inhalt</span></div>
+    <div class="row"><span class="id">8000</span><span class="label">Satzidentifikation</span><span class="val">6301</span></div>
+    <div class="row"><span class="id">9218</span><span class="label">GDT-Version</span><span class="val">03.10</span></div>
+    <div class="row"><span class="id">3101</span><span class="label">Name (Nachname)</span><span class="val">Mustermann</span></div>
+    <div class="row"><span class="id">3103</span><span class="label">Geburtsdatum</span><span class="val">01051980</span></div>
+    <div class="row"><span class="id">8410</span><span class="label">Test-Ident / Kennung</span><span class="val">HF</span></div>
+  </div>
+</body>
+</html>
