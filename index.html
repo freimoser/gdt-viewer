@@ -67,6 +67,7 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
   <div class="page">
     <nav class="site-nav" aria-label="Hauptnavigation">
       <a href="./" aria-current="page">Viewer</a>
@@ -85,39 +86,18 @@
           <p class="tagline">Gerätedatentransfer-Dateien online lesen &amp; Testdaten erzeugen</p>
         </div>
       </div>
-      <p class="privacy-badge" title="Dateien werden nur in deinem Browser gelesen">
-        <span class="dot"></span>
+      <p class="privacy-badge">
+        <span class="dot" aria-hidden="true"></span>
         100 % lokal – nichts wird hochgeladen
       </p>
     </header>
 
-    <main>
-      <section class="generator" aria-labelledby="gen-title">
-        <div class="generator-head">
-          <h2 id="gen-title">Zufällige GDT erzeugen</h2>
-          <p class="muted">Konforme Testdateien (GDT 2.1 &amp; 3.x) – fiktive Patientendaten</p>
-        </div>
-        <div class="generator-controls">
-          <label class="field">
-            <span>Format</span>
-            <select id="formatSelect" aria-label="GDT-Format wählen">
-              <option value="random">Zufälliges Format</option>
-            </select>
-          </label>
-          <div class="generator-actions">
-            <button type="button" class="btn btn-primary" id="generateBtn">Zufällig erzeugen</button>
-            <button type="button" class="btn btn-ghost" id="downloadGenBtn" disabled>Als .gdt speichern</button>
-          </div>
-        </div>
-        <p id="formatHint" class="format-hint muted"></p>
-      </section>
-
+    <main id="main">
       <section
         id="dropzone"
         class="dropzone"
-        tabindex="0"
-        role="button"
-        aria-label="GDT-Datei auswählen oder hierher ziehen"
+        aria-labelledby="drop-title"
+        aria-describedby="drop-sub"
       >
         <div class="dropzone-inner">
           <div class="drop-icon" aria-hidden="true">
@@ -126,40 +106,67 @@
               <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" stroke-linecap="round"/>
             </svg>
           </div>
-          <p class="drop-title">GDT-Datei hierher ziehen</p>
-          <p class="drop-sub">oder klicken zum Auswählen · .gdt / .txt</p>
-          <button type="button" class="btn btn-primary" id="browseBtn">Datei wählen</button>
+          <h2 id="drop-title" class="drop-title">GDT-Datei hierher ziehen</h2>
+          <p id="drop-sub" class="drop-sub">oder klicken zum Auswählen · .gdt / .txt</p>
+          <button type="button" class="btn btn-primary btn-lg" id="browseBtn">Datei wählen</button>
           <input type="file" id="fileInput" accept=".gdt,.txt,text/plain" hidden />
         </div>
       </section>
 
-      <section id="toolbar" class="toolbar hidden">
+      <section class="generator" aria-labelledby="gen-title">
+        <div class="generator-head">
+          <h2 id="gen-title">Zufällige GDT erzeugen</h2>
+          <p class="muted">Konforme Testdateien (GDT 2.1 &amp; 3.x) – fiktive Patientendaten</p>
+        </div>
+        <div class="generator-controls">
+          <label class="field" for="formatSelect">
+            <span>Format</span>
+            <select id="formatSelect" aria-describedby="formatHint">
+              <option value="random">Zufälliges Format</option>
+            </select>
+          </label>
+          <div class="generator-actions">
+            <button type="button" class="btn btn-secondary" id="generateBtn">Zufällig erzeugen</button>
+            <button type="button" class="btn btn-ghost" id="downloadGenBtn" disabled>Als .gdt speichern</button>
+          </div>
+        </div>
+        <p id="formatHint" class="format-hint muted" aria-live="polite"></p>
+      </section>
+
+      <section id="error" class="error hidden" role="alert"></section>
+
+      <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+
+      <section id="toolbar" class="toolbar hidden" tabindex="-1" aria-labelledby="fileName">
         <div class="file-meta">
-          <strong id="fileName">—</strong>
+          <h2 id="fileName" class="file-name">—</h2>
           <span id="fileInfo" class="muted"></span>
         </div>
         <div class="toolbar-actions">
           <label class="toggle">
-            <input type="checkbox" id="showRaw" />
+            <input type="checkbox" id="showRaw" aria-controls="raw" />
             Rohtext anzeigen
           </label>
-          <button type="button" class="btn btn-ghost" id="copyBtn">Kopieren</button>
-          <button type="button" class="btn btn-ghost" id="downloadBtn">Download</button>
-          <button type="button" class="btn btn-ghost" id="clearBtn">Neue Datei</button>
+          <div class="toolbar-buttons">
+            <button type="button" class="btn btn-ghost" id="copyBtn">Kopieren</button>
+            <button type="button" class="btn btn-ghost" id="downloadBtn">Download</button>
+            <button type="button" class="btn btn-ghost" id="clearBtn">Neue Datei</button>
+          </div>
         </div>
       </section>
 
-      <section id="summary" class="summary hidden"></section>
+      <section id="summary" class="summary hidden" aria-label="Zusammenfassung"></section>
 
-      <section id="results" class="results hidden">
+      <section id="results" class="results hidden" aria-label="GDT-Felder">
         <div class="table-wrap">
           <table>
+            <caption class="sr-only">Felder der GDT-Datei mit Zeile, Feldkennung, Bedeutung und Inhalt</caption>
             <thead>
               <tr>
-                <th class="col-line">Zeile</th>
-                <th class="col-id">Feld</th>
-                <th class="col-label">Bedeutung</th>
-                <th class="col-value">Inhalt</th>
+                <th scope="col" class="col-line">Zeile</th>
+                <th scope="col" class="col-id">Feld</th>
+                <th scope="col" class="col-label">Bedeutung</th>
+                <th scope="col" class="col-value">Inhalt</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -167,33 +174,33 @@
         </div>
       </section>
 
-      <section id="raw" class="raw hidden">
-        <h2>Rohtext</h2>
-        <pre id="rawText"></pre>
+      <section id="raw" class="raw hidden" aria-labelledby="raw-title">
+        <h2 id="raw-title">Rohtext</h2>
+        <pre id="rawText" tabindex="0"></pre>
       </section>
 
-      <section id="error" class="error hidden" role="alert"></section>
+      <div class="info-grid">
+        <section class="help" aria-labelledby="hinweise-title">
+          <h2 id="hinweise-title">Hinweise</h2>
+          <ul>
+            <li>Unterstützt typische GDT 2.x-Zeilen: <code>Länge (3) + Feld-ID (4) + Inhalt</code></li>
+            <li>Generator: GDT <strong>2.1</strong> und <strong>3.0/3.1</strong> · Satzarten <code>6301</code>, <code>6302</code>, <code>6310</code></li>
+            <li>3.x: Satzlänge Feld <code>8004</code>, Version <code>03.00</code>/<code>03.10</code>, optional <code>3618</code>/<code>3619</code>, Datum <code>6200</code> als YYYYMMDD</li>
+            <li>Die Datei bleibt in deinem Browser – es gibt keinen Server-Upload</li>
+            <li>Nur Testdaten erzeugen; echte Patientendaten nicht unnötig teilen</li>
+          </ul>
+        </section>
 
-      <section class="help">
-        <h2>Hinweise</h2>
-        <ul>
-          <li>Unterstützt typische GDT 2.x-Zeilen: <code>Länge (3) + Feld-ID (4) + Inhalt</code></li>
-          <li>Generator: GDT <strong>2.1</strong> und <strong>3.0/3.1</strong> · Satzarten <code>6301</code>, <code>6302</code>, <code>6310</code></li>
-          <li>3.x: Satzlänge Feld <code>8004</code>, Version <code>03.00</code>/<code>03.10</code>, optional <code>3618</code>/<code>3619</code>, Datum <code>6200</code> als YYYYMMDD</li>
-          <li>Die Datei bleibt in deinem Browser – es gibt keinen Server-Upload</li>
-          <li>Nur Testdaten erzeugen; echte Patientendaten nicht unnötig teilen</li>
-        </ul>
-      </section>
-
-      <section class="help" style="margin-top:1rem" aria-labelledby="wissen-teaser">
-        <h2 id="wissen-teaser">GDT lernen</h2>
-        <ul>
-          <li><a href="wissen/was-ist-gdt.html" style="color:var(--accent-hover)">Was ist GDT?</a> – Definition, Aufbau, 2.1 vs. 3.x</li>
-          <li><a href="wissen/anbindung.html" style="color:var(--accent-hover)">GDT-Anbindung</a> – PVS und Gerät verbinden</li>
-          <li><a href="wissen/tutorial.html" style="color:var(--accent-hover)">Anfänger-Tutorial</a> – erste Datei in 15 Minuten</li>
-          <li><a href="wissen/tool.html" style="color:var(--accent-hover)">Wie das Tool hilft</a> – Debugging, Schulung, Tests</li>
-        </ul>
-      </section>
+        <section class="help" aria-labelledby="wissen-teaser">
+          <h2 id="wissen-teaser">GDT lernen</h2>
+          <ul>
+            <li><a href="wissen/was-ist-gdt.html">Was ist GDT?</a> – Definition, Aufbau, 2.1 vs. 3.x</li>
+            <li><a href="wissen/anbindung.html">GDT-Anbindung</a> – PVS und Gerät verbinden</li>
+            <li><a href="wissen/tutorial.html">Anfänger-Tutorial</a> – erste Datei in 15 Minuten</li>
+            <li><a href="wissen/tool.html">Wie das Tool hilft</a> – Debugging, Schulung, Tests</li>
+          </ul>
+        </section>
+      </div>
     </main>
 
     <footer class="site-footer">

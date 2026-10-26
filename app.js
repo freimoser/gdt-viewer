@@ -73,6 +73,7 @@ const formatSelect = $("formatSelect");
 const generateBtn = $("generateBtn");
 const downloadGenBtn = $("downloadGenBtn");
 const formatHint = $("formatHint");
+const statusEl = $("status");
 
 let lastRecords = [];
 let lastRaw = "";
@@ -87,6 +88,14 @@ function showError(message) {
 function clearError() {
   errorBox.textContent = "";
   errorBox.classList.add("hidden");
+}
+
+function announce(message) {
+  statusEl.textContent = "";
+  // Re-set on the next frame so repeated identical messages are announced again
+  requestAnimationFrame(() => {
+    statusEl.textContent = message;
+  });
 }
 
 /**
@@ -157,13 +166,16 @@ function findField(records, id) {
 
 function formatDate(value) {
   if (!value) return null;
-  // DDMMYYYY or YYYYMMDD
+  // DDMMYYYY (GDT 2.x) or YYYYMMDD (GDT 3.x) – only one reading can be a valid date
   if (/^\d{8}$/.test(value)) {
-    if (parseInt(value.slice(0, 2), 10) > 31) {
-      // YYYYMMDD
+    const valid = (y, m, d) => y >= 1800 && y <= 2200 && m >= 1 && m <= 12 && d >= 1 && d <= 31;
+    const num = (from, to) => parseInt(value.slice(from, to), 10);
+    if (valid(num(0, 4), num(4, 6), num(6, 8))) {
       return `${value.slice(6, 8)}.${value.slice(4, 6)}.${value.slice(0, 4)}`;
     }
-    return `${value.slice(0, 2)}.${value.slice(2, 4)}.${value.slice(4, 8)}`;
+    if (valid(num(4, 8), num(2, 4), num(0, 2))) {
+      return `${value.slice(0, 2)}.${value.slice(2, 4)}.${value.slice(4, 8)}`;
+    }
   }
   return value;
 }
@@ -198,7 +210,7 @@ function buildSummary(records) {
   const version = findField(records, "9218") || "—";
 
   return [
-    { label: "Patient", value: patient },
+    { label: "Patient", value: patient, wide: true },
     { label: "Geburtsdatum", value: birth },
     { label: "Geschlecht", value: sex },
     { label: "Untersuchungsdatum", value: date },
@@ -223,7 +235,7 @@ function render(records, rawContent, fileMeta) {
   summary.innerHTML = cards
     .map(
       (c) => `
-      <div class="summary-card">
+      <div class="summary-card${c.wide ? " summary-card-wide" : ""}">
         <span class="label">${escapeHtml(c.label)}</span>
         <span class="value">${escapeHtml(c.value)}</span>
       </div>`
@@ -234,7 +246,7 @@ function render(records, rawContent, fileMeta) {
     .map(
       (r) => `
       <tr>
-        <td class="col-line">${r.line}</td>
+        <td class="col-line"><span class="cell-prefix">Zeile </span>${r.line}</td>
         <td class="col-id">${escapeHtml(r.fieldId)}</td>
         <td class="col-label">${escapeHtml(r.label)}</td>
         <td class="col-value">${escapeHtml(r.content)}</td>
@@ -250,6 +262,7 @@ function render(records, rawContent, fileMeta) {
   raw.classList.toggle("hidden", !showRaw.checked);
   dropzone.classList.add("hidden");
   if (downloadBtn) downloadBtn.disabled = false;
+  announce(`${lastFileName} geladen · ${records.length} Felder`);
 }
 
 function downloadText(filename, text) {
@@ -345,6 +358,8 @@ async function handleFile(file) {
       return;
     }
     render(records, rawContent, file);
+    // The dropzone (and the focused button in it) is now hidden – keep focus on the result
+    toolbar.focus();
   } catch (err) {
     showError(`Datei konnte nicht gelesen werden: ${err.message || err}`);
   }
@@ -382,6 +397,7 @@ function reset() {
   if (downloadBtn) downloadBtn.disabled = true;
   clearError();
   updateFormatHint();
+  browseBtn.focus();
 }
 
 // Events
@@ -390,13 +406,8 @@ browseBtn.addEventListener("click", (e) => {
   fileInput.click();
 });
 
+// Mouse users can click anywhere in the zone; keyboard users use the button
 dropzone.addEventListener("click", () => fileInput.click());
-dropzone.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    fileInput.click();
-  }
-});
 
 fileInput.addEventListener("change", () => {
   const file = fileInput.files?.[0];
@@ -440,6 +451,7 @@ copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(tsv);
     copyBtn.textContent = "Kopiert!";
+    announce("Tabelle in die Zwischenablage kopiert");
     setTimeout(() => {
       copyBtn.textContent = "Kopieren";
     }, 1500);
