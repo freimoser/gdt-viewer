@@ -219,12 +219,14 @@ def attr(value):
 
 def head_block(cfg):
     url = BASE + cfg["path"]
+    up = "../" * cfg["path"].count("/")
     lines = [
         "<!-- seo:start -->",
         f"<title>{attr(cfg['title'])}</title>",
         f'<meta name="description" content="{attr(cfg["description"])}" />',
         '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />',
         f'<meta name="theme-color" content="{THEME_COLOR}" />',
+        f'<link rel="manifest" href="{up}site.webmanifest" />',
         f'<link rel="canonical" href="{url}" />',
         f'<meta property="og:type" content="{cfg["type"]}" />',
         '<meta property="og:locale" content="de_DE" />',

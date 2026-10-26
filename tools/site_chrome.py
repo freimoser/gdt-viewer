@@ -2,8 +2,9 @@
 
 Usage (from the repo root):  python3 tools/site_chrome.py
 Edit LINKS / header() / footer() here, never the generated blocks in the HTML files.
+Run it again after changing styles.css, app.js or generator.js to refresh the ?v= cache-busting hashes.
 """
-import re, pathlib
+import hashlib, re, pathlib
 
 root = pathlib.Path(__file__).resolve().parent.parent
 PAGES = {
@@ -46,6 +47,15 @@ NAV_SCRIPT = '''  <script>
       nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
     })();
   </script>'''
+
+# Cache busting: references to these files get ?v=<content hash>, so browsers fetch a
+# new copy exactly when the file changed (GitHub Pages caches assets for 10 minutes)
+VERSIONED = ["styles.css", "app.js", "generator.js"]
+ASSET_VERSION = {
+    name: hashlib.sha1((root / name).read_bytes()).hexdigest()[:8] for name in VERSIONED
+}
+ASSET_REF = re.compile(r'((?:href|src)="[^"]*?)(' + "|".join(map(re.escape, VERSIONED)) + r')(?:\?v=[0-9a-f]+)?"')
+
 
 def href(prefix, target):
     # Pages inside wissen/ link to their siblings directly instead of via ../wissen/
@@ -142,6 +152,8 @@ for rel, (prefix, current) in PAGES.items():
             s = re.sub(r"<!-- breadcrumb:start -->.*?<!-- breadcrumb:end -->", lambda m: breadcrumb(prefix, current), s, flags=re.S)
         else:
             s = re.sub(r'<p class="breadcrumb">.*?</p>', lambda m: breadcrumb(prefix, current), s, count=1, flags=re.S)
+
+    s = ASSET_REF.sub(lambda m: f'{m.group(1)}{m.group(2)}?v={ASSET_VERSION[m.group(2)]}"', s)
 
     # Footer
     if "<!-- site-footer:start -->" in s:
