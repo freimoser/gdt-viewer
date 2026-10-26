@@ -274,5 +274,19 @@ for rel, cfg in PAGES.items():
     path.write_text(head + rest, encoding="utf-8")
     print(f"updated {rel}: title {len(cfg['title'])}, description {len(cfg['description'])}")
 
+# sitemap.xml – lastmod follows the structured-data "modified" date of each page
+urls = "\n".join(
+    f"  <url>\n    <loc>{BASE + cfg['path']}</loc>\n    <lastmod>{LD[rel]['modified']}</lastmod>\n  </url>"
+    for rel, cfg in PAGES.items()
+)
+(root / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    f"{urls}\n"
+    "</urlset>\n",
+    encoding="utf-8",
+)
+print(f"updated sitemap.xml: {len(PAGES)} URLs")
+
 if problems:
     raise SystemExit(f"{problems} length warning(s)")

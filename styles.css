@@ -261,6 +261,7 @@ h1 {
   font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }

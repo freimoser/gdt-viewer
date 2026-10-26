@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seite nicht gefunden | GDT Viewer</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0f1419" />
+  <!-- GitHub Pages serves this file for any unknown path, so every URL here is absolute -->
+  <link rel="stylesheet" href="/gdt-viewer/styles.css" />
+  <link rel="icon" href="/gdt-viewer/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/gdt-viewer/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/gdt-viewer/apple-touch-icon.png" sizes="180x180" />
+</head>
+<body>
+  <!-- site-header:start -->
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-brand" href="/gdt-viewer/">
+        <span class="site-brand-mark" aria-hidden="true">GDT</span>
+        <span class="site-brand-name">GDT Viewer</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="/gdt-viewer/">Viewer</a>
+        <a href="/gdt-viewer/wissen/">Wissen</a>
+        <a href="/gdt-viewer/wissen/was-ist-gdt.html">Was ist GDT?</a>
+        <a href="/gdt-viewer/wissen/anbindung.html">Anbindung</a>
+        <a href="/gdt-viewer/wissen/tutorial.html">Tutorial</a>
+        <a href="/gdt-viewer/wissen/tool.html">Tool-Hilfe</a>
+      </nav>
+    </div>
+  </header>
+  <script>
+    // Mobile: the link row scrolls sideways – bring the current page's link into view
+    (function () {
+      var nav = document.querySelector(".site-nav");
+      var cur = nav && nav.querySelector("[aria-current]");
+      if (!cur || nav.scrollWidth <= nav.clientWidth) return;
+      var offset = cur.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
+    })();
+  </script>
+  <!-- site-header:end -->
+  <div class="page page-content">
+    <main id="main">
+      <header class="hero-article">
+        <h1>Seite nicht gefunden</h1>
+        <p class="lead">
+          Unter dieser Adresse gibt es keine Seite – vielleicht wurde sie verschoben oder der Link enthält einen Tippfehler.
+        </p>
+      </header>
+
+      <div class="cta-box">
+        <p>
+          <strong>GDT-Datei öffnen oder Testdaten erzeugen</strong>
+          Der Viewer läuft direkt im Browser – nichts wird hochgeladen.
+        </p>
+        <a class="btn btn-primary" href="/gdt-viewer/">Zum GDT Viewer</a>
+      </div>
+
+      <section class="related">
+        <h2>Oder hier weiterlesen</h2>
+        <div class="card-grid">
+          <a class="card-link" href="/gdt-viewer/wissen/was-ist-gdt.html"><h3>Was ist GDT?</h3><p>Definition, Dateiaufbau und Versionen.</p></a>
+          <a class="card-link" href="/gdt-viewer/wissen/anbindung.html"><h3>GDT-Anbindung</h3><p>Praxissoftware und Gerät verbinden.</p></a>
+          <a class="card-link" href="/gdt-viewer/wissen/tutorial.html"><h3>Tutorial</h3><p>Erste GDT-Datei in 15 Minuten verstehen.</p></a>
+        </div>
+      </section>
+    </main>
+
+    <!-- site-footer:start -->
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h2>Tool</h2>
+          <ul>
+            <li><a href="/gdt-viewer/">GDT Viewer</a></li>
+            <li><a href="/gdt-viewer/wissen/tool.html">Tool-Hilfe</a></li>
+            <li><a href="https://github.com/freimoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Wissen</h2>
+          <ul>
+            <li><a href="/gdt-viewer/wissen/">Übersicht</a></li>
+            <li><a href="/gdt-viewer/wissen/was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="/gdt-viewer/wissen/anbindung.html">GDT-Anbindung</a></li>
+            <li><a href="/gdt-viewer/wissen/tutorial.html">Tutorial für Anfänger</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Hinweise</h2>
+          <ul>
+            <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
+            <li>Dateiinhalte bleiben im Browser</li>
+            <li>Open Source · Lizenz: MIT</li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
+    </footer>
+    <!-- site-footer:end -->
+  </div>
+</body>
+</html>

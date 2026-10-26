@@ -1,3 +1,11 @@
+# Hinweis: Diese Seite liegt als GitHub-Project-Page unter /gdt-viewer/.
+# Crawler lesen robots.txt nur am Host-Root (https://freimoser.github.io/robots.txt),
+# diese Datei wird daher von Suchmaschinen NICHT ausgewertet.
+# Die Sitemap muss direkt in der Google Search Console und den Bing Webmaster Tools
+# eingereicht werden: https://freimoser.github.io/gdt-viewer/sitemap.xml
+# Alle Inhalte dürfen gecrawlt werden – auch von KI-Suchdiensten (GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended): Zitiert zu werden ist ausdrücklich erwünscht.
+
 User-agent: *
 Allow: /
 

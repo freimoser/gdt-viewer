@@ -13,6 +13,8 @@ PAGES = {
     "wissen/anbindung.html": ("../", "anbindung"),
     "wissen/tutorial.html": ("../", "tutorial"),
     "wissen/tool.html": ("../", "tool"),
+    # Served by GitHub Pages for any unknown path, so it needs absolute links
+    "404.html": ("/gdt-viewer/", None),
 }
 LINKS = [
     ("viewer", "", "Viewer"),
