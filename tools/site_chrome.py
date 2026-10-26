@@ -25,6 +25,15 @@ LINKS = [
     ("tool", "wissen/tool.html", "Tool-Hilfe"),
 ]
 
+# Visible breadcrumb label per page – keep in sync with LD[...]["crumb"] in tools/site_meta.py
+CRUMBS = {
+    "wissen": "Wissen",
+    "was-ist-gdt": "Was ist GDT?",
+    "anbindung": "Anbindung",
+    "tutorial": "Tutorial",
+    "tool": "Tool-Hilfe",
+}
+
 CUR = ' aria-current="page"'
 
 NAV_SCRIPT = '''  <script>
@@ -64,6 +73,21 @@ def header(prefix, current):
   </header>
 {NAV_SCRIPT}
   <!-- site-header:end -->'''
+
+def breadcrumb(prefix, current):
+    items = [f'<li><a href="{href(prefix, "")}">GDT Viewer</a></li>']
+    if current != "wissen":
+        items.append(f'<li><a href="{href(prefix, "wissen/")}">Wissen</a></li>')
+    items.append(f'<li><span aria-current="page">{CRUMBS[current]}</span></li>')
+    lines = "\n".join("          " + i for i in items)
+    return f'''<!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+{lines}
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->'''
+
 
 def footer(prefix):
     p = prefix
@@ -111,6 +135,13 @@ for rel, (prefix, current) in PAGES.items():
         s = re.sub(r'\s*<a class="skip-link"[^>]*>[^<]*</a>', "", s)
         s = re.sub(r'\s*<nav class="site-nav".*?</nav>', "", s, count=1, flags=re.S)
         s = s.replace("<body>", "<body>\n  " + header(prefix, current), 1)
+
+    # Breadcrumb on knowledge pages: replace a previous generated block or the old <p class="breadcrumb">
+    if current in CRUMBS:
+        if "<!-- breadcrumb:start -->" in s:
+            s = re.sub(r"<!-- breadcrumb:start -->.*?<!-- breadcrumb:end -->", lambda m: breadcrumb(prefix, current), s, flags=re.S)
+        else:
+            s = re.sub(r'<p class="breadcrumb">.*?</p>', lambda m: breadcrumb(prefix, current), s, count=1, flags=re.S)
 
     # Footer
     if "<!-- site-footer:start -->" in s:

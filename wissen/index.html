@@ -149,11 +149,14 @@
     <main id="main">
 
     <header class="hero-article">
-      <p class="breadcrumb">
-        <a href="../">GDT Viewer</a>
-        <span aria-hidden="true">/</span>
-        <span>Wissen</span>
-      </p>
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><span aria-current="page">Wissen</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
       <h1>GDT Wissen: Gerätedatentransfer verstehen</h1>
       <p class="lead">
         Kompakte, praxisnahe Erklärungen zur <strong>GDT-Schnittstelle</strong> (Gerätedatentransfer)
@@ -193,7 +196,7 @@
         <strong>textbasierte Schnittstelle</strong> zum Austausch von Patientendaten und
         Untersuchungsergebnissen zwischen <strong>Praxisverwaltungssystem (PVS)</strong> und
         medizinischen Geräten bzw. Zusatzsoftware. Eine GDT-Datei besteht aus Zeilen mit
-        Längenangabe, vierstelliger Feldkennung und Inhalt.
+        Längenangabe, vierstelliger <a href="was-ist-gdt.html#aufbau">Feldkennung</a> und Inhalt.
       </p>
 
       <div class="callout">
@@ -201,7 +204,7 @@
         <p>
           GDT ist kein Netzwerkprotokoll wie HL7 FHIR über HTTP, sondern in der Regel ein
           <strong>dateibasierter Datenaustausch</strong> über freigegebene Ordner. Versionen
-          2.1 und 3.x unterscheiden sich u. a. bei der Satzlängen-Feldkennung (8100 vs. 8004)
+          2.1 und 3.x unterscheiden sich u. a. bei der Satzlängen-Feldkennung (<a href="was-ist-gdt.html#versionen">8100 vs. 8004</a>)
           und bei erweiterten Patientenfeldern.
         </p>
       </div>

@@ -227,13 +227,15 @@
     <main id="main">
 
     <header class="hero-article">
-      <p class="breadcrumb">
-        <a href="../">GDT Viewer</a>
-        <span aria-hidden="true">/</span>
-        <a href="./">Wissen</a>
-        <span aria-hidden="true">/</span>
-        <span>Tutorial</span>
-      </p>
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><a href="./">Wissen</a></li>
+          <li><span aria-current="page">Tutorial</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
       <h1>GDT Tutorial für Anfänger</h1>
       <p class="lead">
         In etwa 15 Minuten verstehen Sie, wie eine <strong>GDT-Datei</strong> aussieht,
@@ -289,7 +291,7 @@
       <p>Schauen Sie zuerst auf die <strong>Zusammenfassung</strong>:</p>
       <ul>
         <li><strong>Patient</strong> – aus Nachname (<code>3101</code>) und Vorname (<code>3102</code>)</li>
-        <li><strong>Satzart</strong> – Feld <code>8000</code> (z. B. 6301, 6302, 6310)</li>
+        <li><strong><a href="was-ist-gdt.html#satzarten">Satzart</a></strong> – Feld <code>8000</code> (z. B. 6301, 6302, 6310)</li>
         <li><strong>GDT-Version</strong> – Feld <code>9218</code> (02.10 vs. 03.10)</li>
         <li><strong>Untersuchungsdatum</strong> – <code>2002</code> oder <code>6200</code></li>
       </ul>
@@ -341,7 +343,7 @@
       <h2 id="schritt-5">Schritt 5: GDT 2.1 und 3.x vergleichen</h2>
       <p>Erzeugen Sie nacheinander zwei Dateien und vergleichen Sie:</p>
       <ul>
-        <li><strong>2.1:</strong> Version <code>02.10</code>, Satzlänge oft Feld <code>8100</code></li>
+        <li><strong>2.1:</strong> Version <code>02.10</code>, <a href="was-ist-gdt.html#versionen">Satzlänge</a> oft Feld <code>8100</code></li>
         <li><strong>3.1:</strong> Version <code>03.10</code>, Satzlänge Feld <code>8004</code>, oft E-Mail/Mobil</li>
       </ul>
       <p>

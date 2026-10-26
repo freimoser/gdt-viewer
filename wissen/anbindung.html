@@ -200,13 +200,15 @@
     <main id="main">
 
     <header class="hero-article">
-      <p class="breadcrumb">
-        <a href="../">GDT Viewer</a>
-        <span aria-hidden="true">/</span>
-        <a href="./">Wissen</a>
-        <span aria-hidden="true">/</span>
-        <span>Anbindung</span>
-      </p>
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><a href="./">Wissen</a></li>
+          <li><span aria-current="page">Anbindung</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
       <h1>GDT-Anbindung: So funktioniert der Datenaustausch</h1>
       <p class="lead">
         Die <strong>GDT-Anbindung</strong> verbindet Praxisverwaltungssystem (PVS) und
@@ -250,7 +252,7 @@
           <strong>Patient im PVS auswählen</strong> und externes Modul / Gerät aufrufen.
         </li>
         <li>
-          Das PVS erzeugt eine GDT-Datei – oft Satzart <code>6302</code>
+          Das PVS erzeugt eine GDT-Datei – oft <a href="was-ist-gdt.html#satzarten">Satzart</a> <code>6302</code>
           (Untersuchungsanforderung) mit Patientenfeldern (<code>3000</code>, <code>3101</code>, …).
         </li>
         <li>
@@ -295,7 +297,7 @@
           </tr>
           <tr>
             <td>GDT-Version 2.1 oder 3.x</td>
-            <td>Andere Feldlängen-Felder (8100 vs. 8004), optionale Felder</td>
+            <td>Andere Feldlängen-Felder (<a href="was-ist-gdt.html#versionen">8100 vs. 8004</a>), optionale Felder</td>
           </tr>
           <tr>
             <td>Programmpfad + Parameter</td>

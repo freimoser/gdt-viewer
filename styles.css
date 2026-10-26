@@ -723,13 +723,25 @@ td.col-value {
 }
 
 .breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  align-items: center;
   margin: 0 0 1.25rem;
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb li + li::before {
+  content: "/" / "";
+  margin-right: 0.35rem;
+  opacity: 0.5;
 }
 
 .breadcrumb a {
@@ -741,8 +753,8 @@ td.col-value {
   color: var(--accent-hover);
 }
 
-.breadcrumb span[aria-hidden="true"] {
-  opacity: 0.5;
+.breadcrumb [aria-current="page"] {
+  color: var(--text);
 }
 
 .hero-article {

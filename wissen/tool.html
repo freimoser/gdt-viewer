@@ -252,13 +252,15 @@
     <main id="main">
 
     <header class="hero-article">
-      <p class="breadcrumb">
-        <a href="../">GDT Viewer</a>
-        <span aria-hidden="true">/</span>
-        <a href="./">Wissen</a>
-        <span aria-hidden="true">/</span>
-        <span>Tool-Hilfe</span>
-      </p>
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><a href="./">Wissen</a></li>
+          <li><span aria-current="page">Tool-Hilfe</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
       <h1>Wie der GDT Viewer hilft</h1>
       <p class="lead">
         Der <strong>GDT Viewer</strong> ist ein kostenloses, browserbasiertes Werkzeug zum
@@ -292,11 +294,11 @@
         <tbody>
           <tr>
             <td>Datei verstehen</td>
-            <td>Tabelle mit Feldkennung, Bedeutung und Inhalt statt reiner Rohtext-Rätsel</td>
+            <td>Tabelle mit <a href="was-ist-gdt.html#felder">Feldkennung</a>, Bedeutung und Inhalt statt reiner Rohtext-Rätsel</td>
           </tr>
           <tr>
             <td>Anbindung debuggen</td>
-            <td>Export aus dem PVS prüfen: Satzart, Version, Patienten-ID, Messwerte</td>
+            <td>Export aus dem PVS prüfen: <a href="was-ist-gdt.html#satzarten">Satzart</a>, Version, Patienten-ID, Messwerte</td>
           </tr>
           <tr>
             <td>Testdaten erzeugen</td>
@@ -308,7 +310,7 @@
           </tr>
           <tr>
             <td>Formate vergleichen</td>
-            <td>8100 vs. 8004, CRLF vs. LF, mit/ohne Längenpräfix, Multi-Satz</td>
+            <td><a href="was-ist-gdt.html#versionen">8100 vs. 8004</a>, CRLF vs. LF, mit/ohne Längenpräfix, Multi-Satz</td>
           </tr>
         </tbody>
       </table>
@@ -328,8 +330,8 @@
       <p>
         Öffnen Sie die vom PVS erzeugte Datei im Viewer. Fehlen <code>3000</code>/<code>3101</code>?
         Ist die Satzart nicht <code>6302</code>? Stimmt die Version? So finden Sie Fehler,
-        bevor Sie am Gerät lange raten. Kontext:
-        <a href="anbindung.html">GDT-Anbindung</a>.
+        bevor Sie am Gerät lange raten. Typische Ursachen:
+        <a href="anbindung.html#fehler">Häufige Fehler bei der GDT-Anbindung</a>.
       </p>
 
       <h3>2. Entwicklung: Parser und Exporte testen</h3>
