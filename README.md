@@ -28,7 +28,7 @@ Ideal für **Praxis-IT**, **Support**, **Medizintechnik**, **Entwicklung** und *
 - Generator-Formate: GDT 2.1 (CRLF/LF/UTF-8), GDT 3.0, GDT 3.1, Multi-Satz, ohne Längenpräfix, ohne 8100
 - Satzarten: **6301**, **6302**, **6310**
 - Wissensseiten: Grundlagen, Anbindung PVS↔Gerät, Anfänger-Tutorial, Tool-Nutzen
-- SEO/GEO-taugliche Unterseiten (Meta, Canonical, JSON-LD, Sitemap)
+- SEO/GEO: Meta, Canonical, Open Graph, verknüpftes JSON-LD, Sitemap, `llms.txt` / `llms-full.txt`
 
 ### 2.x vs. 3.x (kurz)
 
@@ -63,6 +63,27 @@ Browser: [http://localhost:8080](http://localhost:8080)
 | [Tool-Hilfe](https://freimoser.github.io/gdt-viewer/wissen/tool.html) | Debugging, Schulung, Testdaten |
 
 ---
+
+## Pflege (SEO / GEO)
+
+Kopfzeile, Footer, Meta-Tags, strukturierte Daten, Sitemap und `llms.txt` werden aus zentralen Skripten erzeugt.
+Die Blöcke zwischen `<!-- site-header:start -->`, `<!-- seo:start -->` usw. **nicht von Hand ändern** – sie werden überschrieben.
+
+| Was ändern? | Wo? |
+|-------------|-----|
+| Navigation, Footer, Brotkrumen | `tools/site_chrome.py` |
+| Title, Description, Open Graph, JSON-LD, Datum, Sitemap | `tools/site_meta.py` |
+| Fakten in `llms.txt` | `tools/site_llms.py` |
+| Vorschaubild `og-image.png` | `tools/og-image.html` (Render-Befehl in der Datei) |
+
+Nach jeder Änderung an Inhalten, CSS oder JS:
+
+```bash
+python3 tools/site_chrome.py && python3 tools/site_meta.py && python3 tools/site_llms.py
+```
+
+Bei inhaltlichen Änderungen einer Seite das sichtbare „Aktualisiert“-Datum **und** `modified` in `tools/site_meta.py` anpassen.
+Die Sitemap muss in der Google Search Console und den Bing Webmaster Tools eingereicht werden – `robots.txt` unter `/gdt-viewer/` wird von Crawlern nicht gelesen.
 
 ## Tech
 
