@@ -1,0 +1,366 @@
+# GDT Viewer – Volltext
+
+> Alle Inhalte von https://freimoser.github.io/gdt-viewer/ als Markdown. Quelle für Zitate: die jeweils angegebene Seiten-URL.
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/
+
+# GDT Viewer
+
+Gerätedatentransfer-Dateien online lesen & Testdaten erzeugen
+
+100 % lokal – nichts wird hochgeladen
+
+## Zufällige GDT erzeugen
+
+Konforme Testdateien (GDT 2.1 & 3.x) – fiktive Patientendaten
+
+## Hinweise
+
+- Unterstützt typische GDT 2.x-Zeilen: `Länge (3) + Feld-ID (4) + Inhalt`
+- Generator: GDT **2.1** und **3.0/3.1** · Satzarten `6301`, `6302`, `6310`
+- 3.x: Satzlänge Feld `8004`, Version `03.00`/`03.10`, optional `3618`/`3619`, Datum `6200` als YYYYMMDD
+- Die Datei bleibt in deinem Browser – es gibt keinen Server-Upload
+- Nur Testdaten erzeugen; echte Patientendaten nicht unnötig teilen
+
+## GDT lernen
+
+- [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html) – Definition, Aufbau, 2.1 vs. 3.x
+- [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html) – PVS und Gerät verbinden
+- [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) – erste Datei in 15 Minuten
+- [Wie das Tool hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html) – Debugging, Schulung, Tests
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/
+
+# GDT Wissen: Gerätedatentransfer verstehen
+
+Kompakte, praxisnahe Erklärungen zur **GDT-Schnittstelle** (Gerätedatentransfer) in der deutschen Arztpraxis und Medizintechnik – von den Grundlagen über die Anbindung bis zum Anfänger-Tutorial und dem Nutzen des kostenlosen GDT Viewers.
+
+*Aktualisiert: 20. Juli 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT*
+
+- [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html): Definition, Dateiaufbau, Feldkennungen, GDT 2.1 vs. 3.x und typische Satzarten.
+- [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html): So tauschen Praxissoftware und Gerät Dateien aus – Verzeichnisse, Aufruf, Import/Export.
+- [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html): Schritt für Einsteiger: erste GDT-Datei lesen, Felder deuten, Testdaten erzeugen.
+- [Wie der GDT Viewer hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html): Debuggen, schulen, Formate vergleichen – lokal im Browser ohne Server-Upload.
+
+## Kurzantwort: Was ist GDT?
+
+**GDT (Gerätedatentransfer)** ist eine in Deutschland weit verbreitete **textbasierte Schnittstelle** zum Austausch von Patientendaten und Untersuchungsergebnissen zwischen **Praxisverwaltungssystem (PVS)** und medizinischen Geräten bzw. Zusatzsoftware. Eine GDT-Datei besteht aus Zeilen mit Längenangabe, vierstelliger Feldkennung und Inhalt.
+
+**Für KI- und Suchmaschinen klar formuliert**
+
+GDT ist kein Netzwerkprotokoll wie HL7 FHIR über HTTP, sondern in der Regel ein **dateibasierter Datenaustausch** über freigegebene Ordner. Versionen 2.1 und 3.x unterscheiden sich u. a. bei der Satzlängen-Feldkennung (8100 vs. 8004) und bei erweiterten Patientenfeldern.
+
+## Wen sprechen diese Seiten an?
+
+- Praxis-IT, MFA und Ärztinnen/Ärzte, die Geräte anbinden
+- Software- und Medizintechnik-Hersteller (Integration & Support)
+- Entwickler:innen, die GDT parsen oder erzeugen
+- Lernende, die GDT-Dateien sicher ansehen und testen wollen
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html
+
+# Was ist GDT? Gerätedatentransfer erklärt
+
+**GDT** steht für **Gerätedatentransfer** – die in Deutschland gängige Schnittstelle, mit der Praxissoftware und medizinische Geräte strukturierte Textdaten austauschen. Diese Seite erklärt Definition, Dateiaufbau, wichtige Felder und die Unterschiede zwischen GDT 2.1 und GDT 3.0/3.1.
+
+*Aktualisiert: 20. Juli 2026 · Lesedauer ca. 8 Min.*
+
+## Definition: Was ist Gerätedatentransfer (GDT)?
+
+**Gerätedatentransfer (GDT)** ist ein standardisiertes, vor allem im deutschsprachigen Praxisumfeld genutztes **Austauschformat** für Stammdaten, Untersuchungsanforderungen und Messergebnisse. Typischerweise schreibt die Praxissoftware eine Datei (z. B. `.gdt`) in ein Übergabe-Verzeichnis; das Gerät oder die Zusatzsoftware liest sie, und liefert Ergebnisse in einer Antwort-Datei zurück.
+
+GDT ist **zeilenbasiert und lesbar als Text**. Es basiert auf dem XDT-Prinzip (ähnliche Struktur wie bei LDT/BDT): jedes Feld hat Länge, Kennung und Inhalt. Es ersetzt keine modernen API-Standards wie FHIR, ist aber in vielen deutschen Praxen und Geräteanbindungen weiterhin der Alltag.
+
+**Merksatz**
+
+GDT = **Datei + feste Feldkennungen** für Patienten und Untersuchungen, ausgetauscht zwischen **PVS** und **Gerät/Modul**.
+
+## Wie ist eine GDT-Datei aufgebaut?
+
+Eine GDT-Datei enthält einen oder mehrere **Sätze**. Jeder Satz besteht aus Feldern, jedes Feld ist eine Zeile:
+
+```
+01380006301
+01481000166
+014921802.10
+0173000P-1042
+0213101Mustermann
+…
+```
+
+Bedeutung einer Standardzeile (GDT mit Längenpräfix):
+
+| Teil | Länge | Bedeutung |
+|---|---|---|
+| Länge | 3 Ziffern | Gesamtlänge der Zeile inkl. dieser 3 Ziffern und des Zeilenendes (CR+LF oder LF) |
+| Feldkennung | 4 Ziffern | z. B. `3101` = Nachname, `8000` = Satzart |
+| Inhalt | variabel | eigentliche Daten (Text, Zahl, Datum) |
+
+Manche Systeme exportieren vereinfacht **ohne Längenpräfix** (nur Feldkennung + Inhalt). Der [GDT Viewer](https://freimoser.github.io/gdt-viewer/) kann beide Varianten lesen.
+
+## Wichtige Satzarten (Feld 8000)
+
+Die Satzart steht im Feld `8000` und bestimmt den Zweck des Datensatzes:
+
+| Satzart | Typische Bedeutung |
+|---|---|
+| `6301` | Stammdaten / Patientendaten übermitteln |
+| `6302` | Anforderung einer Untersuchung inkl. Patientendaten |
+| `6310` | Übergabe von Untersuchungsergebnissen / Befunddaten |
+| `6311` | u. a. digitale Unterschrift / erweiterte Ergebnisübergabe (je nach Spezifikation) |
+
+## Häufige Feldkennungen
+
+| Feld | Inhalt |
+|---|---|
+| `8000` | Satzart |
+| `8100` | Satzlänge (vor allem GDT 2.x) |
+| `8004` | Satzlänge (GDT 3.x) |
+| `9218` | GDT-Version (z. B. 02.10, 03.10) |
+| `3000` | Patienten-ID / -nummer |
+| `3101` / `3102` | Nachname / Vorname |
+| `3103` | Geburtsdatum (oft TTMMJJJJ) |
+| `3110` | Geschlecht |
+| `3618` / `3619` | Mobil / E-Mail (häufig GDT 3.1) |
+| `8410` / `8420` | Testkennung / Messwert |
+| `6200` | Tag der Untersuchung (in 3.x oft JJJJMMTT) |
+
+## GDT 2.1 vs. GDT 3.0 / 3.1
+
+| Aspekt | GDT 2.1 | GDT 3.0 / 3.1 |
+|---|---|---|
+| Version (`9218`) | `02.10` | `03.00` / `03.10` |
+| Satzlänge | Feld `8100` | Feld `8004` |
+| Feldlängen | oft streng begrenzt | variabler |
+| Kontaktdaten | selten / begrenzt | u. a. Mobil, E-Mail |
+| Untersuchungsdatum | häufig `2002` TTMMJJJJ | häufig `6200` JJJJMMTT |
+
+Details zur praktischen Dateiübergabe finden Sie unter [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html). Zum Einlesen und Testen: [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html).
+
+## Häufige Fragen zu GDT
+
+### Ist GDT dasselbe wie HL7 oder FHIR?
+
+Nein. HL7/FHIR sind breitere (oft netzwerkbasierte) Interoperabilitätsstandards. GDT ist ein spezifisches, dateibasiertes Format im deutschsprachigen Praxis-/Geräte-Kontext.
+
+### Welche Dateiendung hat GDT?
+
+Häufig `.gdt`, manchmal auch `.txt` oder herstellerspezifische Namen im Import-/Exportordner.
+
+### Enthalten GDT-Dateien Patientendaten?
+
+Ja, typischerweise Name, ID, Geburtsdatum und Messwerte. Deshalb gelten Datenschutzregeln (DSGVO); Testdaten sollten fiktiv sein.
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/anbindung.html
+
+# GDT-Anbindung: So funktioniert der Datenaustausch
+
+Die **GDT-Anbindung** verbindet Praxisverwaltungssystem (PVS) und medizinisches Gerät über Dateien. Hier erfahren Sie den typischen Ablauf, was konfiguriert werden muss und wo Fehler entstehen – inklusive Checkliste.
+
+*Aktualisiert: 20. Juli 2026 · Für Praxis-IT und Integratoren in Deutschland*
+
+## Grundprinzip der GDT-Schnittstelle
+
+Im Gegensatz zu vielen Cloud-APIs ist GDT in der Praxis meist **ordnerbasiert**: Beide Systeme kennen dieselben Pfade (oder getrennte Import-/Exportordner). Die Kommunikation läuft über **Schreiben und Lesen von GDT-Dateien**, oft gekoppelt mit dem Start eines externen Programms aus dem PVS heraus.
+
+**Kernidee**
+
+PVS legt Anforderungsdatei ab → Gerät/Modul startet und liest → Messung → Ergebnisdatei wird geschrieben → PVS importiert zurück in die Karteikarte.
+
+## Typischer Ablauf (Anforderung → Ergebnis)
+
+1. **Patient im PVS auswählen** und externes Modul / Gerät aufrufen.
+2. Das PVS erzeugt eine GDT-Datei – oft Satzart `6302` (Untersuchungsanforderung) mit Patientenfeldern (`3000`, `3101`, …).
+3. Die Datei liegt in einem **Export- bzw. Übergabeverzeichnis**; der Programmaufruf übergibt oft den vollen Dateipfad als Parameter.
+4. Das Gerät liest die Datei, führt die Untersuchung durch und schreibt Ergebnisse (häufig Satzart `6310`) in den **Importordner**.
+5. Das PVS importiert die Ergebnisdatei und ordnet sie dem Patienten zu (über Patienten-ID und/oder Workflow-Kontext).
+
+Varianten: reine Stammdatenübergabe (`6301`), mehrere Sätze in einer Datei, unterschiedliche Dateinamen pro Hersteller, Polling des Importordners statt sofortigem Import.
+
+## Was in der Anbindung konfiguriert wird
+
+| Einstellung | Warum sie wichtig ist |
+|---|---|
+| Exportpfad (PVS → Gerät) | Wo die Anforderungsdatei landet |
+| Importpfad (Gerät → PVS) | Wo Ergebnisse erwartet werden |
+| Dateiname / Muster | Muss auf beiden Seiten übereinstimmen |
+| GDT-Version 2.1 oder 3.x | Andere Feldlängen-Felder (8100 vs. 8004), optionale Felder |
+| Programmpfad + Parameter | Start des Gerätemoduls, oft mit `/load:` o. Ä. und Dateipfad |
+| Zeichensatz | Umlaute (ISO-8859-1 / Windows-1252 / UTF-8) |
+| Sender-/Empfänger-IDs | Felder `8315` / `8316` – je nach Gerät Pflicht |
+
+Die genauen Dialoge unterscheiden sich je PVS (z. B. „Externes Modul“, „Geräteschnittstelle“, „GDT-Konfiguration“). Die Spezifikation des Geräteherstellers hat Vorrang vor generischen Annahmen.
+
+## Checkliste vor dem Produktivstart
+
+- Beide Seiten nutzen denselben freigegebenen Ordner bzw. abgestimmte Pfade
+- Schreib- und Leserechte für den Praxis-Windows-Benutzer sind gesetzt
+- Test mit **fiktiven** Patientendaten, nicht mit echten Produktivdaten zuerst
+- Anforderungsdatei im [GDT Viewer](https://freimoser.github.io/gdt-viewer/) geöffnet: Satzart, Patient, Version plausibel?
+- Ergebnisdatei enthält erwartete Messfelder (`8410`/`8420`) und Patienten-ID
+- Zeichensatz: Umlaute in Namen korrekt?
+- GDT 2.1 vs. 3.x: Stimmt die Version mit der Geräte-Doku überein?
+- Datenschutz: Ordner nicht unnötig freigegeben; Backup- und Löschregeln klären
+
+## Häufige Fehler bei der GDT-Anbindung
+
+| Symptom | Mögliche Ursache |
+|---|---|
+| Gerät startet ohne Patient | Falscher Parameter, leere/ungültige GDT-Datei, falscher Pfad |
+| Ergebnis erscheint nicht im PVS | Importordner falsch, Dateiname, Import nicht ausgelöst, falsche Patienten-ID |
+| Umlaute kaputt | Zeichensatz-Mismatch (Feld `9206` / Encoding der Datei) |
+| Parser meldet Längenfehler | Falsche 3-stellige Zeilenlänge, gemischte CRLF/LF, manuell editierte Datei |
+| Version abgelehnt | Gerät erwartet 02.10, PVS sendet 03.10 (oder umgekehrt) |
+
+Zum Debuggen eignet sich der Viewer besonders gut: Datei öffnen, Felder prüfen, mit dem Generator eine [kontrollierte Testdatei](https://freimoser.github.io/gdt-viewer/wissen/tool.html) erzeugen und den Import testen. Grundlagen der Felder: [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html)
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/tutorial.html
+
+# GDT Tutorial für Anfänger
+
+In etwa 15 Minuten verstehen Sie, wie eine **GDT-Datei** aussieht, welche Felder wichtig sind und wie Sie mit dem kostenlosen **GDT Viewer** sicher üben – ohne Installation und ohne Server-Upload.
+
+*Aktualisiert: 20. Juli 2026 · Niveau: Einsteiger · Voraussetzungen: Browser*
+
+**Datenschutz zuerst**
+
+Üben Sie mit **fiktiven** Daten. Echte GDT-Dateien enthalten Patientendaten. Der Viewer verarbeitet Dateien nur lokal im Browser – trotzdem keine sensiblen Dateien auf fremden Rechnern oder Screenshots teilen.
+
+## Schritt 1: GDT Viewer öffnen
+
+Öffnen Sie den [GDT Viewer](https://freimoser.github.io/gdt-viewer/) im Browser (z. B. Chrome, Firefox, Edge, Safari). Es gibt nichts zu installieren. Oben sehen Sie den Generator für Zufallsdateien, darunter den Bereich zum Hochladen bzw. Ablegen einer Datei.
+
+## Schritt 2: Zufällige Testdatei erzeugen
+
+1. Unter **Format** z. B. „GDT 2.1 (CRLF…)“ oder „Zufälliges Format“ wählen.
+2. Auf **Zufällig erzeugen** klicken.
+3. Sofort erscheinen Zusammenfassung und Tabelle mit allen Feldern.
+4. Optional: **Als .gdt speichern** – z. B. für einen Importtest im PVS.
+
+Die erzeugten Personen, Adressen und Messwerte sind erfunden. Ideal für Schulung und Entwicklung.
+
+## Schritt 3: Felder richtig deuten
+
+Schauen Sie zuerst auf die **Zusammenfassung**:
+
+- **Patient** – aus Nachname (`3101`) und Vorname (`3102`)
+- **Satzart** – Feld `8000` (z. B. 6301, 6302, 6310)
+- **GDT-Version** – Feld `9218` (02.10 vs. 03.10)
+- **Untersuchungsdatum** – `2002` oder `6200`
+
+In der Tabelle bedeuten die Spalten:
+
+| Spalte | Bedeutung für Einsteiger |
+|---|---|
+| Zeile | Position in der Datei (von oben) |
+| Feld | Vierstellige Kennung laut GDT-Spezifikation |
+| Bedeutung | Lesbare Erklärung (sofern bekannt) |
+| Inhalt | Der konkrete Wert (Name, Zahl, Datum …) |
+
+Aktivieren Sie **Rohtext anzeigen**, um die Originalzeilen zu sehen – so erkennen Sie Längenpräfix und Zeilenenden. Mehr Theorie: [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html)
+
+## Schritt 4: Eigene GDT-Datei laden
+
+1. Datei per Drag & Drop auf die Fläche ziehen oder „Datei wählen“.
+2. Formate: typisch `.gdt` oder `.txt`.
+3. Prüfen: Stimmen Patient und Messwerte mit der Erwartung überein?
+4. Bei Importproblemen im PVS: Version, Satzart und Patienten-ID notieren.
+
+Für den Kontext „warum die Datei so heißt und wo sie liegt“ lesen Sie [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html).
+
+## Schritt 5: GDT 2.1 und 3.x vergleichen
+
+Erzeugen Sie nacheinander zwei Dateien und vergleichen Sie:
+
+- **2.1:** Version `02.10`, Satzlänge oft Feld `8100`
+- **3.1:** Version `03.10`, Satzlänge Feld `8004`, oft E-Mail/Mobil
+
+Dieses Wissen hilft, wenn ein Gerät „falsche Version“ meldet oder Felder „zu lang / zu kurz“ moniert.
+
+## Mini-Übung (5 Minuten)
+
+1. Erzeugen Sie eine Datei im Format **GDT 3.1 (CRLF)**.
+2. Notieren Sie Satzart und ob Feld `8004` vorkommt.
+3. Erzeugen Sie danach **GDT 2.1** und suchen Sie Feld `8100`.
+4. Laden Sie die Datei erneut nach Download – Inhalt muss gleich lesbar sein.
+
+Wenn Sie das beherrschen, können Sie Support-Fälle und Anbindungen deutlich schneller eingrenzen. Einsatzszenarien: [Wie der GDT Viewer hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html).
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/tool.html
+
+# Wie der GDT Viewer hilft
+
+Der **GDT Viewer** ist ein kostenloses, browserbasiertes Werkzeug zum **Lesen und Erzeugen von GDT-Dateien**. Er beschleunigt Debugging, Schulungen und Integrationstests – ohne Installation und ohne dass Dateiinhalte einen Server erreichen.
+
+*Aktualisiert: 20. Juli 2026 · Open Source · MIT-Lizenz*
+
+## Nutzen auf einen Blick
+
+| Ziel | Wie das Tool hilft |
+|---|---|
+| Datei verstehen | Tabelle mit Feldkennung, Bedeutung und Inhalt statt reiner Rohtext-Rätsel |
+| Anbindung debuggen | Export aus dem PVS prüfen: Satzart, Version, Patienten-ID, Messwerte |
+| Testdaten erzeugen | Konforme GDT 2.1- und 3.x-Dateien mit fiktiven Daten, sofort downloadbar |
+| Teams schulen | Anfänger sehen live, was in einer GDT-Datei steckt – siehe [Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) |
+| Formate vergleichen | 8100 vs. 8004, CRLF vs. LF, mit/ohne Längenpräfix, Multi-Satz |
+
+**Kurzantwort für Suchanfragen**
+
+Der GDT Viewer ist ein **lokaler Online-Viewer und Generator** für Gerätedatentransfer-Dateien. Er eignet sich, um GDT zu lesen, zu erklären und Testdateien für Praxissoftware und Geräte zu erzeugen – in Deutschland üblich bei PVS-Anbindungen.
+
+## Typische Szenarien
+
+### 1. Support: „Das Gerät bekommt keinen Patienten“
+
+Öffnen Sie die vom PVS erzeugte Datei im Viewer. Fehlen `3000`/`3101`? Ist die Satzart nicht `6302`? Stimmt die Version? So finden Sie Fehler, bevor Sie am Gerät lange raten. Kontext: [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html).
+
+### 2. Entwicklung: Parser und Exporte testen
+
+Erzeugen Sie viele Varianten (2.1, 3.1, Multi-Satz, ohne 8100, ohne Längenpräfix) und speichern Sie sie als `.gdt`. Ideal für automatisierte oder manuelle Regressionstests.
+
+### 3. Schulung: MFA und IT onboarden
+
+Statt abstrakter PDF-Spezifikation: eine Datei erzeugen, Felder zeigen, Rohtext einschalten. Das [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) führt Schritt für Schritt.
+
+### 4. Qualitätssicherung vor Go-Live
+
+Prüfen Sie Stichproben der echten Übergabedateien (auf autorisierten Systemen) auf Vollständigkeit der Pflichtfelder und Plausibilität der Messwerte – und dokumentieren Sie Abweichungen mit der Feldtabelle.
+
+## Funktionen im Überblick
+
+- **Upload / Drag & Drop** von `.gdt` und Textdateien
+- **Zusammenfassung** zu Patient, Datum, Satzart, Version
+- **Feldtabelle** mit gängigen deutschen Bezeichnungen
+- **Rohtext** und Kopieren als TSV
+- **Generator** für GDT 2.1, 3.0, 3.1 und Sonderformate
+- **Download** der aktuellen oder erzeugten Datei
+- **100 % clientseitig** – Verarbeitung im Browser
+
+## Datenschutz und Grenzen
+
+- Dateiinhalte werden **nicht** auf einen Anwendungsserver des Tools geladen.
+- GitHub Pages liefert nur die statische Web-App; Ihre Datei bleibt im Tab.
+- Das Tool ersetzt keine zertifizierte Medizinprodukt-Software und keine offizielle GDT-Zertifizierung.
+- Feldbedeutungen decken gängige Kennungen ab, nicht jede herstellerspezifische Erweiterung.
+- Für Produktivdaten gelten Ihre internen IT- und DSGVO-Vorgaben.
+
+## Schnelleinstieg
+
+1. [GDT Viewer öffnen](https://freimoser.github.io/gdt-viewer/)
+2. Format wählen → **Zufällig erzeugen**
+3. Tabelle und Zusammenfassung lesen
+4. Optional speichern und im eigenen System importieren
+
+Grundlagen: [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html) · Quellcode: [github.com/freimoser/gdt-viewer](https://github.com/freimoser/gdt-viewer)
