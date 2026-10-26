@@ -74,7 +74,7 @@
         "height": 630
       },
       "datePublished": "2026-07-20",
-      "dateModified": "2026-07-20",
+      "dateModified": "2026-10-27",
       "about": {
         "@type": "Thing",
         "name": "Gerätedatentransfer",
@@ -119,7 +119,7 @@
       "inLanguage": "de-DE",
       "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
       "datePublished": "2026-07-20",
-      "dateModified": "2026-07-20",
+      "dateModified": "2026-10-27",
       "author": {
         "@id": "https://freimoser.github.io/gdt-viewer/#organization"
       },
@@ -231,7 +231,7 @@
         Textdaten austauschen. Diese Seite erklärt Definition, Dateiaufbau, wichtige Felder und
         die Unterschiede zwischen GDT 2.1 und GDT 3.0/3.1.
       </p>
-      <p class="meta-line">Aktualisiert: 20. Juli 2026 · Lesedauer ca. 8 Min.</p>
+      <p class="meta-line">Aktualisiert: 27. Oktober 2026 · Lesedauer ca. 8 Min.</p>
     </header>
 
     <nav class="toc" aria-label="Inhaltsverzeichnis">
@@ -274,11 +274,17 @@
       <h2 id="aufbau">Wie ist eine GDT-Datei aufgebaut?</h2>
       <p>Eine GDT-Datei enthält einen oder mehrere <strong>Sätze</strong>. Jeder Satz besteht aus Feldern, jedes Feld ist eine Zeile:</p>
       <pre>01380006301
-01481000166
+014810000357
 014921802.10
-0173000P-1042
-0213101Mustermann
+0153000P-1042
+0193101Mustermann
 …</pre>
+      <p>
+        Rechenbeispiel: In <code>0193101Mustermann</code> ist <code>019</code> die Gesamtlänge der Zeile –
+        3 Ziffern Längenangabe + 4 Ziffern Feldkennung (<code>3101</code> = Nachname) + 10 Zeichen Inhalt
+        + 2 Zeichen Zeilenende (CR+LF) = 19. Die Satzlänge in Feld <code>8100</code> ist bei GDT 2.1
+        immer fünfstellig mit führenden Nullen, z. B. <code>00357</code>.
+      </p>
       <p>Bedeutung einer Standardzeile (GDT mit Längenpräfix):</p>
       <table>
         <thead>

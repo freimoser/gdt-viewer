@@ -940,6 +940,16 @@ td.col-value {
   color: var(--accent-hover);
 }
 
+.home-faq {
+  margin-top: 2.5rem;
+}
+
+.home-faq h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
 .faq details {
   margin: 0 0 0.65rem;
   padding: 0.85rem 1rem;

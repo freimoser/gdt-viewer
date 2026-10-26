@@ -31,6 +31,32 @@ Konforme Testdateien (GDT 2.1 & 3.x) – fiktive Patientendaten
 - [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) – erste Datei in 15 Minuten
 - [Wie das Tool hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html) – Debugging, Schulung, Tests
 
+## Häufige Fragen zum GDT Viewer
+
+### Wie öffne ich eine GDT-Datei online?
+
+Ziehen Sie die .gdt- oder .txt-Datei in das Feld oben oder klicken Sie auf „Datei wählen“. Der GDT Viewer zeigt jede Zeile mit Feldkennung, Bedeutung und Inhalt sowie eine Zusammenfassung mit Patient, Geburtsdatum, Untersuchungsdatum, Satzart und GDT-Version.
+
+### Werden meine GDT-Dateien auf einen Server hochgeladen?
+
+Nein. Die Datei wird ausschließlich im Browser per JavaScript gelesen. Die Website besteht nur aus statischen Dateien auf GitHub Pages; Dateiinhalte werden nicht übertragen oder gespeichert.
+
+### Welche GDT-Versionen unterstützt der Viewer?
+
+Der Viewer liest GDT 2.x und GDT 3.x – Zeilen mit dreistelliger Längenangabe ebenso wie Zeilen ohne Längenpräfix. Der Generator erzeugt GDT 2.1 (Version 02.10, Satzlänge in Feld 8100), GDT 3.0 und 3.1 (Satzlänge in Feld 8004) mit den Satzarten 6301, 6302 und 6310.
+
+### Welcher Zeichensatz wird erkannt?
+
+Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt.
+
+### Wie erzeuge ich GDT-Testdaten?
+
+Wählen Sie ein Format, klicken Sie auf „Zufällig erzeugen“ und speichern Sie das Ergebnis mit „Als .gdt speichern“. Die Dateien enthalten nur fiktive Patientendaten und eignen sich für Tests von Praxissoftware, Geräteanbindungen und eigenen Parsern.
+
+### Ist der GDT Viewer ein Medizinprodukt?
+
+Nein. Der GDT Viewer ist ein kostenloses Open-Source-Hilfswerkzeug (MIT-Lizenz) zum Lesen, Prüfen und Erzeugen von GDT-Dateien. Er ist nicht für Diagnose oder Therapie bestimmt.
+
 ---
 
 Quelle: https://freimoser.github.io/gdt-viewer/wissen/
@@ -39,7 +65,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/
 
 Kompakte, praxisnahe Erklärungen zur **GDT-Schnittstelle** (Gerätedatentransfer) in der deutschen Arztpraxis und Medizintechnik – von den Grundlagen über die Anbindung bis zum Anfänger-Tutorial und dem Nutzen des kostenlosen GDT Viewers.
 
-*Aktualisiert: 20. Juli 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT*
+*Aktualisiert: 27. Oktober 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT*
 
 - [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html): Definition, Dateiaufbau, Feldkennungen, GDT 2.1 vs. 3.x und typische Satzarten.
 - [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html): So tauschen Praxissoftware und Gerät Dateien aus – Verzeichnisse, Aufruf, Import/Export.
@@ -50,7 +76,7 @@ Kompakte, praxisnahe Erklärungen zur **GDT-Schnittstelle** (Gerätedatentransfe
 
 **GDT (Gerätedatentransfer)** ist eine in Deutschland weit verbreitete **textbasierte Schnittstelle** zum Austausch von Patientendaten und Untersuchungsergebnissen zwischen **Praxisverwaltungssystem (PVS)** und medizinischen Geräten bzw. Zusatzsoftware. Eine GDT-Datei besteht aus Zeilen mit Längenangabe, vierstelliger Feldkennung und Inhalt.
 
-**Für KI- und Suchmaschinen klar formuliert**
+**Abgrenzung: GDT ist kein HL7 FHIR**
 
 GDT ist kein Netzwerkprotokoll wie HL7 FHIR über HTTP, sondern in der Regel ein **dateibasierter Datenaustausch** über freigegebene Ordner. Versionen 2.1 und 3.x unterscheiden sich u. a. bei der Satzlängen-Feldkennung (8100 vs. 8004) und bei erweiterten Patientenfeldern.
 
@@ -69,7 +95,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html
 
 **GDT** steht für **Gerätedatentransfer** – die in Deutschland gängige Schnittstelle, mit der Praxissoftware und medizinische Geräte strukturierte Textdaten austauschen. Diese Seite erklärt Definition, Dateiaufbau, wichtige Felder und die Unterschiede zwischen GDT 2.1 und GDT 3.0/3.1.
 
-*Aktualisiert: 20. Juli 2026 · Lesedauer ca. 8 Min.*
+*Aktualisiert: 27. Oktober 2026 · Lesedauer ca. 8 Min.*
 
 ## Definition: Was ist Gerätedatentransfer (GDT)?
 
@@ -87,12 +113,14 @@ Eine GDT-Datei enthält einen oder mehrere **Sätze**. Jeder Satz besteht aus Fe
 
 ```
 01380006301
-01481000166
+014810000357
 014921802.10
-0173000P-1042
-0213101Mustermann
+0153000P-1042
+0193101Mustermann
 …
 ```
+
+Rechenbeispiel: In `0193101Mustermann` ist `019` die Gesamtlänge der Zeile – 3 Ziffern Längenangabe + 4 Ziffern Feldkennung (`3101` = Nachname) + 10 Zeichen Inhalt + 2 Zeichen Zeilenende (CR+LF) = 19. Die Satzlänge in Feld `8100` ist bei GDT 2.1 immer fünfstellig mit führenden Nullen, z. B. `00357`.
 
 Bedeutung einer Standardzeile (GDT mit Längenpräfix):
 
@@ -304,7 +332,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/tool.html
 
 Der **GDT Viewer** ist ein kostenloses, browserbasiertes Werkzeug zum **Lesen und Erzeugen von GDT-Dateien**. Er beschleunigt Debugging, Schulungen und Integrationstests – ohne Installation und ohne dass Dateiinhalte einen Server erreichen.
 
-*Aktualisiert: 20. Juli 2026 · Open Source · MIT-Lizenz*
+*Aktualisiert: 27. Oktober 2026 · Open Source · MIT-Lizenz*
 
 ## Nutzen auf einen Blick
 
@@ -316,7 +344,7 @@ Der **GDT Viewer** ist ein kostenloses, browserbasiertes Werkzeug zum **Lesen un
 | Teams schulen | Anfänger sehen live, was in einer GDT-Datei steckt – siehe [Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) |
 | Formate vergleichen | 8100 vs. 8004, CRLF vs. LF, mit/ohne Längenpräfix, Multi-Satz |
 
-**Kurzantwort für Suchanfragen**
+**Kurz gesagt**
 
 Der GDT Viewer ist ein **lokaler Online-Viewer und Generator** für Gerätedatentransfer-Dateien. Er eignet sich, um GDT zu lesen, zu erklären und Testdateien für Praxissoftware und Geräte zu erzeugen – in Deutschland üblich bei PVS-Anbindungen.
 

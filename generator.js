@@ -354,18 +354,20 @@ function buildSentence(fields, format) {
   let ordered = fields.slice();
 
   if (withLen) {
+    // GDT 2.1 defines 8100 as 5 numeric digits with leading zeros (e.g. 00421)
+    const fmtLen = (n) => (lenField === "8100" ? String(n).padStart(5, "0") : String(n));
     const without = fields.filter(([id]) => id !== "8100" && id !== "8004");
     const probe = without.map(([id, val]) => encodeField(id, val, format)).join("");
-    let lenStr = String(probe.length);
+    let lenStr = fmtLen(probe.length);
     for (let i = 0; i < 5; i++) {
       const lineLen = encodeField(lenField, lenStr, format);
       const total = probe.length + lineLen.length;
-      const next = String(total);
+      const next = fmtLen(total);
       if (next === lenStr) break;
       lenStr = next;
     }
     // Final consistency pass
-    lenStr = String(probe.length + encodeField(lenField, lenStr, format).length);
+    lenStr = fmtLen(probe.length + encodeField(lenField, lenStr, format).length);
 
     ordered = [];
     let inserted = false;

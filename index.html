@@ -75,7 +75,7 @@
         "height": 630
       },
       "datePublished": "2026-07-18",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-27",
       "about": {
         "@type": "Thing",
         "name": "Gerätedatentransfer",
@@ -135,6 +135,62 @@
 }
   </script>
   <!-- seo-ld:end -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie öffne ich eine GDT-Datei online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ziehen Sie die .gdt- oder .txt-Datei in das Feld oben oder klicken Sie auf „Datei wählen“. Der GDT Viewer zeigt jede Zeile mit Feldkennung, Bedeutung und Inhalt sowie eine Zusammenfassung mit Patient, Geburtsdatum, Untersuchungsdatum, Satzart und GDT-Version."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Werden meine GDT-Dateien auf einen Server hochgeladen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Die Datei wird ausschließlich im Browser per JavaScript gelesen. Die Website besteht nur aus statischen Dateien auf GitHub Pages; Dateiinhalte werden nicht übertragen oder gespeichert."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche GDT-Versionen unterstützt der Viewer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Viewer liest GDT 2.x und GDT 3.x – Zeilen mit dreistelliger Längenangabe ebenso wie Zeilen ohne Längenpräfix. Der Generator erzeugt GDT 2.1 (Version 02.10, Satzlänge in Feld 8100), GDT 3.0 und 3.1 (Satzlänge in Feld 8004) mit den Satzarten 6301, 6302 und 6310."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welcher Zeichensatz wird erkannt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie erzeuge ich GDT-Testdaten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wählen Sie ein Format, klicken Sie auf „Zufällig erzeugen“ und speichern Sie das Ergebnis mit „Als .gdt speichern“. Die Dateien enthalten nur fiktive Patientendaten und eignen sich für Tests von Praxissoftware, Geräteanbindungen und eigenen Parsern."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist der GDT Viewer ein Medizinprodukt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Der GDT Viewer ist ein kostenloses Open-Source-Hilfswerkzeug (MIT-Lizenz) zum Lesen, Prüfen und Erzeugen von GDT-Dateien. Er ist nicht für Diagnose oder Therapie bestimmt."
+      }
+    }
+  ]
+}
+  </script>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon.ico" sizes="any" />
@@ -293,6 +349,34 @@
           </ul>
         </section>
       </div>
+
+      <section class="faq home-faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Häufige Fragen zum GDT Viewer</h2>
+          <details>
+            <summary>Wie öffne ich eine GDT-Datei online?</summary>
+            <p>Ziehen Sie die .gdt- oder .txt-Datei in das Feld oben oder klicken Sie auf „Datei wählen“. Der GDT Viewer zeigt jede Zeile mit Feldkennung, Bedeutung und Inhalt sowie eine Zusammenfassung mit Patient, Geburtsdatum, Untersuchungsdatum, Satzart und GDT-Version.</p>
+          </details>
+          <details>
+            <summary>Werden meine GDT-Dateien auf einen Server hochgeladen?</summary>
+            <p>Nein. Die Datei wird ausschließlich im Browser per JavaScript gelesen. Die Website besteht nur aus statischen Dateien auf GitHub Pages; Dateiinhalte werden nicht übertragen oder gespeichert.</p>
+          </details>
+          <details>
+            <summary>Welche GDT-Versionen unterstützt der Viewer?</summary>
+            <p>Der Viewer liest GDT 2.x und GDT 3.x – Zeilen mit dreistelliger Längenangabe ebenso wie Zeilen ohne Längenpräfix. Der Generator erzeugt GDT 2.1 (Version 02.10, Satzlänge in Feld 8100), GDT 3.0 und 3.1 (Satzlänge in Feld 8004) mit den Satzarten 6301, 6302 und 6310.</p>
+          </details>
+          <details>
+            <summary>Welcher Zeichensatz wird erkannt?</summary>
+            <p>Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt.</p>
+          </details>
+          <details>
+            <summary>Wie erzeuge ich GDT-Testdaten?</summary>
+            <p>Wählen Sie ein Format, klicken Sie auf „Zufällig erzeugen“ und speichern Sie das Ergebnis mit „Als .gdt speichern“. Die Dateien enthalten nur fiktive Patientendaten und eignen sich für Tests von Praxissoftware, Geräteanbindungen und eigenen Parsern.</p>
+          </details>
+          <details>
+            <summary>Ist der GDT Viewer ein Medizinprodukt?</summary>
+            <p>Nein. Der GDT Viewer ist ein kostenloses Open-Source-Hilfswerkzeug (MIT-Lizenz) zum Lesen, Prüfen und Erzeugen von GDT-Dateien. Er ist nicht für Diagnose oder Therapie bestimmt.</p>
+          </details>
+      </section>
     </main>
 
     <!-- site-footer:start -->

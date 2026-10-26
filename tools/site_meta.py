@@ -75,15 +75,15 @@ PAGES = {
 # Structured data per page. "modified" must match the visible "Aktualisiert" date on the page.
 # FAQPage / HowTo blocks stay hand-written in the pages next to the content they describe.
 LD = {
-    "index.html": {"schema": "WebPage", "published": "2026-07-18", "modified": "2026-10-26", "app": True},
-    "wissen/index.html": {"schema": "CollectionPage", "crumb": "Wissen", "published": "2026-07-20", "modified": "2026-07-20"},
-    "wissen/was-ist-gdt.html": {"schema": "Article", "crumb": "Was ist GDT?", "published": "2026-07-20", "modified": "2026-07-20",
+    "index.html": {"schema": "WebPage", "published": "2026-07-18", "modified": "2026-10-27", "app": True},
+    "wissen/index.html": {"schema": "CollectionPage", "crumb": "Wissen", "published": "2026-07-20", "modified": "2026-10-27"},
+    "wissen/was-ist-gdt.html": {"schema": "Article", "crumb": "Was ist GDT?", "published": "2026-07-20", "modified": "2026-10-27",
                                 "headline": "Was ist GDT? Gerätedatentransfer erklärt"},
     "wissen/anbindung.html": {"schema": "Article", "crumb": "Anbindung", "published": "2026-07-20", "modified": "2026-07-20",
                               "headline": "GDT-Anbindung: So funktioniert der Datenaustausch"},
     "wissen/tutorial.html": {"schema": "Article", "crumb": "Tutorial", "published": "2026-07-20", "modified": "2026-07-20",
                              "headline": "GDT Tutorial für Anfänger"},
-    "wissen/tool.html": {"schema": "Article", "crumb": "Tool-Hilfe", "published": "2026-07-20", "modified": "2026-07-20",
+    "wissen/tool.html": {"schema": "Article", "crumb": "Tool-Hilfe", "published": "2026-07-20", "modified": "2026-10-27",
                          "headline": "Wie der GDT Viewer hilft", "app": True},
 }
 

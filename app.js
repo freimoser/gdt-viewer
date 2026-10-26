@@ -346,11 +346,7 @@ async function handleFile(file) {
   }
 
   try {
-    // Prefer Windows-1252 / ISO-8859-1 common in German medical exports; fallback UTF-8
-    let text = await readAsText(file, "windows-1252");
-    if (looksLikeMojibake(text)) {
-      text = await readAsText(file, "utf-8");
-    }
+    const text = decodeGdt(await file.arrayBuffer());
 
     const { records, raw: rawContent } = parseGdt(text);
     if (!records.length) {
@@ -365,18 +361,16 @@ async function handleFile(file) {
   }
 }
 
-function looksLikeMojibake(text) {
-  // Heuristic: lots of replacement chars
-  return (text.match(/\uFFFD/g) || []).length > 2;
-}
-
-function readAsText(file, encoding) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || ""));
-    reader.onerror = () => reject(reader.error || new Error("Lesefehler"));
-    reader.readAsText(file, encoding);
-  });
+/**
+ * German GDT exports are usually Windows-1252 / ISO 8859-1 (field 9206 = 3), newer ones UTF-8.
+ * Strict UTF-8 decoding fails on CP1252 umlauts, so it cleanly tells the two apart.
+ */
+function decodeGdt(buffer) {
+  try {
+    return new TextDecoder("utf-8", { fatal: true }).decode(buffer);
+  } catch {
+    return new TextDecoder("windows-1252").decode(buffer);
+  }
 }
 
 function reset() {
