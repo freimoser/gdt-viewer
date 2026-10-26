@@ -92,6 +92,16 @@
       </nav>
     </div>
   </header>
+  <script>
+    // Mobile: the link row scrolls sideways – bring the current page's link into view
+    (function () {
+      var nav = document.querySelector(".site-nav");
+      var cur = nav && nav.querySelector("[aria-current]");
+      if (!cur || nav.scrollWidth <= nav.clientWidth) return;
+      var offset = cur.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
+    })();
+  </script>
   <!-- site-header:end -->
   <div class="page page-content">
     <main id="main">

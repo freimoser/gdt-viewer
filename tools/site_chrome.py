@@ -1,0 +1,127 @@
+"""Write the shared site header + footer into every page (static site, no build step).
+
+Usage (from the repo root):  python3 tools/site_chrome.py
+Edit LINKS / header() / footer() here, never the generated blocks in the HTML files.
+"""
+import re, pathlib
+
+root = pathlib.Path(__file__).resolve().parent.parent
+PAGES = {
+    "index.html": ("", "viewer"),
+    "wissen/index.html": ("../", "wissen"),
+    "wissen/was-ist-gdt.html": ("../", "was-ist-gdt"),
+    "wissen/anbindung.html": ("../", "anbindung"),
+    "wissen/tutorial.html": ("../", "tutorial"),
+    "wissen/tool.html": ("../", "tool"),
+}
+LINKS = [
+    ("viewer", "", "Viewer"),
+    ("wissen", "wissen/", "Wissen"),
+    ("was-ist-gdt", "wissen/was-ist-gdt.html", "Was ist GDT?"),
+    ("anbindung", "wissen/anbindung.html", "Anbindung"),
+    ("tutorial", "wissen/tutorial.html", "Tutorial"),
+    ("tool", "wissen/tool.html", "Tool-Hilfe"),
+]
+
+CUR = ' aria-current="page"'
+
+NAV_SCRIPT = '''  <script>
+    // Mobile: the link row scrolls sideways – bring the current page's link into view
+    (function () {
+      var nav = document.querySelector(".site-nav");
+      var cur = nav && nav.querySelector("[aria-current]");
+      if (!cur || nav.scrollWidth <= nav.clientWidth) return;
+      var offset = cur.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
+    })();
+  </script>'''
+
+def href(prefix, target):
+    # Pages inside wissen/ link to their siblings directly instead of via ../wissen/
+    if prefix == "../" and target.startswith("wissen/"):
+        return target[len("wissen/"):] or "./"
+    return (prefix + target) or "./"
+
+def header(prefix, current):
+    links = "\n".join(
+        f'        <a href="{href(prefix, t)}"{CUR if k == current else ""}>{label}</a>'
+        for k, t, label in LINKS
+    )
+    return f'''<!-- site-header:start -->
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-brand" href="{href(prefix, "")}">
+        <span class="site-brand-mark" aria-hidden="true">GDT</span>
+        <span class="site-brand-name">GDT Viewer</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+{links}
+      </nav>
+    </div>
+  </header>
+{NAV_SCRIPT}
+  <!-- site-header:end -->'''
+
+def footer(prefix):
+    p = prefix
+    return f'''<!-- site-footer:start -->
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h2>Tool</h2>
+          <ul>
+            <li><a href="{href(p, "")}">GDT Viewer</a></li>
+            <li><a href="{href(p, "wissen/tool.html")}">Tool-Hilfe</a></li>
+            <li><a href="https://github.com/freimoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Wissen</h2>
+          <ul>
+            <li><a href="{href(p, "wissen/")}">Übersicht</a></li>
+            <li><a href="{href(p, "wissen/was-ist-gdt.html")}">Was ist GDT?</a></li>
+            <li><a href="{href(p, "wissen/anbindung.html")}">GDT-Anbindung</a></li>
+            <li><a href="{href(p, "wissen/tutorial.html")}">Tutorial für Anfänger</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Hinweise</h2>
+          <ul>
+            <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
+            <li>Dateiinhalte bleiben im Browser</li>
+            <li>Open Source · Lizenz: MIT</li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
+    </footer>
+    <!-- site-footer:end -->'''
+
+for rel, (prefix, current) in PAGES.items():
+    path = root / rel
+    s = path.read_text(encoding="utf-8")
+
+    # Header: replace a previous generated block, or the old in-page nav + skip link
+    if "<!-- site-header:start -->" in s:
+        s = re.sub(r"<!-- site-header:start -->.*?<!-- site-header:end -->", lambda m: header(prefix, current), s, flags=re.S)
+    else:
+        s = re.sub(r'\s*<a class="skip-link"[^>]*>[^<]*</a>', "", s)
+        s = re.sub(r'\s*<nav class="site-nav".*?</nav>', "", s, count=1, flags=re.S)
+        s = s.replace("<body>", "<body>\n  " + header(prefix, current), 1)
+
+    # Footer
+    if "<!-- site-footer:start -->" in s:
+        s = re.sub(r"<!-- site-footer:start -->.*?<!-- site-footer:end -->", lambda m: footer(prefix), s, flags=re.S)
+    else:
+        s = re.sub(r'<footer class="site-footer">.*?</footer>', lambda m: footer(prefix), s, count=1, flags=re.S)
+
+    # Every page gets a <main id="main"> landmark wrapping the content before the footer
+    if '<main id="main">' not in s:
+        s = re.sub(r"\s*<main>", "", s)
+        s = re.sub(r"\s*</main>", "", s)
+        s = re.sub(r'(<div class="page[^"]*">)', r'\1\n    <main id="main">', s, count=1)
+        s = s.replace("    <!-- site-footer:start -->", "    </main>\n\n    <!-- site-footer:start -->", 1)
+
+    path.write_text(s, encoding="utf-8")
+    print("updated", rel)
