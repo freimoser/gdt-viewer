@@ -41,7 +41,7 @@ PAGES = {
     "wissen/was-ist-gdt.html": {
         "path": "wissen/was-ist-gdt.html",
         "type": "article",
-        "title": "Was ist GDT? Gerätedatentransfer erklärt | GDT Viewer",
+        "title": "Was ist GDT? Die GDT-Schnittstelle erklärt | GDT Viewer",
         "description": "Was ist GDT (Gerätedatentransfer)? Aufbau einer GDT-Datei, Feldkennungen, Satzarten 6301/6302/6310 und Unterschiede zwischen GDT 2.1 und 3.x.",
         "og_title": "Was ist GDT? Gerätedatentransfer erklärt",
         "og_description": "Definition, Dateiaufbau, Felder und Versionen (GDT 2.1 vs. 3.x) der Geräteschnittstelle in deutschen Arztpraxen.",
