@@ -1,42 +1,48 @@
 /**
- * Random GDT file generator – produces format-conformant Gerätedatentransfer
- * data in several common encoding / layout variants (GDT 2.1 and 3.x).
+ * Random GDT file generator – Gerätedatentransfer test data in several variants.
  *
- * GDT 2.x: Satzlänge in Feld 8100, Version 02.10
- * GDT 3.x: Satzlänge in Feld 8004, Version 03.00 / 03.10, variable Feldlängen,
- *          optional 3618/3619, Untersuchungsdatum oft 6200 als YYYYMMDD
+ * GDT 2.1 (normgerecht nach QMS-Schnittstellenbeschreibung 2.1): Satzlänge 8100 (5 Ziffern),
+ *   Version 02.10, Zeichensatz 9206 = 3 (ISO 8859-1 / CP1252), Zeilenende CR+LF,
+ *   Untersuchungsdatum 6200 als TTMMJJJJ, Uhrzeit 6201 als HHMMSS, 8402 in Satzart 6310.
+ * Variants marked "Abweichung" deliberately break one rule to test how robust an importer is.
+ * GDT 3.x: Satzlänge in Feld 8004, Version 03.00 / 03.10 (layout as used by 3.x exports;
+ *   the 3.x specification is not part of the checked data).
+ * Line and record lengths are counted in bytes of the file's encoding (format.encoding).
  */
 
 const GDT_FORMATS = {
   gdt21_crlf: {
     id: "gdt21_crlf",
-    label: "GDT 2.1 (CRLF, mit Längenpräfix)",
-    description: "Klassisch: Länge inkl. CR+LF · Satzlänge Feld 8100 · Version 02.10",
+    label: "GDT 2.1 (normgerecht)",
+    description: "Nach Spezifikation 2.1: CR+LF · Satzlänge 8100 · Version 02.10 · Zeichensatz 9206 = 3 (ISO 8859-1)",
     lineEnding: "\r\n",
     withLength: true,
-    charset: "ISO8859-1",
+    charset: "3",
+    encoding: "cp1252",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
   },
   gdt21_lf: {
     id: "gdt21_lf",
-    label: "GDT 2.1 (LF, mit Längenpräfix)",
-    description: "Wie 2.1, Unix-Zeilenenden (LF) · Satzlänge Feld 8100",
+    label: "GDT 2.1 – Abweichung: nur LF",
+    description: "Robustheitstest: Unix-Zeilenenden (LF) statt des vorgeschriebenen CR+LF",
     lineEnding: "\n",
     withLength: true,
-    charset: "ISO8859-1",
+    charset: "3",
+    encoding: "cp1252",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
   },
   gdt21_utf8: {
     id: "gdt21_utf8",
-    label: "GDT 2.1 (CRLF, UTF-8 / Umlaute)",
-    description: "Zeichensatz-Feld UTF-8, Inhalte mit Umlauten · GDT 2.1",
+    label: "GDT 2.1 – Abweichung: UTF-8 mit Umlauten",
+    description: "Robustheitstest: UTF-8-kodiert (in GDT 2.1 nicht vorgesehen), Namen mit Umlauten, ohne Feld 9206",
     lineEnding: "\r\n",
     withLength: true,
-    charset: "UTF-8",
+    charset: null,
+    encoding: "utf8",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
@@ -49,6 +55,7 @@ const GDT_FORMATS = {
     lineEnding: "\r\n",
     withLength: true,
     charset: null,
+    encoding: "cp1252",
     version: "03.00",
     major: 3,
     satzlaengeField: "8004",
@@ -62,6 +69,7 @@ const GDT_FORMATS = {
     lineEnding: "\r\n",
     withLength: true,
     charset: null,
+    encoding: "cp1252",
     version: "03.10",
     major: 3,
     satzlaengeField: "8004",
@@ -77,6 +85,7 @@ const GDT_FORMATS = {
     lineEnding: "\n",
     withLength: true,
     charset: null,
+    encoding: "cp1252",
     version: "03.10",
     major: 3,
     satzlaengeField: "8004",
@@ -91,7 +100,8 @@ const GDT_FORMATS = {
     description: "GDT 3.1 mit Umlauten und Kontaktdaten · Version 03.10",
     lineEnding: "\r\n",
     withLength: true,
-    charset: "UTF-8",
+    charset: null,
+    encoding: "utf8",
     version: "03.10",
     major: 3,
     satzlaengeField: "8004",
@@ -108,6 +118,7 @@ const GDT_FORMATS = {
     lineEnding: "\r\n",
     withLength: true,
     charset: null,
+    encoding: "cp1252",
     version: "03.10",
     major: 3,
     satzlaengeField: "8004",
@@ -118,22 +129,24 @@ const GDT_FORMATS = {
   },
   gdt_bare: {
     id: "gdt_bare",
-    label: "Ohne Längenpräfix (Feld-ID + Inhalt)",
-    description: "Manche Exporte: nur 4-stellige Feldkennung + Inhalt (2.1-Felder)",
+    label: "GDT 2.1 – Abweichung: ohne Längenpräfix",
+    description: "Robustheitstest: nur 4-stellige Feldkennung + Inhalt, ohne die vorgeschriebene Zeilenlänge",
     lineEnding: "\r\n",
     withLength: false,
-    charset: "ISO8859-1",
+    charset: "3",
+    encoding: "cp1252",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
   },
   gdt_multi: {
     id: "gdt_multi",
-    label: "GDT 2.1 Mehrere Sätze (6301 + 6310)",
-    description: "Stammdaten und Messergebnis in einer Datei (Feld 8100)",
+    label: "GDT 2.1 Mehrere Sätze (6301 + 6310, normgerecht)",
+    description: "Stammdaten und Messergebnis in einer Datei, jeder Satz mit eigener Satzlänge 8100",
     lineEnding: "\r\n",
     withLength: true,
-    charset: "ISO8859-1",
+    charset: "3",
+    encoding: "cp1252",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
@@ -141,11 +154,12 @@ const GDT_FORMATS = {
   },
   gdt_no_8100: {
     id: "gdt_no_8100",
-    label: "GDT 2.1 ohne Feld 8100",
-    description: "Konforme Felder, aber ohne optionale Satzlängen-Angabe",
+    label: "GDT 2.1 – Abweichung: ohne Satzlänge 8100",
+    description: "Robustheitstest: das Pflichtfeld 8100 (Satzlänge) fehlt",
     lineEnding: "\r\n",
     withLength: true,
-    charset: "ISO8859-1",
+    charset: "3",
+    encoding: "cp1252",
     version: "02.10",
     major: 2,
     satzlaengeField: "8100",
@@ -187,19 +201,21 @@ const CITIES_UMLAUT = [
   "80331 München", "50667 Köln", "90402 Nürnberg", "99084 Erfurt",
 ];
 
+// group = 8402 code from Anhang B of the 2.1 specification (BDM00 Blutdruck, ERGO07 Pulsoximetrie, ALLG00 allgemein)
 const DEVICES = [
-  { id: "RR_SYS", name: "Blutdruck systolisch", unit: "mmHg", min: 100, max: 160, decimals: 0 },
-  { id: "RR_DIA", name: "Blutdruck diastolisch", unit: "mmHg", min: 60, max: 100, decimals: 0 },
-  { id: "HF", name: "Herzfrequenz", unit: "1/min", min: 50, max: 110, decimals: 0 },
-  { id: "SPO2", name: "Sauerstoffsaettigung", unit: "%", min: 92, max: 100, decimals: 0 },
-  { id: "TEMP", name: "Koerpertemperatur", unit: "C", min: 36.1, max: 38.5, decimals: 1 },
-  { id: "GLU", name: "Blutzucker", unit: "mg/dl", min: 70, max: 180, decimals: 0 },
-  { id: "GEW", name: "Gewicht", unit: "kg", min: 50, max: 120, decimals: 1 },
-  { id: "GRO", name: "Groesse", unit: "cm", min: 150, max: 195, decimals: 0 },
+  { id: "RR_SYS", name: "Blutdruck systolisch", unit: "mmHg", min: 100, max: 160, decimals: 0, group: "BDM00" },
+  { id: "RR_DIA", name: "Blutdruck diastolisch", unit: "mmHg", min: 60, max: 100, decimals: 0, group: "BDM00" },
+  { id: "HF", name: "Herzfrequenz", unit: "1/min", min: 50, max: 110, decimals: 0, group: "ALLG00" },
+  { id: "SPO2", name: "Sauerstoffsaettigung", unit: "%", min: 92, max: 100, decimals: 0, group: "ERGO07" },
+  { id: "TEMP", name: "Koerpertemperatur", unit: "C", min: 36.1, max: 38.5, decimals: 1, group: "ALLG00" },
+  { id: "GLU", name: "Blutzucker", unit: "mg/dl", min: 70, max: 180, decimals: 0, group: "ALLG00" },
+  { id: "GEW", name: "Gewicht", unit: "kg", min: 50, max: 120, decimals: 1, group: "ALLG00" },
+  { id: "GRO", name: "Groesse", unit: "cm", min: 150, max: 195, decimals: 0, group: "ALLG00" },
 ];
 
 const SENDER_IDS = ["PRAXIS01", "LABOR_NW", "KARDIO_A", "HAUSARZT", "GERAET_X"];
-const RECEIVER_IDS = ["PVS_MAIN", "EMPFANG1", "ARCHIV", "ZENTRALE"];
+// GDT-IDs (8315/8316) consist of exactly 8 characters
+const RECEIVER_IDS = ["PVS_MAIN", "EMPFANG1", "ARCHIV01", "ZENTRALE"];
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -324,9 +340,14 @@ function randomExamTimeLong() {
   return `${pad2(randInt(7, 18))}${pad2(randInt(0, 59))}${pad2(randInt(0, 59))}`;
 }
 
+/** Length in bytes of the file's encoding (UTF-8 umlauts take two bytes, CP1252 one). */
+function byteLen(str, format) {
+  return format.encoding === "utf8" ? new TextEncoder().encode(str).length : str.length;
+}
+
 /**
  * Encode one GDT field line.
- * Length (when used) = 3 (len digits) + 4 (field id) + content + lineEnding length.
+ * Length (when used) = 3 (len digits) + 4 (field id) + content + lineEnding, in bytes.
  */
 function encodeField(fieldId, content, format) {
   const id = String(fieldId).padStart(4, "0");
@@ -337,7 +358,7 @@ function encodeField(fieldId, content, format) {
     return id + value + ending;
   }
 
-  const totalLen = 3 + 4 + value.length + ending.length;
+  const totalLen = 3 + 4 + byteLen(value, format) + ending.length;
   if (totalLen > 999) {
     throw new Error(`Feld ${id} zu lang (${totalLen})`);
   }
@@ -357,17 +378,17 @@ function buildSentence(fields, format) {
     // GDT 2.1 defines 8100 as 5 numeric digits with leading zeros (e.g. 00421)
     const fmtLen = (n) => (lenField === "8100" ? String(n).padStart(5, "0") : String(n));
     const without = fields.filter(([id]) => id !== "8100" && id !== "8004");
-    const probe = without.map(([id, val]) => encodeField(id, val, format)).join("");
-    let lenStr = fmtLen(probe.length);
+    const probeLen = byteLen(without.map(([id, val]) => encodeField(id, val, format)).join(""), format);
+    let lenStr = fmtLen(probeLen);
     for (let i = 0; i < 5; i++) {
       const lineLen = encodeField(lenField, lenStr, format);
-      const total = probe.length + lineLen.length;
+      const total = probeLen + byteLen(lineLen, format);
       const next = fmtLen(total);
       if (next === lenStr) break;
       lenStr = next;
     }
     // Final consistency pass
-    lenStr = fmtLen(probe.length + encodeField(lenField, lenStr, format).length);
+    lenStr = fmtLen(probeLen + byteLen(encodeField(lenField, lenStr, format), format));
 
     ordered = [];
     let inserted = false;
@@ -390,23 +411,24 @@ function addExamDateTime(fields, format) {
     fields.push(["6200", randomExamDateYmd()]);
     fields.push(["6201", Math.random() < 0.5 ? randomTime() : randomExamTimeLong()]);
   } else {
-    fields.push(["2002", randomExamDate()]);
-    fields.push(["2003", randomTime()]);
+    // GDT 2.1: 6200 Tag der Erhebung (TTMMJJJJ), 6201 Uhrzeit (HHMMSS, 6 Stellen)
+    fields.push(["6200", randomExamDate()]);
+    fields.push(["6201", randomExamTimeLong()]);
   }
 }
 
 function headerFields(format, satzart, patient) {
   const fields = [
     ["8000", satzart],
-    ["9218", format.version],
     ["8315", pick(RECEIVER_IDS)],
     ["8316", pick(SENDER_IDS)],
   ];
 
-  // 9206 Zeichensatz: üblich in 2.x; in 3.x oft weggelassen
+  // 9206 Zeichensatz (GDT 2.1: 1 = 7 Bit, 2 = CP437, 3 = ISO 8859-1); not used in 3.x
   if (format.charset) {
     fields.push(["9206", format.charset]);
   }
+  fields.push(["9218", format.version]);
 
   fields.push(["3000", patient.id]);
   fields.push(["3101", patient.lastName]);
@@ -441,7 +463,7 @@ function headerFields(format, satzart, patient) {
 /** Satz 6301 – Stammdaten / Patient */
 function buildSatz6301(format, patient) {
   const fields = headerFields(format, "6301", patient);
-  addExamDateTime(fields, format);
+  if (format.major >= 3) addExamDateTime(fields, format);
   if (Math.random() < 0.5) {
     fields.push(["3622", String(randInt(155, 195))]);
     fields.push(["3623", (randInt(500, 1100) / 10).toFixed(1)]);
@@ -452,21 +474,30 @@ function buildSatz6301(format, patient) {
 /** Satz 6302 – Untersuchungsanforderung */
 function buildSatz6302(format, patient) {
   const fields = headerFields(format, "6302", patient);
-  addExamDateTime(fields, format);
-  fields.push(["8410", pick(DEVICES).id]);
-  fields.push(["8411", pick(DEVICES).name]);
-  fields.push([
-    "6220",
-    format.preferUmlauts
-      ? "Bitte Messung durchführen."
-      : "Bitte Messung durchfuehren.",
-  ]);
+  const dev = pick(DEVICES);
+  if (format.major >= 3) {
+    addExamDateTime(fields, format);
+    fields.push(["8410", dev.id]);
+    fields.push(["8411", dev.name]);
+    fields.push([
+      "6220",
+      format.preferUmlauts
+        ? "Bitte Messung durchführen."
+        : "Bitte Messung durchfuehren.",
+    ]);
+  } else {
+    // GDT 2.1 record 6302 carries the kind of examination (8402) and a Test-Ident (8410)
+    fields.push(["8402", dev.group]);
+    fields.push(["8410", dev.id]);
+  }
   return buildSentence(fields, format);
 }
 
 /** Satz 6310 – Messergebnisse */
 function buildSatz6310(format, patient) {
   const fields = headerFields(format, "6310", patient);
+  // 8402 (Geräte- und verfahrensspezifisches Kennfeld) is mandatory in 6310; ALLG00 = allgemein
+  fields.push(["8402", "ALLG00"]);
   addExamDateTime(fields, format);
 
   const count = randInt(2, 4);

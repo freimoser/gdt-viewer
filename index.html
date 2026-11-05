@@ -170,7 +170,7 @@
       "name": "Welcher Zeichensatz wird erkannt?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt."
+        "text": "Der Viewer wertet Feld 9206 aus: 1 = 7 Bit (DIN 66003), 2 = IBM CP437, 3 = ISO 8859-1 / Windows-1252. Fehlt das Feld, erkennt er den Zeichensatz an den Umlauten und nimmt sonst CP437 an, den Standard laut GDT 2.1. UTF-8-Dateien werden automatisch erkannt. Der verwendete Zeichensatz steht über der Tabelle."
       }
     },
     {
@@ -192,7 +192,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="styles.css?v=862c683f" />
+  <link rel="stylesheet" href="styles.css?v=91d71dba" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
@@ -234,7 +234,7 @@
       <div class="header header-top">
         <div class="brand">
           <h1>GDT Viewer</h1>
-          <p class="tagline">Gerätedatentransfer-Dateien online lesen &amp; Testdaten erzeugen</p>
+          <p class="tagline">Gerätedatentransfer-Dateien online lesen, nach GDT 2.1 prüfen &amp; Testdaten erzeugen</p>
         </div>
         <p class="privacy-badge">
           <span class="dot" aria-hidden="true"></span>
@@ -265,7 +265,7 @@
       <section class="generator" aria-labelledby="gen-title">
         <div class="generator-head">
           <h2 id="gen-title">Zufällige GDT erzeugen</h2>
-          <p class="muted">Konforme Testdateien (GDT 2.1 &amp; 3.x) – fiktive Patientendaten</p>
+          <p class="muted">Normgerechte GDT-2.1-Testdateien, 3.x-Varianten und gezielte Abweichungen für Robustheitstests – nur fiktive Patientendaten</p>
         </div>
         <div class="generator-controls">
           <label class="field" for="formatSelect">
@@ -305,6 +305,15 @@
       </section>
 
       <section id="summary" class="summary hidden" aria-label="Zusammenfassung"></section>
+
+      <section id="validation" class="validation hidden" aria-labelledby="validationTitle">
+        <h2 id="validationTitle" class="validation-title">Prüfung</h2>
+        <ul id="validationList" class="validation-list"></ul>
+        <p class="validation-note muted">
+          Geprüft werden Zeilen- und Satzlängen, Pflichtfelder, Feldlängen, Datums- und Zahlenformate nach der
+          <a href="wissen/feldkennungen.html">GDT-2.1-Feldtabelle</a>. Bei GDT 3.x nur Struktur und Längen.
+        </p>
+      </section>
 
       <section id="results" class="results hidden" aria-label="GDT-Felder">
         <div class="table-wrap">
@@ -367,7 +376,7 @@
           </details>
           <details>
             <summary>Welcher Zeichensatz wird erkannt?</summary>
-            <p>Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt.</p>
+            <p>Der Viewer wertet Feld 9206 aus: 1 = 7 Bit (DIN 66003), 2 = IBM CP437, 3 = ISO 8859-1 / Windows-1252. Fehlt das Feld, erkennt er den Zeichensatz an den Umlauten und nimmt sonst CP437 an, den Standard laut GDT 2.1. UTF-8-Dateien werden automatisch erkannt. Der verwendete Zeichensatz steht über der Tabelle.</p>
           </details>
           <details>
             <summary>Wie erzeuge ich GDT-Testdaten?</summary>
@@ -413,7 +422,9 @@
     </footer>
     <!-- site-footer:end -->
   </div>
-  <script src="generator.js?v=69e8a56f"></script>
-  <script src="app.js?v=190d4c0e"></script>
+  <script src="gdt-spec.js?v=4ca9e09c"></script>
+  <script src="gdt-core.js?v=9eefcde3"></script>
+  <script src="generator.js?v=6ccb2cb9"></script>
+  <script src="app.js?v=b9e94fa0"></script>
 </body>
 </html>

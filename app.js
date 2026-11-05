@@ -1,55 +1,7 @@
 /**
- * GDT Viewer – client-side parser for German Gerätedatentransfer files.
+ * GDT Viewer – user interface. Decoding, parsing and checks live in gdt-core.js.
  * Files never leave the browser.
  */
-
-const FIELD_LABELS = {
-  "8000": "Satzidentifikation",
-  "8001": "Version GDT",
-  "8004": "Satzlänge (GDT 3.x)",
-  "8100": "Satzlänge (GDT 2.x)",
-  "8315": "GDT-ID Empfänger",
-  "8316": "GDT-ID Sender",
-  "9206": "Zeichensatz",
-  "9218": "GDT-Version",
-  "3000": "Patientennummer / ID",
-  "3100": "Namenszusatz",
-  "3101": "Name (Nachname)",
-  "3102": "Vorname",
-  "3103": "Geburtsdatum",
-  "3104": "Titel",
-  "3105": "Versichertennummer",
-  "3106": "Wohnort (PLZ + Ort)",
-  "3107": "Straße",
-  "3108": "Versichertenart",
-  "3110": "Geschlecht",
-  "3112": "PLZ",
-  "3113": "Wohnort",
-  "3618": "Mobiltelefon",
-  "3619": "E-Mail-Adresse",
-  "3622": "Größe (cm)",
-  "3623": "Gewicht (kg)",
-  "2002": "Tag der Erhebung",
-  "2003": "Uhrzeit der Erhebung",
-  "6200": "Tag der Untersuchung",
-  "6201": "Uhrzeit der Untersuchung",
-  "6220": "Ergebnis-Text / Kommentar",
-  "6227": "Dateiinhalt / Anhang",
-  "6302": "Dateiformat",
-  "6303": "Dateiname",
-  "6304": "Dateiinhaltsbeschreibung",
-  "6305": "Dateigröße",
-  "8402": "Art der Untersuchung",
-  "8410": "Test-Ident / Kennung",
-  "8411": "Testbezeichnung",
-  "8420": "Ergebnis-Wert",
-  "8421": "Einheit",
-  "8432": "Probenmaterial",
-  "8480": "Ergebnis-Text",
-  "8490": "Normalwert-Text",
-  "8501": "Befundart",
-  "8504": "Ergebnis-Status",
-};
 
 const $ = (id) => document.getElementById(id);
 
@@ -58,6 +10,9 @@ const fileInput = $("fileInput");
 const browseBtn = $("browseBtn");
 const toolbar = $("toolbar");
 const summary = $("summary");
+const validation = $("validation");
+const validationTitle = $("validationTitle");
+const validationList = $("validationList");
 const results = $("results");
 const tableBody = $("tableBody");
 const raw = $("raw");
@@ -77,6 +32,7 @@ const statusEl = $("status");
 
 let lastRecords = [];
 let lastRaw = "";
+let lastBytes = null;
 let lastFileName = "export.gdt";
 let lastGenerated = null;
 
@@ -96,67 +52,6 @@ function announce(message) {
   requestAnimationFrame(() => {
     statusEl.textContent = message;
   });
-}
-
-/**
- * Parse a single GDT line.
- * Standard: first 3 digits = total line length (incl. CR/LF), next 4 = field ID.
- * Also accepts bare "FFFFcontent" lines without length prefix.
- */
-function parseLine(line, lineNumber) {
-  const cleaned = line.replace(/\r$/, "");
-  if (!cleaned.trim()) return null;
-
-  // Full form: LLLffffcontent
-  if (/^\d{7}/.test(cleaned)) {
-    const declaredLen = parseInt(cleaned.slice(0, 3), 10);
-    const fieldId = cleaned.slice(3, 7);
-    const content = cleaned.slice(7);
-    return {
-      line: lineNumber,
-      fieldId,
-      content,
-      label: FIELD_LABELS[fieldId] || "Unbekanntes Feld",
-      declaredLen,
-      raw: cleaned,
-    };
-  }
-
-  // Fallback: ffffcontent
-  if (/^\d{4}/.test(cleaned)) {
-    const fieldId = cleaned.slice(0, 4);
-    const content = cleaned.slice(4);
-    return {
-      line: lineNumber,
-      fieldId,
-      content,
-      label: FIELD_LABELS[fieldId] || "Unbekanntes Feld",
-      declaredLen: null,
-      raw: cleaned,
-    };
-  }
-
-  return {
-    line: lineNumber,
-    fieldId: "—",
-    content: cleaned,
-    label: "Freitext / nicht erkannt",
-    declaredLen: null,
-    raw: cleaned,
-  };
-}
-
-function parseGdt(text) {
-  const normalized = text.replace(/^\uFEFF/, "");
-  const lines = normalized.split(/\r\n|\n|\r/);
-  const records = [];
-
-  lines.forEach((line, idx) => {
-    const rec = parseLine(line, idx + 1);
-    if (rec) records.push(rec);
-  });
-
-  return { records, raw: normalized };
 }
 
 function findField(records, id) {
@@ -204,7 +99,7 @@ function buildSummary(records) {
   const sex = (sexRaw && (sexMap[sexRaw] || sexRaw)) || "—";
   const date =
     formatDate(findField(records, "6200")) ||
-    formatDate(findField(records, "2002")) ||
+    formatDate(findField(records, "8432")) ||
     "—";
   const satz = findField(records, "8000") || "—";
   const version = findField(records, "9218") || "—";
@@ -220,16 +115,58 @@ function buildSummary(records) {
   ];
 }
 
-function render(records, rawContent, fileMeta) {
+const LEVEL_TEXT = { error: "Fehler", warning: "Warnung", info: "Hinweis" };
+
+function renderValidation(result) {
+  const counts = { error: 0, warning: 0, info: 0 };
+  for (const i of result.issues) counts[i.level]++;
+
+  let state = "ok";
+  let title = `Prüfung nach ${result.standard}: keine Fehler gefunden`;
+  if (counts.error) {
+    state = "error";
+    title = `Prüfung nach ${result.standard}: ${counts.error} Fehler`;
+  } else if (counts.warning) {
+    state = "warning";
+    title = `Prüfung nach ${result.standard}: keine Fehler, ${counts.warning} Warnung${counts.warning > 1 ? "en" : ""}`;
+  }
+  if (counts.error && counts.warning) title += `, ${counts.warning} Warnung${counts.warning > 1 ? "en" : ""}`;
+  if (counts.info) title += ` · ${counts.info} Hinweis${counts.info > 1 ? "e" : ""}`;
+
+  validation.dataset.state = state;
+  validationTitle.textContent = title;
+  validationList.innerHTML = result.issues
+    .map((i) => {
+      const where = i.line
+        ? `<a href="#zeile-${i.line}" data-line="${i.line}">Zeile ${i.line}${i.field ? ` · ${escapeHtml(i.field)}` : ""}</a>`
+        : "Datei";
+      return `<li class="issue issue-${i.level}"><span class="issue-level">${LEVEL_TEXT[i.level]}</span><span class="issue-where">${where}</span><span class="issue-text">${escapeHtml(i.message)}</span></li>`;
+    })
+    .join("");
+  validationList.hidden = result.issues.length === 0;
+  validation.classList.remove("hidden");
+  return counts;
+}
+
+function render(parsed, rawContent, fileMeta, decoded) {
+  const { records } = parsed;
   lastRecords = records;
   lastRaw = rawContent;
   lastFileName = fileMeta.name || "export.gdt";
+
+  const result = GdtCore.validate(parsed, decoded);
+  const worst = new Map();
+  const rank = { error: 3, warning: 2, info: 1 };
+  for (const i of result.issues) {
+    if (i.line && (rank[i.level] || 0) > (rank[worst.get(i.line)] || 0)) worst.set(i.line, i.level);
+  }
 
   fileNameEl.textContent = lastFileName;
   const size = fileMeta.size != null ? fileMeta.size : new Blob([rawContent]).size;
   const kb = (size / 1024).toFixed(size < 1024 ? 2 : 1);
   const extra = fileMeta.extraInfo ? ` · ${fileMeta.extraInfo}` : "";
-  fileInfoEl.textContent = `${kb} KB · ${records.length} Felder${extra}`;
+  const charset = `${GdtCore.CHARSET_NAMES[decoded.charset]} (${decoded.source})`;
+  fileInfoEl.textContent = `${kb} KB · ${records.length} Felder · Zeichensatz ${charset}${extra}`;
 
   const cards = buildSummary(records);
   summary.innerHTML = cards
@@ -243,30 +180,33 @@ function render(records, rawContent, fileMeta) {
     .join("");
 
   tableBody.innerHTML = records
-    .map(
-      (r) => `
-      <tr>
-        <td class="col-line"><span class="cell-prefix">Zeile </span>${r.line}</td>
+    .map((r) => {
+      const level = worst.get(r.line);
+      const mark = level ? ` <span class="row-flag row-flag-${level}" title="${LEVEL_TEXT[level]}">${LEVEL_TEXT[level]}</span>` : "";
+      return `
+      <tr id="zeile-${r.line}"${level ? ` class="row-${level}"` : ""}>
+        <td class="col-line"><span class="cell-prefix">Zeile </span>${r.line}${mark}</td>
         <td class="col-id">${escapeHtml(r.fieldId)}</td>
         <td class="col-label">${escapeHtml(r.label)}</td>
         <td class="col-value">${escapeHtml(r.content)}</td>
-      </tr>`
-    )
+      </tr>`;
+    })
     .join("");
 
   rawText.textContent = rawContent;
 
+  const counts = renderValidation(result);
   toolbar.classList.remove("hidden");
   summary.classList.remove("hidden");
   results.classList.remove("hidden");
   raw.classList.toggle("hidden", !showRaw.checked);
   dropzone.classList.add("hidden");
   if (downloadBtn) downloadBtn.disabled = false;
-  announce(`${lastFileName} geladen · ${records.length} Felder`);
+  announce(`${lastFileName} geladen · ${records.length} Felder · ${counts.error} Fehler, ${counts.warning} Warnungen`);
 }
 
-function downloadText(filename, text) {
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+function downloadBytes(filename, bytes) {
+  const blob = new Blob([bytes], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -308,9 +248,11 @@ function runGenerate() {
     const formatId = formatSelect?.value || "random";
     const gen = generateRandomGdt(formatId);
     lastGenerated = gen;
+    lastBytes = GdtCore.encode(gen.text, gen.format.encoding);
 
-    const { records, raw: rawContent } = parseGdt(gen.text);
-    if (!records.length) {
+    const decoded = { charset: gen.format.encoding, source: "erzeugt", declared: gen.format.charset };
+    const parsed = GdtCore.parse(gen.text, decoded.charset);
+    if (!parsed.records.length) {
       showError("Generator lieferte keine lesbaren Felder.");
       return;
     }
@@ -318,11 +260,7 @@ function runGenerate() {
     if (downloadGenBtn) downloadGenBtn.disabled = false;
     formatHint.textContent = `Erzeugt: ${gen.format.label} · Satzart(en) ${gen.satzarten.join(", ")} · ${gen.patient.lastName}, ${gen.patient.firstName}`;
 
-    render(records, rawContent, {
-      name: gen.fileName,
-      size: new Blob([gen.text]).size,
-      extraInfo: gen.format.id,
-    });
+    render(parsed, gen.text, { name: gen.fileName, size: lastBytes.length, extraInfo: gen.format.id }, decoded);
   } catch (err) {
     showError(`Generator-Fehler: ${err.message || err}`);
   }
@@ -336,54 +274,58 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+function showBytes(bytes, name) {
+  const decoded = GdtCore.decode(bytes);
+  const parsed = GdtCore.parse(decoded.text, decoded.charset);
+  if (!parsed.records.length) {
+    showError("Keine GDT-Felder erkannt. Ist die Datei leer oder im falschen Format?");
+    return false;
+  }
+  lastBytes = bytes;
+  render(parsed, decoded.text, { name, size: bytes.length }, decoded);
+  return true;
+}
+
 async function handleFile(file) {
   clearError();
   if (!file) return;
-
-  const name = file.name.toLowerCase();
-  if (!name.endsWith(".gdt") && !name.endsWith(".txt") && file.type && !file.type.startsWith("text")) {
-    // still try – many GDT files have empty MIME
-  }
-
   try {
-    const text = decodeGdt(await file.arrayBuffer());
-
-    const { records, raw: rawContent } = parseGdt(text);
-    if (!records.length) {
-      showError("Keine GDT-Felder erkannt. Ist die Datei leer oder im falschen Format?");
-      return;
+    if (showBytes(new Uint8Array(await file.arrayBuffer()), file.name)) {
+      // The dropzone (and the focused button in it) is now hidden – keep focus on the result
+      toolbar.focus();
     }
-    render(records, rawContent, file);
-    // The dropzone (and the focused button in it) is now hidden – keep focus on the result
-    toolbar.focus();
   } catch (err) {
     showError(`Datei konnte nicht gelesen werden: ${err.message || err}`);
   }
 }
 
-/**
- * German GDT exports are usually Windows-1252 / ISO 8859-1 (field 9206 = 3), newer ones UTF-8.
- * Strict UTF-8 decoding fails on CP1252 umlauts, so it cleanly tells the two apart.
- */
-function decodeGdt(buffer) {
+/** ?beispiel=<name> opens one of the sample files from beispiele/ (linked from the samples page). */
+async function loadSampleFromUrl() {
+  const name = new URLSearchParams(location.search).get("beispiel");
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return;
   try {
-    return new TextDecoder("utf-8", { fatal: true }).decode(buffer);
-  } catch {
-    return new TextDecoder("windows-1252").decode(buffer);
+    const res = await fetch(`beispiele/${name}.gdt`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    showBytes(new Uint8Array(await res.arrayBuffer()), `${name}.gdt`);
+  } catch (err) {
+    showError(`Beispieldatei „${name}“ konnte nicht geladen werden (${err.message || err}).`);
   }
 }
 
 function reset() {
   lastRecords = [];
   lastRaw = "";
+  lastBytes = null;
   lastFileName = "export.gdt";
   lastGenerated = null;
   fileInput.value = "";
   tableBody.innerHTML = "";
   summary.innerHTML = "";
+  validationList.innerHTML = "";
   rawText.textContent = "";
   toolbar.classList.add("hidden");
   summary.classList.add("hidden");
+  validation.classList.add("hidden");
   results.classList.add("hidden");
   raw.classList.add("hidden");
   dropzone.classList.remove("hidden");
@@ -391,6 +333,7 @@ function reset() {
   if (downloadBtn) downloadBtn.disabled = true;
   clearError();
   updateFormatHint();
+  if (location.search) history.replaceState(null, "", location.pathname);
   browseBtn.focus();
 }
 
@@ -429,6 +372,18 @@ dropzone.addEventListener("drop", (e) => {
   if (file) handleFile(file);
 });
 
+// Issue links jump to the table row and give it focus for keyboard and screen reader users
+validationList.addEventListener("click", (e) => {
+  const link = e.target.closest("a[data-line]");
+  if (!link) return;
+  e.preventDefault();
+  const row = $(`zeile-${link.dataset.line}`);
+  if (!row) return;
+  row.tabIndex = -1;
+  row.scrollIntoView({ block: "center" });
+  row.focus({ preventScroll: true });
+});
+
 showRaw.addEventListener("change", () => {
   if (!lastRaw) return;
   raw.classList.toggle("hidden", !showRaw.checked);
@@ -457,8 +412,9 @@ copyBtn.addEventListener("click", async () => {
 if (downloadBtn) {
   downloadBtn.disabled = true;
   downloadBtn.addEventListener("click", () => {
-    if (!lastRaw) return;
-    downloadText(lastFileName.endsWith(".gdt") ? lastFileName : `${lastFileName}.gdt`, lastRaw);
+    if (!lastBytes) return;
+    // Loaded files are saved byte for byte, so the download is identical to the original
+    downloadBytes(lastFileName.endsWith(".gdt") ? lastFileName : `${lastFileName}.gdt`, lastBytes);
   });
 }
 
@@ -469,7 +425,7 @@ if (generateBtn) {
 if (downloadGenBtn) {
   downloadGenBtn.addEventListener("click", () => {
     if (!lastGenerated) return;
-    downloadText(lastGenerated.fileName, lastGenerated.text);
+    downloadBytes(lastGenerated.fileName, GdtCore.encode(lastGenerated.text, lastGenerated.format.encoding));
   });
 }
 
@@ -478,6 +434,7 @@ if (formatSelect) {
 }
 
 initFormatSelect();
+loadSampleFromUrl();
 
 // Prevent browser from opening dropped files outside the zone
 ["dragover", "drop"].forEach((evt) => {

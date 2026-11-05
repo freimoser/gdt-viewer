@@ -50,7 +50,7 @@ NAV_SCRIPT = '''  <script>
 
 # Cache busting: references to these files get ?v=<content hash>, so browsers fetch a
 # new copy exactly when the file changed (GitHub Pages caches assets for 10 minutes)
-VERSIONED = ["styles.css", "app.js", "generator.js"]
+VERSIONED = ["styles.css", "app.js", "generator.js", "gdt-core.js", "gdt-spec.js"]
 ASSET_VERSION = {
     name: hashlib.sha1((root / name).read_bytes()).hexdigest()[:8] for name in VERSIONED
 }

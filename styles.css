@@ -10,6 +10,8 @@
   --accent-hover: #2dd4bf;
   --danger: #f87171;
   --danger-bg: rgba(248, 113, 113, 0.12);
+  --warning: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
   --radius: 14px;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -415,6 +417,144 @@ h1 {
   font-weight: 600;
   font-size: 0.98rem;
   word-break: break-word;
+}
+
+/* Validation result: state colours the frame, each issue links to its table row */
+.validation {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.validation[data-state="ok"] {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.validation[data-state="warning"] {
+  border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+}
+
+.validation[data-state="error"] {
+  border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+}
+
+.validation-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.validation-title::before {
+  content: "";
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.validation[data-state="warning"] .validation-title::before {
+  background: var(--warning);
+}
+
+.validation[data-state="error"] .validation-title::before {
+  background: var(--danger);
+}
+
+.validation-list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+}
+
+.issue {
+  display: grid;
+  grid-template-columns: 5.5rem 9rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+
+.issue-level {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.issue-error .issue-level {
+  color: var(--danger);
+}
+
+.issue-warning .issue-level {
+  color: var(--warning);
+}
+
+.issue-info .issue-level {
+  color: var(--muted);
+}
+
+.issue-where {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.issue-where a {
+  color: var(--accent-hover);
+  text-underline-offset: 2px;
+}
+
+.validation-note {
+  margin: 0.85rem 0 0;
+  font-size: 0.8rem;
+}
+
+.validation-note a {
+  color: var(--accent-hover);
+}
+
+tbody tr.row-error {
+  background: var(--danger-bg);
+}
+
+tbody tr.row-warning {
+  background: var(--warning-bg);
+}
+
+tbody tr:focus {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: -2px;
+}
+
+.row-flag {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.row-flag-error {
+  color: var(--danger);
+}
+
+.row-flag-warning {
+  color: var(--warning);
+}
+
+.row-flag-info {
+  color: var(--muted);
 }
 
 .results {
@@ -1218,5 +1358,19 @@ td.col-value {
 
   .cell-prefix {
     display: inline;
+  }
+
+  .issue {
+    grid-template-columns: auto 1fr;
+    gap: 0.2rem 0.6rem;
+  }
+
+  .issue-text {
+    grid-column: 1 / -1;
+  }
+
+  .row-flag {
+    display: inline;
+    margin: 0 0 0 0.35rem;
   }
 }
