@@ -75,7 +75,7 @@
         "height": 630
       },
       "datePublished": "2026-07-20",
-      "dateModified": "2026-10-27",
+      "dateModified": "2026-11-05",
       "about": {
         "@type": "Thing",
         "name": "Gerätedatentransfer",
@@ -120,7 +120,7 @@
       "inLanguage": "de-DE",
       "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
       "datePublished": "2026-07-20",
-      "dateModified": "2026-10-27",
+      "dateModified": "2026-11-05",
       "author": {
         "@id": "https://freimoser.github.io/gdt-viewer/#organization"
       },
@@ -146,7 +146,7 @@
 }
   </script>
   <!-- seo-ld:end -->
-  <link rel="stylesheet" href="../styles.css?v=91d71dba" />
+  <link rel="stylesheet" href="../styles.css?v=03605964" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
@@ -197,9 +197,10 @@
         <a href="../">Viewer</a>
         <a href="./">Wissen</a>
         <a href="was-ist-gdt.html" aria-current="page">Was ist GDT?</a>
+        <a href="feldkennungen.html">Feldkennungen</a>
+        <a href="beispieldateien.html">Beispieldateien</a>
+        <a href="fehler.html">Fehler beheben</a>
         <a href="anbindung.html">Anbindung</a>
-        <a href="tutorial.html">Tutorial</a>
-        <a href="tool.html">Tool-Hilfe</a>
       </nav>
     </div>
   </header>
@@ -234,7 +235,7 @@
         Textdaten austauschen. Diese Seite erklärt Definition, Dateiaufbau, wichtige Felder und
         die Unterschiede zwischen GDT 2.1 und GDT 3.0/3.1.
       </p>
-      <p class="meta-line">Aktualisiert: 27. Oktober 2026 · Lesedauer ca. 8 Min.</p>
+      <p class="meta-line">Aktualisiert: 5. November 2026 · Lesedauer ca. 8 Min.</p>
     </header>
 
     <nav class="toc" aria-label="Inhaltsverzeichnis">
@@ -334,6 +335,10 @@
           </thead>
           <tbody>
             <tr>
+              <td><code>6300</code></td>
+              <td>Stammdaten anfordern (Gerät fragt die Praxissoftware nach Patientendaten)</td>
+            </tr>
+            <tr>
               <td><code>6301</code></td>
               <td>Stammdaten / Patientendaten übermitteln</td>
             </tr>
@@ -347,7 +352,7 @@
             </tr>
             <tr>
               <td><code>6311</code></td>
-              <td>u. a. digitale Unterschrift / erweiterte Ergebnisübergabe (je nach Spezifikation)</td>
+              <td>Daten einer Untersuchung zeigen (Gerät zeigt eine frühere Untersuchung an)</td>
             </tr>
           </tbody>
         </table>
@@ -369,7 +374,7 @@
             <tr><td><code>9218</code></td><td>GDT-Version (z. B. 02.10, 03.10)</td></tr>
             <tr><td><code>3000</code></td><td>Patienten-ID / -nummer</td></tr>
             <tr><td><code>3101</code> / <code>3102</code></td><td>Nachname / Vorname</td></tr>
-            <tr><td><code>3103</code></td><td>Geburtsdatum (oft TTMMJJJJ)</td></tr>
+            <tr><td><code>3103</code></td><td>Geburtsdatum (TTMMJJJJ)</td></tr>
             <tr><td><code>3110</code></td><td>Geschlecht</td></tr>
             <tr><td><code>3618</code> / <code>3619</code></td><td>Mobil / E-Mail (häufig GDT 3.1)</td></tr>
             <tr><td><code>8410</code> / <code>8420</code></td><td>Testkennung / Messwert</td></tr>
@@ -411,7 +416,7 @@
             </tr>
             <tr>
               <td>Untersuchungsdatum</td>
-              <td>häufig <code>2002</code> TTMMJJJJ</td>
+              <td><code>6200</code> als TTMMJJJJ</td>
               <td>häufig <code>6200</code> JJJJMMTT</td>
             </tr>
           </tbody>
@@ -475,6 +480,9 @@
           <ul>
             <li><a href="./">Übersicht</a></li>
             <li><a href="was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="feldkennungen.html">GDT-Feldkennungen</a></li>
+            <li><a href="beispieldateien.html">GDT-Beispieldateien</a></li>
+            <li><a href="fehler.html">GDT-Fehler beheben</a></li>
             <li><a href="anbindung.html">GDT-Anbindung</a></li>
             <li><a href="tutorial.html">Tutorial für Anfänger</a></li>
           </ul>

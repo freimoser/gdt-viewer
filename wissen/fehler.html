@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- seo:start -->
+  <title>GDT-Fehler beheben: Umlaute, Längen, Import | GDT Viewer</title>
+  <meta name="description" content="GDT-Schnittstelle funktioniert nicht? Ursachen und Lösungen für kaputte Umlaute, Längenfehler, nicht eingelesene Dateien und falsche Patientenzuordnung." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#0f1419" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="canonical" href="https://freimoser.github.io/gdt-viewer/wissen/fehler.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <meta property="og:title" content="GDT-Fehler beheben: Ursachen und Lösungen" />
+  <meta property="og:description" content="Umlaute kaputt, Datei wird nicht eingelesen, Patient falsch zugeordnet – so finden und beheben Sie die Ursache." />
+  <meta property="og:url" content="https://freimoser.github.io/gdt-viewer/wissen/fehler.html" />
+  <meta property="og:image" content="https://freimoser.github.io/gdt-viewer/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GDT-Fehler beheben: Ursachen und Lösungen" />
+  <meta name="twitter:description" content="Umlaute kaputt, Datei wird nicht eingelesen, Patient falsch zugeordnet – so finden und beheben Sie die Ursache." />
+  <meta name="twitter:image" content="https://freimoser.github.io/gdt-viewer/og-image.png" />
+  <meta name="twitter:image:alt" content="GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle" />
+  <!-- seo:end -->
+  <!-- seo-ld:start -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://freimoser.github.io/gdt-viewer/#organization",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/icon-192.png",
+        "width": 192,
+        "height": 192
+      },
+      "sameAs": [
+        "https://github.com/freimoser/gdt-viewer"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://freimoser.github.io/gdt-viewer/#website",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "inLanguage": "de-DE",
+      "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer (GDT) für Praxissoftware und Medizintechnik in Deutschland.",
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html#webpage",
+      "url": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html",
+      "name": "GDT-Fehler beheben: Umlaute, Längen, Import | GDT Viewer",
+      "description": "GDT-Schnittstelle funktioniert nicht? Ursachen und Lösungen für kaputte Umlaute, Längenfehler, nicht eingelesene Dateien und falsche Patientenzuordnung.",
+      "inLanguage": "de-DE",
+      "isPartOf": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-11-05",
+      "dateModified": "2026-11-05",
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      },
+      "breadcrumb": {
+        "@id": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "GDT Viewer",
+          "item": "https://freimoser.github.io/gdt-viewer/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wissen",
+          "item": "https://freimoser.github.io/gdt-viewer/wissen/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Fehler beheben",
+          "item": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html#article",
+      "headline": "GDT-Fehler beheben: Ursachen und Lösungen",
+      "description": "GDT-Schnittstelle funktioniert nicht? Ursachen und Lösungen für kaputte Umlaute, Längenfehler, nicht eingelesene Dateien und falsche Patientenzuordnung.",
+      "inLanguage": "de-DE",
+      "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
+      "datePublished": "2026-11-05",
+      "dateModified": "2026-11-05",
+      "author": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      },
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://freimoser.github.io/gdt-viewer/wissen/fehler.html#webpage"
+      },
+      "isPartOf": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#website"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      }
+    }
+  ]
+}
+  </script>
+  <!-- seo-ld:end -->
+  <link rel="stylesheet" href="../styles.css?v=03605964" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" sizes="180x180" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Warum werden Umlaute in einer GDT-Datei falsch angezeigt?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sender und Empfänger verwenden unterschiedliche Zeichensätze. GDT 2.1 legt den Zeichensatz in Feld 9206 fest: 1 = 7 Bit, 2 = IBM CP437 (Standard), 3 = ISO 8859-1 / Windows-1252. Beide Seiten müssen denselben Zeichensatz verwenden und ihn in 9206 angeben." }
+      },
+      {
+        "@type": "Question",
+        "name": "Warum liest die Praxissoftware eine GDT-Datei nicht ein?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Häufige Ursachen sind falsche Zeilen- oder Satzlängen, Zeilenenden ohne CR+LF, ein falscher Dateiname oder Ordner sowie fehlende Pflichtfelder wie 8000, 8100, 9218 und 3000. Der GDT Viewer prüft diese Punkte automatisch." }
+      },
+      {
+        "@type": "Question",
+        "name": "Wie berechnet man die Zeilenlänge einer GDT-Zeile?",
+        "acceptedAnswer": { "@type": "Answer", "text": "3 Ziffern Längenangabe + 4 Ziffern Feldkennung + Anzahl Bytes des Inhalts + 2 Bytes für CR+LF. Für 0193101Mustermann ergibt das 3 + 4 + 10 + 2 = 19." }
+      },
+      {
+        "@type": "Question",
+        "name": "Was passiert, wenn ein Gerät keine Patientennummer übermittelt?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Laut GDT 2.1 sendet das Gerät in Feld 3000 dann den Wert 0. Die Praxissoftware muss die Daten selbst dem richtigen Patienten zuordnen – das ist eine häufige Quelle für Fehlzuordnungen." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- site-header:start -->
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-brand" href="../">
+        <span class="site-brand-mark" aria-hidden="true">GDT</span>
+        <span class="site-brand-name">GDT Viewer</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../">Viewer</a>
+        <a href="./">Wissen</a>
+        <a href="was-ist-gdt.html">Was ist GDT?</a>
+        <a href="feldkennungen.html">Feldkennungen</a>
+        <a href="beispieldateien.html">Beispieldateien</a>
+        <a href="fehler.html" aria-current="page">Fehler beheben</a>
+        <a href="anbindung.html">Anbindung</a>
+      </nav>
+    </div>
+  </header>
+  <script>
+    // Mobile: the link row scrolls sideways – bring the current page's link into view
+    (function () {
+      var nav = document.querySelector(".site-nav");
+      var cur = nav && nav.querySelector("[aria-current]");
+      if (!cur || nav.scrollWidth <= nav.clientWidth) return;
+      var offset = cur.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
+    })();
+  </script>
+  <!-- site-header:end -->
+  <div class="page page-content">
+    <main id="main">
+
+    <header class="hero-article">
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><a href="./">Wissen</a></li>
+          <li><span aria-current="page">Fehler beheben</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
+      <h1>GDT-Fehler beheben: Ursachen und Lösungen</h1>
+      <p class="lead">
+        Umlaute kaputt, Datei wird nicht eingelesen, Patient falsch zugeordnet? Die meisten Probleme mit der
+        <strong>GDT-Schnittstelle</strong> haben wenige, gut prüfbare Ursachen. Dieser Ratgeber erklärt sie
+        nach Symptom geordnet – mit Lösung und dem passenden Prüfschritt im GDT Viewer.
+      </p>
+      <p class="meta-line">Aktualisiert: 5. November 2026 · Grundlage: GDT-Schnittstellenbeschreibung 2.1 (QMS)</p>
+    </header>
+
+    <nav class="toc" aria-label="Inhaltsverzeichnis">
+      <p class="toc-title">Inhalt</p>
+      <ol>
+        <li><a href="#umlaute">Umlaute werden falsch angezeigt</a></li>
+        <li><a href="#nicht-eingelesen">Datei wird nicht eingelesen</a></li>
+        <li><a href="#dateiname">Datei wird nicht gefunden oder überschrieben</a></li>
+        <li><a href="#zuordnung">Patient wird falsch oder gar nicht zugeordnet</a></li>
+        <li><a href="#datum">Datum oder Uhrzeit sind falsch</a></li>
+        <li><a href="#messwerte">Messwerte fehlen oder sind falsch</a></li>
+        <li><a href="#abgeschnitten">Texte werden abgeschnitten</a></li>
+        <li><a href="#checkliste">Checkliste zur Fehlersuche</a></li>
+      </ol>
+    </nav>
+
+    <article class="prose">
+      <h2 id="umlaute">Umlaute werden falsch angezeigt</h2>
+      <p><strong>Symptom:</strong> Aus „Jäger“ wird „JÃ¤ger“, „J„ger“ oder „J�ger“.</p>
+      <p>
+        <strong>Ursache:</strong> Sender und Empfänger lesen die Datei mit unterschiedlichen Zeichensätzen.
+        GDT 2.1 gibt den Zeichensatz in Feld <code>9206</code> an:
+      </p>
+      <ul>
+        <li><code>1</code> – 7 Bit (DIN 66003, Umlaute auf den Positionen von <code>[ \ ] { | } ~</code>)</li>
+        <li><code>2</code> – IBM CP437, der <strong>Standard</strong>, wenn das Feld fehlt</li>
+        <li><code>3</code> – ISO 8859-1 / Windows-1252</li>
+      </ul>
+      <p>
+        „JÃ¤ger“ entsteht, wenn eine UTF-8-Datei als Windows-1252 gelesen wird – UTF-8 ist in GDT 2.1 nicht
+        vorgesehen. „J„ger“ entsteht, wenn eine CP437-Datei als Windows-1252 gelesen wird; ein „ü“ wird
+        dabei sogar zu einem unlesbaren Zeichen.
+      </p>
+      <p>
+        <strong>Lösung:</strong> Auf beiden Seiten denselben Zeichensatz einstellen und ihn in <code>9206</code>
+        eintragen. Bei UTF-8-Exporten auf ISO 8859-1 (<code>9206</code> = <code>3</code>) umstellen.
+      </p>
+      <p>
+        <strong>Im Viewer prüfen:</strong> Über der Tabelle steht, welcher Zeichensatz erkannt wurde und ob er aus
+        Feld 9206 stammt. Stimmen dort die Umlaute, liegt das Problem beim Empfänger.
+      </p>
+
+      <h2 id="nicht-eingelesen">Datei wird nicht eingelesen</h2>
+      <p><strong>Symptom:</strong> Die Praxissoftware oder das Gerät ignoriert die Datei oder meldet einen Formatfehler.</p>
+      <p><strong>Häufige Ursachen:</strong></p>
+      <ul>
+        <li>
+          <strong>Falsche Zeilenlänge:</strong> Die ersten drei Ziffern jeder Zeile müssen die Länge der ganzen
+          Zeile in Byte angeben – einschließlich CR+LF. Für <code>0193101Mustermann</code>: 3 + 4 + 10 + 2 = 19.
+          Umlaute zählen je nach Zeichensatz als ein Byte (CP437, ISO 8859-1) oder zwei Byte (UTF-8).
+        </li>
+        <li>
+          <strong>Falsche Satzlänge:</strong> Feld <code>8100</code> enthält die Länge des ganzen Satzes in Byte,
+          immer fünfstellig mit führenden Nullen (<code>00390</code>, nicht <code>390</code>).
+        </li>
+        <li><strong>Zeilenende nur LF:</strong> GDT verlangt CR+LF (<code>0D 0A</code>). Unix-Zeilenenden brechen viele Importe.</li>
+        <li>
+          <strong>Pflichtfelder fehlen:</strong> In jeder Satzart sind <code>8000</code>, <code>8100</code>,
+          <code>9218</code> und <code>3000</code> Pflicht; welche weiteren dazukommen, zeigt die
+          <a href="feldkennungen.html#satzarten">Satzart-Tabelle</a>.
+        </li>
+      </ul>
+      <p>
+        <strong>Im Viewer prüfen:</strong> Die Prüfung meldet jede Zeile mit falscher Länge, eine abweichende
+        Satzlänge, fehlende Pflichtfelder und falsche Zeilenenden – mit Zeilennummer.
+      </p>
+
+      <h2 id="dateiname">Datei wird nicht gefunden oder überschrieben</h2>
+      <p>
+        <strong>Ursache:</strong> GDT tauscht Dateien über einen Ordner aus, den beide Seiten kennen. Der Dateiname
+        setzt sich laut Spezifikation aus höchstens vier Zeichen für den Empfänger und vier für den Sender zusammen,
+        dazu entweder die feste Endung <code>.GDT</code> (z. B. <code>EDV1EKG1.GDT</code>) oder eine hochzählende
+        Nummer ab <code>.001</code>.
+      </p>
+      <ul>
+        <li>Stimmen Ordner, Kürzel oder Endung auf einer Seite nicht, sucht der Empfänger nach der falschen Datei.</li>
+        <li>Eine noch nicht gelesene <code>.GDT</code>-Datei darf der Sender <strong>nicht überschreiben</strong> – sonst gehen Daten verloren. Abhilfe schafft die hochzählende Endung.</li>
+        <li>Der Empfänger verarbeitet Dateien in der Reihenfolge ihres Eingangs und löscht sie nach dem Lesen.</li>
+        <li>Der Sender schreibt die Datei ohne Pause; liest der Empfänger zu früh, erhält er eine unvollständige Datei.</li>
+      </ul>
+      <p>Mehr zum Ablauf: <a href="anbindung.html#ablauf">Typischer Ablauf der GDT-Anbindung</a>.</p>
+
+      <h2 id="zuordnung">Patient wird falsch oder gar nicht zugeordnet</h2>
+      <ul>
+        <li>
+          <strong>Patientennummer:</strong> Feld <code>3000</code> ist in jeder Satzart Pflicht und höchstens 10
+          Zeichen lang. Kann ein Gerät sie nicht übermitteln, sendet es laut Spezifikation den Wert
+          <code>0</code> – dann muss die Praxissoftware selbst zuordnen.
+        </li>
+        <li>
+          <strong>GDT-IDs:</strong> Empfänger (<code>8315</code>) und Sender (<code>8316</code>) werden über
+          achtstellige GDT-IDs erkannt. Stehen zwei gleiche Geräte im selben Raum, brauchen sie unterschiedliche IDs.
+        </li>
+        <li>
+          <strong>Geburtsdatum:</strong> <code>3103</code> im Format TTMMJJJJ. Ein vertauschtes Format führt zu
+          Abweichungen beim Abgleich mit den Stammdaten.
+        </li>
+      </ul>
+
+      <h2 id="datum">Datum oder Uhrzeit sind falsch</h2>
+      <p>
+        Datumsfelder (<code>3103</code>, <code>6200</code>, <code>8432</code>) haben in GDT 2.1 das Format
+        <code>TTMMJJJJ</code>, Uhrzeiten (<code>6201</code>, <code>8439</code>) das Format <code>HHMMSS</code>
+        mit sechs Stellen. Ein ISO-Datum wie <code>2026-11-04</code> oder eine vierstellige Uhrzeit wie
+        <code>0930</code> sind nicht zulässig; richtig sind <code>04112026</code> und <code>093000</code>.
+      </p>
+
+      <h2 id="messwerte">Messwerte fehlen oder sind falsch</h2>
+      <ul>
+        <li><strong>Komma statt Punkt:</strong> Zahlenfelder wie <code>8420</code> verwenden einen Punkt (<code>37.2</code>). Mit Komma lesen viele Programme den Wert nicht.</li>
+        <li><strong>Fehlende Gruppierung:</strong> Jeder Messwert beginnt mit einem Test-Ident <code>8410</code>; Bezeichnung (<code>8411</code>), Wert (<code>8420</code>) und Einheit (<code>8421</code>) folgen darauf.</li>
+        <li><strong>Fehlendes Kennfeld:</strong> In Satzart <code>6310</code> ist <code>8402</code> Pflicht – es beschreibt die Art der Untersuchung, z. B. <code>EKG01</code> oder <code>BDM01</code>.</li>
+      </ul>
+
+      <h2 id="abgeschnitten">Texte werden abgeschnitten</h2>
+      <p>
+        Die meisten Textfelder sind auf 60 Zeichen begrenzt, Name und Vorname auf 28. Längere Befunde werden auf
+        mehrere Zeilen desselben Feldes verteilt. Für formatierte Ergebnistabellen gibt Feld <code>6226</code> an,
+        wie viele Zeilen <code>6228</code> folgen.
+      </p>
+
+      <h2 id="checkliste">Checkliste zur Fehlersuche</h2>
+      <ol>
+        <li>Datei im <a href="../">GDT Viewer</a> öffnen und das Prüfergebnis lesen.</li>
+        <li>Zeichensatz über der Tabelle mit der Einstellung beider Programme vergleichen.</li>
+        <li>Mit einer <a href="beispieldateien.html">normgerechten Beispieldatei</a> testen: Funktioniert sie, liegt der Fehler in der eigenen Datei.</li>
+        <li>Ordner, Dateinamen und GDT-IDs auf beiden Seiten vergleichen.</li>
+        <li>Erst mit fiktiven Daten testen, dann mit echten.</li>
+      </ol>
+    </article>
+
+    <div class="cta-box">
+      <p>
+        <strong>Datei jetzt prüfen</strong>
+        Der GDT Viewer findet Längen-, Format- und Zeichensatzfehler in Sekunden – lokal im Browser.
+      </p>
+      <a class="btn btn-primary" href="../">GDT-Datei prüfen</a>
+    </div>
+
+    <section class="related">
+      <h2>Weiterlesen</h2>
+      <div class="card-grid">
+        <a class="card-link" href="feldkennungen.html"><h3>Feldkennungen</h3><p>Alle Felder mit Länge und Format.</p></a>
+        <a class="card-link" href="beispieldateien.html"><h3>Beispieldateien</h3><p>Normgerechte Dateien zum Testen.</p></a>
+        <a class="card-link" href="anbindung.html"><h3>GDT-Anbindung</h3><p>Ordner, Ablauf und Checkliste.</p></a>
+      </div>
+    </section>
+
+    </main>
+
+    <!-- site-footer:start -->
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h2>Tool</h2>
+          <ul>
+            <li><a href="../">GDT Viewer</a></li>
+            <li><a href="tool.html">Tool-Hilfe</a></li>
+            <li><a href="https://github.com/freimoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Wissen</h2>
+          <ul>
+            <li><a href="./">Übersicht</a></li>
+            <li><a href="was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="feldkennungen.html">GDT-Feldkennungen</a></li>
+            <li><a href="beispieldateien.html">GDT-Beispieldateien</a></li>
+            <li><a href="fehler.html">GDT-Fehler beheben</a></li>
+            <li><a href="anbindung.html">GDT-Anbindung</a></li>
+            <li><a href="tutorial.html">Tutorial für Anfänger</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Hinweise</h2>
+          <ul>
+            <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
+            <li>Dateiinhalte bleiben im Browser</li>
+            <li>Open Source · Lizenz: MIT</li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
+    </footer>
+    <!-- site-footer:end -->
+  </div>
+</body>
+</html>

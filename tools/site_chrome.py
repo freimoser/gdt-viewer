@@ -14,16 +14,21 @@ PAGES = {
     "wissen/anbindung.html": ("../", "anbindung"),
     "wissen/tutorial.html": ("../", "tutorial"),
     "wissen/tool.html": ("../", "tool"),
+    "wissen/feldkennungen.html": ("../", "feldkennungen"),
+    "wissen/beispieldateien.html": ("../", "beispieldateien"),
+    "wissen/fehler.html": ("../", "fehler"),
     # Served by GitHub Pages for any unknown path, so it needs absolute links
     "404.html": ("/gdt-viewer/", None),
 }
+# Main navigation, ordered by what people look for most; Tutorial and Tool-Hilfe are in the footer
 LINKS = [
     ("viewer", "", "Viewer"),
     ("wissen", "wissen/", "Wissen"),
     ("was-ist-gdt", "wissen/was-ist-gdt.html", "Was ist GDT?"),
+    ("feldkennungen", "wissen/feldkennungen.html", "Feldkennungen"),
+    ("beispieldateien", "wissen/beispieldateien.html", "Beispieldateien"),
+    ("fehler", "wissen/fehler.html", "Fehler beheben"),
     ("anbindung", "wissen/anbindung.html", "Anbindung"),
-    ("tutorial", "wissen/tutorial.html", "Tutorial"),
-    ("tool", "wissen/tool.html", "Tool-Hilfe"),
 ]
 
 # Visible breadcrumb label per page – keep in sync with LD[...]["crumb"] in tools/site_meta.py
@@ -33,6 +38,9 @@ CRUMBS = {
     "anbindung": "Anbindung",
     "tutorial": "Tutorial",
     "tool": "Tool-Hilfe",
+    "feldkennungen": "Feldkennungen",
+    "beispieldateien": "Beispieldateien",
+    "fehler": "Fehler beheben",
 }
 
 CUR = ' aria-current="page"'
@@ -117,6 +125,9 @@ def footer(prefix):
           <ul>
             <li><a href="{href(p, "wissen/")}">Übersicht</a></li>
             <li><a href="{href(p, "wissen/was-ist-gdt.html")}">Was ist GDT?</a></li>
+            <li><a href="{href(p, "wissen/feldkennungen.html")}">GDT-Feldkennungen</a></li>
+            <li><a href="{href(p, "wissen/beispieldateien.html")}">GDT-Beispieldateien</a></li>
+            <li><a href="{href(p, "wissen/fehler.html")}">GDT-Fehler beheben</a></li>
             <li><a href="{href(p, "wissen/anbindung.html")}">GDT-Anbindung</a></li>
             <li><a href="{href(p, "wissen/tutorial.html")}">Tutorial für Anfänger</a></li>
           </ul>

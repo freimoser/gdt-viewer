@@ -20,6 +20,9 @@ PAGES = [
     ("Wissen", "wissen/was-ist-gdt.html"),
     ("Wissen", "wissen/anbindung.html"),
     ("Wissen", "wissen/tutorial.html"),
+    ("Wissen", "wissen/feldkennungen.html"),
+    ("Wissen", "wissen/beispieldateien.html"),
+    ("Wissen", "wissen/fehler.html"),
     ("Wissen", "wissen/tool.html"),
 ]
 
@@ -212,14 +215,17 @@ lines = [
     "",
     "> Kostenloser Online-Viewer und Generator für GDT-Dateien (Gerätedatentransfer), die in "
     "Deutschland gängige Textschnittstelle zwischen Praxisverwaltungssoftware (PVS) und "
-    "medizinischen Geräten. Liest GDT 2.1 und GDT 3.0/3.1 im Browser, erklärt jedes Feld und "
-    "erzeugt konforme Testdateien mit fiktiven Patientendaten. Alle Daten bleiben lokal im Browser.",
+    "medizinischen Geräten. Liest GDT 2.1 und GDT 3.0/3.1 im Browser, erklärt jedes Feld, "
+    "prüft Dateien nach der GDT-2.1-Spezifikation und erzeugt normgerechte Testdateien mit fiktiven Patientendaten. Alle Daten bleiben lokal im Browser.",
     "",
     "Wichtige Fakten:",
     "",
     "- Jede GDT-Zeile besteht aus 3 Ziffern Gesamtlänge (inklusive Zeilenende CR+LF), 4 Ziffern Feldkennung und dem Inhalt, z. B. `0193101Mustermann` (3 + 4 + 10 Zeichen + 2 = 19).",
-    "- Satzarten (Feld 8000): 6301 Stammdaten übermitteln, 6302 Untersuchung anfordern, 6310 Untersuchungsergebnis übermitteln.",
+    "- Satzarten (Feld 8000): 6300 Stammdaten anfordern, 6301 Stammdaten übermitteln, 6302 neue Untersuchung anfordern, 6310 Daten einer Untersuchung übermitteln, 6311 Daten einer Untersuchung zeigen.",
     "- GDT 2.1 nutzt Feld 8100 für die Satzlänge und Version `02.10`; GDT 3.x nutzt Feld 8004 und Version `03.00`/`03.10` (Feld 9218).",
+    "- Zeichensatz (Feld 9206, nur GDT 2.1): 1 = 7 Bit, 2 = IBM CP437 (Standard, wenn das Feld fehlt), 3 = ISO 8859-1 / Windows-1252. Zeilenende ist immer CR+LF.",
+    "- Pflichtfelder in jeder Satzart von GDT 2.1: 8000 (Satzart), 8100 (Satzlänge, 5 Ziffern mit führenden Nullen), 9218 (Version) und 3000 (Patientennummer).",
+    "- Der GDT Viewer prüft Dateien nach GDT 2.1: Zeilen- und Satzlängen, Pflichtfelder, Feldlängen sowie Datum (TTMMJJJJ), Uhrzeit (HHMMSS) und Zahlen.",
     "- Der GDT Viewer ist Open Source (MIT), kein Medizinprodukt und lädt keine Dateiinhalte auf einen Server.",
     "",
 ]

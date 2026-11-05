@@ -8,13 +8,17 @@ Quelle: https://freimoser.github.io/gdt-viewer/
 
 # GDT Viewer
 
-Gerätedatentransfer-Dateien online lesen & Testdaten erzeugen
+Gerätedatentransfer-Dateien online lesen, nach GDT 2.1 prüfen & Testdaten erzeugen
 
 100 % lokal – nichts wird hochgeladen
 
 ## Zufällige GDT erzeugen
 
-Konforme Testdateien (GDT 2.1 & 3.x) – fiktive Patientendaten
+Normgerechte GDT-2.1-Testdateien, 3.x-Varianten und gezielte Abweichungen für Robustheitstests – nur fiktive Patientendaten
+
+## Prüfung
+
+Geprüft werden Zeilen- und Satzlängen, Pflichtfelder, Feldlängen, Datums- und Zahlenformate nach der [GDT-2.1-Feldtabelle](https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html). Bei GDT 3.x nur Struktur und Längen.
 
 ## Hinweise
 
@@ -27,6 +31,9 @@ Konforme Testdateien (GDT 2.1 & 3.x) – fiktive Patientendaten
 ## GDT lernen
 
 - [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html) – Definition, Aufbau, 2.1 vs. 3.x
+- [GDT-Feldkennungen](https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html) – alle Felder und Satzarten
+- [Beispieldateien](https://freimoser.github.io/gdt-viewer/wissen/beispieldateien.html) – normgerechte GDT-Dateien zum Download
+- [GDT-Fehler beheben](https://freimoser.github.io/gdt-viewer/wissen/fehler.html) – Umlaute, Längen, Import
 - [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html) – PVS und Gerät verbinden
 - [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html) – erste Datei in 15 Minuten
 - [Wie das Tool hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html) – Debugging, Schulung, Tests
@@ -47,7 +54,7 @@ Der Viewer liest GDT 2.x und GDT 3.x – Zeilen mit dreistelliger Längenangabe 
 
 ### Welcher Zeichensatz wird erkannt?
 
-Der Viewer erkennt UTF-8 automatisch und liest alle anderen Dateien als Windows-1252 (ISO 8859-1), den Zeichensatz, den Feld 9206 mit dem Wert 3 angibt. Umlaute werden in beiden Fällen korrekt angezeigt.
+Der Viewer wertet Feld 9206 aus: 1 = 7 Bit (DIN 66003), 2 = IBM CP437, 3 = ISO 8859-1 / Windows-1252. Fehlt das Feld, erkennt er den Zeichensatz an den Umlauten und nimmt sonst CP437 an, den Standard laut GDT 2.1. UTF-8-Dateien werden automatisch erkannt. Der verwendete Zeichensatz steht über der Tabelle.
 
 ### Wie erzeuge ich GDT-Testdaten?
 
@@ -65,9 +72,12 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/
 
 Kompakte, praxisnahe Erklärungen zur **GDT-Schnittstelle** (Gerätedatentransfer) in der deutschen Arztpraxis und Medizintechnik – von den Grundlagen über die Anbindung bis zum Anfänger-Tutorial und dem Nutzen des kostenlosen GDT Viewers.
 
-*Aktualisiert: 27. Oktober 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT*
+*Aktualisiert: 5. November 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT*
 
 - [Was ist GDT?](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html): Definition, Dateiaufbau, Feldkennungen, GDT 2.1 vs. 3.x und typische Satzarten.
+- [GDT-Feldkennungen](https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html): Alle Felder und Satzarten der GDT-Schnittstelle 2.1 mit Länge, Format und Beispiel.
+- [GDT-Beispieldateien](https://freimoser.github.io/gdt-viewer/wissen/beispieldateien.html): Normgerechte Dateien für jede Satzart – herunterladen oder direkt im Viewer öffnen.
+- [GDT-Fehler beheben](https://freimoser.github.io/gdt-viewer/wissen/fehler.html): Umlaute, Längenfehler, nicht eingelesene Dateien – Ursachen und Lösungen.
 - [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html): So tauschen Praxissoftware und Gerät Dateien aus – Verzeichnisse, Aufruf, Import/Export.
 - [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html): Schritt für Einsteiger: erste GDT-Datei lesen, Felder deuten, Testdaten erzeugen.
 - [Wie der GDT Viewer hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html): Debuggen, schulen, Formate vergleichen – lokal im Browser ohne Server-Upload.
@@ -95,7 +105,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html
 
 **GDT** steht für **Gerätedatentransfer** – die in Deutschland gängige Schnittstelle, mit der Praxissoftware und medizinische Geräte strukturierte Textdaten austauschen. Diese Seite erklärt Definition, Dateiaufbau, wichtige Felder und die Unterschiede zwischen GDT 2.1 und GDT 3.0/3.1.
 
-*Aktualisiert: 27. Oktober 2026 · Lesedauer ca. 8 Min.*
+*Aktualisiert: 5. November 2026 · Lesedauer ca. 8 Min.*
 
 ## Definition: Was ist Gerätedatentransfer (GDT)?
 
@@ -138,10 +148,11 @@ Die Satzart steht im Feld `8000` und bestimmt den Zweck des Datensatzes:
 
 | Satzart | Typische Bedeutung |
 |---|---|
+| `6300` | Stammdaten anfordern (Gerät fragt die Praxissoftware nach Patientendaten) |
 | `6301` | Stammdaten / Patientendaten übermitteln |
 | `6302` | Anforderung einer Untersuchung inkl. Patientendaten |
 | `6310` | Übergabe von Untersuchungsergebnissen / Befunddaten |
-| `6311` | u. a. digitale Unterschrift / erweiterte Ergebnisübergabe (je nach Spezifikation) |
+| `6311` | Daten einer Untersuchung zeigen (Gerät zeigt eine frühere Untersuchung an) |
 
 ## Häufige Feldkennungen
 
@@ -153,7 +164,7 @@ Die Satzart steht im Feld `8000` und bestimmt den Zweck des Datensatzes:
 | `9218` | GDT-Version (z. B. 02.10, 03.10) |
 | `3000` | Patienten-ID / -nummer |
 | `3101` / `3102` | Nachname / Vorname |
-| `3103` | Geburtsdatum (oft TTMMJJJJ) |
+| `3103` | Geburtsdatum (TTMMJJJJ) |
 | `3110` | Geschlecht |
 | `3618` / `3619` | Mobil / E-Mail (häufig GDT 3.1) |
 | `8410` / `8420` | Testkennung / Messwert |
@@ -167,7 +178,7 @@ Die Satzart steht im Feld `8000` und bestimmt den Zweck des Datensatzes:
 | Satzlänge | Feld `8100` | Feld `8004` |
 | Feldlängen | oft streng begrenzt | variabler |
 | Kontaktdaten | selten / begrenzt | u. a. Mobil, E-Mail |
-| Untersuchungsdatum | häufig `2002` TTMMJJJJ | häufig `6200` JJJJMMTT |
+| Untersuchungsdatum | `6200` als TTMMJJJJ | häufig `6200` JJJJMMTT |
 
 Details zur praktischen Dateiübergabe finden Sie unter [GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html). Zum Einlesen und Testen: [Anfänger-Tutorial](https://freimoser.github.io/gdt-viewer/wissen/tutorial.html).
 
@@ -193,7 +204,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/anbindung.html
 
 Die **GDT-Anbindung** verbindet Praxisverwaltungssystem (PVS) und medizinisches Gerät über Dateien. Hier erfahren Sie den typischen Ablauf, was konfiguriert werden muss und wo Fehler entstehen – inklusive Checkliste.
 
-*Aktualisiert: 20. Juli 2026 · Für Praxis-IT und Integratoren in Deutschland*
+*Aktualisiert: 5. November 2026 · Für Praxis-IT und Integratoren in Deutschland*
 
 ## Grundprinzip der GDT-Schnittstelle
 
@@ -222,7 +233,7 @@ Varianten: reine Stammdatenübergabe (`6301`), mehrere Sätze in einer Datei, un
 | Dateiname / Muster | Muss auf beiden Seiten übereinstimmen |
 | GDT-Version 2.1 oder 3.x | Andere Feldlängen-Felder ([8100 vs. 8004](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html#versionen)), optionale Felder |
 | Programmpfad + Parameter | Start des Gerätemoduls, oft mit `/load:` o. Ä. und Dateipfad |
-| Zeichensatz | Umlaute (ISO-8859-1 / Windows-1252 / UTF-8) |
+| Zeichensatz | Feld `9206`: 2 = IBM CP437 (Standard in GDT 2.1), 3 = ISO 8859-1 / Windows-1252 – auf beiden Seiten gleich einstellen |
 | Sender-/Empfänger-IDs | Felder `8315` / `8316` – je nach Gerät Pflicht |
 
 Die genauen Dialoge unterscheiden sich je PVS (z. B. „Externes Modul“, „Geräteschnittstelle“, „GDT-Konfiguration“). Die Spezifikation des Geräteherstellers hat Vorrang vor generischen Annahmen.
@@ -244,7 +255,7 @@ Die genauen Dialoge unterscheiden sich je PVS (z. B. „Externes Modul“, „Ge
 |---|---|
 | Gerät startet ohne Patient | Falscher Parameter, leere/ungültige GDT-Datei, falscher Pfad |
 | Ergebnis erscheint nicht im PVS | Importordner falsch, Dateiname, Import nicht ausgelöst, falsche Patienten-ID |
-| Umlaute kaputt | Zeichensatz-Mismatch (Feld `9206` / Encoding der Datei) |
+| Umlaute kaputt | Zeichensatz-Mismatch (Feld `9206` / Encoding der Datei) – siehe [Umlaute falsch angezeigt](https://freimoser.github.io/gdt-viewer/wissen/fehler.html#umlaute) |
 | Parser meldet Längenfehler | Falsche 3-stellige Zeilenlänge, gemischte CRLF/LF, manuell editierte Datei |
 | Version abgelehnt | Gerät erwartet 02.10, PVS sendet 03.10 (oder umgekehrt) |
 
@@ -258,7 +269,7 @@ Quelle: https://freimoser.github.io/gdt-viewer/wissen/tutorial.html
 
 In etwa 15 Minuten verstehen Sie, wie eine **GDT-Datei** aussieht, welche Felder wichtig sind und wie Sie mit dem kostenlosen **GDT Viewer** sicher üben – ohne Installation und ohne Server-Upload.
 
-*Aktualisiert: 20. Juli 2026 · Niveau: Einsteiger · Voraussetzungen: Browser*
+*Aktualisiert: 5. November 2026 · Niveau: Einsteiger · Voraussetzungen: Browser*
 
 **Datenschutz zuerst**
 
@@ -284,7 +295,7 @@ Schauen Sie zuerst auf die **Zusammenfassung**:
 - **Patient** – aus Nachname (`3101`) und Vorname (`3102`)
 - **[Satzart](https://freimoser.github.io/gdt-viewer/wissen/was-ist-gdt.html#satzarten)** – Feld `8000` (z. B. 6301, 6302, 6310)
 - **GDT-Version** – Feld `9218` (02.10 vs. 03.10)
-- **Untersuchungsdatum** – `2002` oder `6200`
+- **Untersuchungsdatum** – Feld `6200` (GDT 2.1: TTMMJJJJ)
 
 In der Tabelle bedeuten die Spalten:
 
@@ -323,6 +334,405 @@ Dieses Wissen hilft, wenn ein Gerät „falsche Version“ meldet oder Felder �
 4. Laden Sie die Datei erneut nach Download – Inhalt muss gleich lesbar sein.
 
 Wenn Sie das beherrschen, können Sie Support-Fälle und Anbindungen deutlich schneller eingrenzen. Einsatzszenarien: [Wie der GDT Viewer hilft](https://freimoser.github.io/gdt-viewer/wissen/tool.html).
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html
+
+# GDT-Feldkennungen: Liste aller Felder (GDT 2.1)
+
+Jede Zeile einer GDT-Datei beginnt mit einer **vierstelligen Feldkennung**, die festlegt, was die Zeile enthält. Hier stehen alle Feldkennungen und Satzarten der GDT-Schnittstelle in Version 2.1 mit Bedeutung, erlaubter Länge, Format und Beispiel – direkt aus der offiziellen Schnittstellenbeschreibung.
+
+*Aktualisiert: 5. November 2026 · Quelle: GDT-Schnittstellenbeschreibung 2.1 (QMS)*
+
+## So liest man eine GDT-Zeile
+
+Eine GDT-Zeile besteht aus drei Teilen. Am Beispiel `0193101Mustermann`:
+
+| Teil | Im Beispiel | Bedeutung |
+|---|---|---|
+| Zeilenlänge (3 Ziffern) | `019` | Länge der ganzen Zeile in Byte, einschließlich Zeilenende CR+LF |
+| Feldkennung (4 Ziffern) | `3101` | Was die Zeile enthält – hier der Name des Patienten |
+| Inhalt | `Mustermann` | Der eigentliche Wert, je nach Feld Text, Ziffern, Datum oder Zahl |
+
+Welche Felder in einer Datei vorkommen dürfen und welche Pflicht sind, hängt von der **Satzart** in Feld `8000` ab. Der [GDT Viewer](https://freimoser.github.io/gdt-viewer/) zeigt die Bedeutung jedes Feldes an und prüft eine Datei automatisch gegen diese Tabellen.
+
+## Satzarten (Feld 8000)
+
+Jeder Satz beginnt mit Feld `8000`. Nur `6300` verlangt eine Antwort (`6301`); alle anderen Satzarten werden ohne Rückmeldung übermittelt.
+
+| Satzart | Bedeutung | Richtung | Pflichtfelder |
+|---|---|---|---|
+| `6300` | Stammdaten anfordern | Gerät → Praxissoftware | `8000`, `8100`, `9218`, `3000` |
+| `6301` | Stammdaten übermitteln | Praxissoftware → Gerät | `8000`, `8100`, `9218`, `3000`, `3101`, `3102`, `3103` |
+| `6302` | Neue Untersuchung anfordern | Praxissoftware → Gerät | `8000`, `8100`, `9218`, `3000`, `3101`, `3102`, `3103` |
+| `6310` | Daten einer Untersuchung übermitteln | Gerät → Praxissoftware | `8000`, `8100`, `9218`, `3000`, `8402` |
+| `6311` | Daten einer Untersuchung zeigen | Praxissoftware → Gerät | `8000`, `8100`, `9218`, `3000` |
+
+## Satzkopf und Verwaltung
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `8000` | Satzidentifikation (Satzart) | genau 4 | Text | `6301` |
+| `8100` | Satzlänge in Byte | genau 5 | Ziffern | `00747` |
+| `8315` | GDT-ID des Empfängers | genau 8 | Text | `ROP200U1` |
+| `8316` | GDT-ID des Senders | genau 8 | Text | `PRAX_EDV` |
+| `9206` | Verwendeter Zeichensatz (1 = 7 Bit, 2 = IBM CP437, 3 = ISO 8859-1 / CP1252) | genau 1 | Ziffern | `2` |
+| `9218` | Version GDT | genau 5 | Text | `02.10` |
+
+## Patientendaten
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `3000` | Patientennummer / Patientenkennung | max. 10 | Text | `123456` |
+| `3100` | Namenszusatz / Vorsatzwort des Patienten | max. 15 | Text | `von` |
+| `3101` | Name des Patienten | max. 28 | Text | `Schmitz` |
+| `3102` | Vorname des Patienten | max. 28 | Text | `Erna` |
+| `3103` | Geburtsdatum des Patienten | genau 8 | Datum TTMMJJJJ | `12041946` |
+| `3104` | Titel des Patienten | max. 15 | Text | `Dr.` |
+| `3105` | Versichertennummer des Patienten | max. 12 | Text | `123456M789` |
+| `3106` | Wohnort des Patienten (PLZ Ort) | max. 30 | Text | `50859 Köln` |
+| `3107` | Straße des Patienten | max. 28 | Text | `Holzweg 106` |
+| `3108` | Versichertenart (1 = Mitglied, 3 = Familienversicherter, 5 = Rentner) | genau 1 | Ziffern | `3` |
+| `3110` | Geschlecht des Patienten (1 = männlich, 2 = weiblich) | genau 1 | Ziffern | `1` |
+| `3622` | Größe des Patienten in cm | variabel | Zahl (Punkt) | `175.50` |
+| `3623` | Gewicht des Patienten in kg | variabel | Zahl (Punkt) | `90.50` |
+| `3628` | Muttersprache des Patienten | max. 60 | Text | `türkisch` |
+
+## Untersuchung und Befund
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `6200` | Tag der Erhebung von Behandlungsdaten | genau 8 | Datum TTMMJJJJ | `12031993` |
+| `6201` | Uhrzeit der Erhebung von Behandlungsdaten | genau 6 | Uhrzeit HHMMSS | `132201` |
+| `6205` | Aktuelle Diagnose | max. 60 | Text | `Diabetes` |
+| `6220` | Befund | max. 60 | Text | `erhöhter Blutdruck` |
+| `6221` | Fremdbefund | max. 60 | Text | `Verdacht auf Obstruktion` |
+| `6226` | Anzahl der folgenden Zeilen 6228 | max. 4 | Ziffern | `2` |
+| `6227` | Kommentar | max. 60 | Text | `Belastung abgebrochen` |
+| `6228` | Ergebnistabellentext, formatiert | max. 60 | Text | – |
+
+## Messwerte und Tests
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `8402` | Geräte- und verfahrensspezifisches Kennfeld | max. 6 | Text | `EKG01` |
+| `8410` | Test-Ident | max. 20 | Text | `FEV1` |
+| `8411` | Testbezeichnung | max. 60 | Text | `Obj. refr. cyl. rechts` |
+| `8418` | Teststatus (B = bereits berichtet, K = korrigierter Wert) | genau 1 | Text | `B` |
+| `8420` | Ergebnis-Wert | variabel | Zahl (Punkt) | `-3.7` |
+| `8421` | Einheit | max. 60 | Text | `dpt` |
+| `8428` | Probenmaterial-Ident | max. 8 | Text | – |
+| `8429` | Probenmaterial-Index | genau 2 | Ziffern | – |
+| `8430` | Probenmaterial-Bezeichnung | max. 60 | Text | – |
+| `8431` | Probenmaterial-Spezifikation | max. 60 | Text | – |
+| `8432` | Abnahme-Datum | genau 8 | Datum TTMMJJJJ | `31011994` |
+| `8437` | Einheit(en) für Datenstrom | max. 60 | Text | `min, mmHg, mmHg` |
+| `8438` | Datenstrom | max. 60 | Text | `(5,120,80),(10,128,92)` |
+| `8439` | Abnahme-Zeit | genau 6 | Uhrzeit HHMMSS | `125600` |
+| `8460` | Normalwert-Text | max. 60 | Text | – |
+| `8461` | Normalwert untere Grenze | variabel | Zahl (Punkt) | `-15` |
+| `8462` | Normalwert obere Grenze | variabel | Zahl (Punkt) | `12` |
+| `8470` | Testbezogene Hinweise | max. 60 | Text | – |
+| `8480` | Ergebnis-Text | max. 60 | Text | – |
+| `8990` | Signatur (Name / Kürzel des Durchführenden) | max. 60 | Text | `Dr. Huber` |
+
+## Verweise auf externe Dateien
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `6302` | Datei-Archivierungsnummer | max. 60 | Text | `000001` |
+| `6303` | Dateiformat | max. 60 | Text | `PDF` |
+| `6304` | Dateiinhalt | max. 60 | Text | `Datenanalyse` |
+| `6305` | Verweis auf Datei (URL oder UNC-Pfad) | max. 60 | Text | `\\FS\DATA\00712.PDF` |
+
+## Angaben zur Software
+
+| Feld | Bedeutung | Länge | Format | Beispiel |
+|---|---|---|---|---|
+| `0102` | Softwareverantwortlicher (SV) | max. 60 | Text | `Firma xxx` |
+| `0103` | Software | max. 60 | Text | `PraxisMed` |
+| `0132` | Release-Stand der Software | max. 60 | Text | `Version 4.30b` |
+
+## Freie Kategorien (6330–6399)
+
+Für herstellerspezifische Zusatzangaben stehen Wertepaare bereit: gerade Kennungen (`6330`, `6332` … `6398`) enthalten den **Namen** der Kategorie, die direkt folgende ungerade Kennung (`6331` … `6399`) ihren **Inhalt** – jeweils maximal 60 Zeichen.
+
+## Formate und Regeln
+
+- **Datum** (Felder 3103, 6200, 8432): `TTMMJJJJ`, z. B. `12041946`. Tag 00–31, Monat 00–12; ein Geburtsdatum darf nicht in der Zukunft liegen.
+- **Uhrzeit** (Felder 6201, 8439): `HHMMSS` mit sechs Stellen, z. B. `132201`. Fehlende Sekunden werden als `00` angegeben.
+- **Ziffern mit fester Länge** werden mit führenden Nullen aufgefüllt – die Satzlänge `8100` ist deshalb immer fünfstellig, z. B. `00747`.
+- **Dezimalzahlen** (z. B. 3622, 8420) verwenden einen Punkt: `175.50`, nicht `175,50`.
+- **Textfelder** haben eine Höchstlänge, meist 60 Zeichen; Name und Vorname höchstens 28, die Patientennummer höchstens 10.
+- **Zeilenende** ist immer CR+LF (hex `0D 0A`); beide Zeichen zählen zur Zeilenlänge.
+
+## Felder aus GDT 3.x
+
+GDT 3.x erweitert den Feldkatalog. Die wichtigste Änderung für Parser: Die Satzlänge steht in Feld `8004` statt `8100`, die Version in `9218` lautet `03.00` oder `03.10`. Das Zeichensatz-Feld `9206` gehört nur zu GDT 2.1. Die Tabellen auf dieser Seite beschreiben GDT 2.1; für 3.x-Exporte gilt die jeweilige 3.x-Spezifikation des QMS.
+
+## Häufige Fragen
+
+### Was ist eine GDT-Feldkennung?
+
+Eine Feldkennung ist die vierstellige Zahl an Position 4 bis 7 jeder GDT-Zeile. Sie legt fest, was die Zeile enthält, zum Beispiel 3101 für den Nachnamen oder 8000 für die Satzart.
+
+### Welche Felder sind in jeder GDT-Datei Pflicht?
+
+In allen Satzarten von GDT 2.1 sind 8000 (Satzart), 8100 (Satzlänge), 9218 (GDT-Version) und 3000 (Patientennummer) Pflicht. 6301 und 6302 verlangen zusätzlich Name, Vorname und Geburtsdatum (3101, 3102, 3103), 6310 das Kennfeld 8402.
+
+### In welchem Format stehen Datum und Uhrzeit in GDT 2.1?
+
+Datumsfelder wie 3103, 6200 und 8432 haben das Format TTMMJJJJ (z. B. 12041946), Uhrzeitfelder wie 6201 und 8439 das Format HHMMSS mit sechs Stellen (z. B. 132201).
+
+### Wie werden Dezimalzahlen in GDT geschrieben?
+
+Mit Punkt als Dezimaltrennzeichen, zum Beispiel 175.50 für die Größe in Feld 3622. Ein Komma ist in Zahlenfeldern nicht zulässig.
+
+## Quelle
+
+Alle Angaben stammen aus der *Schnittstellenbeschreibung zum systemunabhängigen Datentransfer zwischen Praxis-EDV-Systemen und Meßgeräten (GDT), Version 2.1* des Qualitätsrings Medizinische Software (QMS), Kapitel 3 (Satztabelle), 4 (Feldtabelle) und 5 (Regeltabelle).
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/beispieldateien.html
+
+# GDT-Beispieldateien zum Download (GDT 2.1)
+
+Für jede Satzart der GDT-Schnittstelle eine **normgerechte Beispieldatei** mit fiktiven Patientendaten – mit korrekten Zeilen- und Satzlängen, CR+LF und Zeichensatzangabe. Ideal zum Testen von Import, Export und eigenen Parsern. Jede Datei lässt sich herunterladen oder direkt im Viewer öffnen.
+
+*Aktualisiert: 5. November 2026 · Alle Dateien geprüft nach GDT-Schnittstellenbeschreibung 2.1*
+
+## Übersicht
+
+Die Dateien bilden einen typischen Ablauf ab: Die Praxissoftware übergibt Patientendaten oder fordert eine Untersuchung an (`6301`, `6302`), das Gerät liefert das Ergebnis zurück (`6310`). Mit `6300` fordert ein Gerät Stammdaten an, mit `6311` zeigt es eine frühere Untersuchung an. Was die einzelnen Felder bedeuten, steht in der [Liste der Feldkennungen](https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html).
+
+## Satzart 6300: Stammdaten anfordern
+
+Das Gerät fordert die Stammdaten eines Patienten an; die Praxissoftware antwortet mit Satzart 6301. Sender ist hier das Gerät (8316 = EKG_TYP1).
+
+```
+01380006300
+014810000099
+0178315PRAX_EDV
+0178316EKG_TYP1
+01092063
+014921802.10
+014300002345
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6300-stammdaten-anfordern) [Herunterladen (99 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6300-stammdaten-anfordern.gdt)
+
+## Satzart 6301: Stammdaten übermitteln
+
+Die Praxissoftware übergibt die Patientenstammdaten an das Gerät. Diese Datei ist im Zeichensatz IBM CP437 gespeichert (9206 = 2), dem Standard von GDT 2.1 – mit Umlauten in Name und Wohnort.
+
+```
+01380006301
+014810000220
+0178315EKG_TYP1
+0178316PRAX_EDV
+01092062
+014921802.10
+014300002345
+0153101Müller
+0153102Jürgen
+017310312041956
+01031101
+0203107Holzweg 106
+019310650859 Köln
+0123622178
+013362379.5
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6301-stammdaten-uebermitteln) [Herunterladen (220 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6301-stammdaten-uebermitteln.gdt)
+
+## Satzart 6302: Neue Untersuchung anfordern
+
+Die Praxissoftware beauftragt ein Ruhe-EKG (8402 = EKG01) und übergibt dazu die Patientendaten. Zeichensatz ISO 8859-1 / Windows-1252 (9206 = 3).
+
+```
+01380006302
+014810000190
+0178315EKG_TYP1
+0178316PRAX_EDV
+01092063
+014921802.10
+014300002345
+0193101Mustermann
+0143102Erika
+017310301051980
+01031102
+0148402EKG01
+0178410RUHE_EKG
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6302-untersuchung-anfordern) [Herunterladen (190 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6302-untersuchung-anfordern.gdt)
+
+## Satzart 6310: Daten einer Untersuchung übermitteln
+
+Das Gerät liefert das Ergebnis einer Langzeit-Blutdruckmessung (8402 = BDM01) zurück: zwei Messwerte, jeweils eingeleitet mit Test-Ident 8410, dazu ein Befund in 6220.
+
+```
+01380006310
+014810000390
+0178315PRAX_EDV
+0178316BDM_SYS1
+01092063
+014921802.10
+014300002345
+0193101Mustermann
+0143102Erika
+017310301051980
+01031102
+0148402BDM01
+017620004112026
+0156201093000
+0158410RR_SYS
+0298411Blutdruck systolisch
+0128420128
+0138421mmHg
+0158410RR_DIA
+0308411Blutdruck diastolisch
+011842082
+0138421mmHg
+0476220Langzeit-Blutdruckmessung unauffällig.
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6310-untersuchungsdaten-uebermitteln) [Herunterladen (390 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6310-untersuchungsdaten-uebermitteln.gdt)
+
+## Satzart 6311: Daten einer Untersuchung zeigen
+
+Die Praxissoftware bittet das Gerät, eine bereits durchgeführte Untersuchung vom 4. November 2026 um 9:30 Uhr anzuzeigen.
+
+```
+01380006311
+014810000178
+0178315BDM_SYS1
+0178316PRAX_EDV
+01092063
+014921802.10
+014300002345
+0193101Mustermann
+0143102Erika
+017620004112026
+0156201093000
+0148402BDM01
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6311-untersuchung-zeigen) [Herunterladen (178 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6311-untersuchung-zeigen.gdt)
+
+## Übungsdatei mit fünf typischen Fehlern
+
+Diese Datei ist absichtlich fehlerhaft: falsche Zeilenlänge, falsche Satzlänge, fehlendes Pflichtfeld 8402, Datum im ISO-Format und ein Komma als Dezimaltrennzeichen. Öffnen Sie sie im Viewer, um die Prüfung in Aktion zu sehen.
+
+```
+01380006310
+014810000300
+0178315PRAX_EDV
+0178316BDM_SYS1
+01092063
+014921802.10
+014300002345
+0213101Mustermann
+0143102Erika
+017310301051980
+01031102
+01962002026-11-04
+0138410TEMP
+0258411Körpertemperatur
+013842037,2
+0108421C
+```
+
+[Im Viewer öffnen](https://freimoser.github.io/gdt-viewer/?beispiel=6310-mit-fehlern) [Herunterladen (239 Byte)](https://freimoser.github.io/gdt-viewer/beispiele/6310-mit-fehlern.gdt)
+
+## So prüfen Sie eigene Dateien
+
+1. Öffnen Sie den [GDT Viewer](https://freimoser.github.io/gdt-viewer/) und ziehen Sie Ihre Datei in das Ablagefeld.
+2. Über der Tabelle steht das Prüfergebnis: Fehler, Warnungen und Hinweise mit Zeilennummer.
+3. Ein Klick auf eine Zeilennummer springt zur betroffenen Zeile in der Tabelle.
+4. Vergleichen Sie Ihre Datei mit dem passenden Beispiel oben – Aufbau und Reihenfolge der Felder sind dort normgerecht.
+
+Typische Fehlerbilder und ihre Lösungen erklärt der Ratgeber [GDT-Fehler beheben](https://freimoser.github.io/gdt-viewer/wissen/fehler.html).
+
+---
+
+Quelle: https://freimoser.github.io/gdt-viewer/wissen/fehler.html
+
+# GDT-Fehler beheben: Ursachen und Lösungen
+
+Umlaute kaputt, Datei wird nicht eingelesen, Patient falsch zugeordnet? Die meisten Probleme mit der **GDT-Schnittstelle** haben wenige, gut prüfbare Ursachen. Dieser Ratgeber erklärt sie nach Symptom geordnet – mit Lösung und dem passenden Prüfschritt im GDT Viewer.
+
+*Aktualisiert: 5. November 2026 · Grundlage: GDT-Schnittstellenbeschreibung 2.1 (QMS)*
+
+## Umlaute werden falsch angezeigt
+
+**Symptom:** Aus „Jäger“ wird „JÃ¤ger“, „J„ger“ oder „J�ger“.
+
+**Ursache:** Sender und Empfänger lesen die Datei mit unterschiedlichen Zeichensätzen. GDT 2.1 gibt den Zeichensatz in Feld `9206` an:
+
+- `1` – 7 Bit (DIN 66003, Umlaute auf den Positionen von `[ \ ] { | } ~`)
+- `2` – IBM CP437, der **Standard**, wenn das Feld fehlt
+- `3` – ISO 8859-1 / Windows-1252
+
+„JÃ¤ger“ entsteht, wenn eine UTF-8-Datei als Windows-1252 gelesen wird – UTF-8 ist in GDT 2.1 nicht vorgesehen. „J„ger“ entsteht, wenn eine CP437-Datei als Windows-1252 gelesen wird; ein „ü“ wird dabei sogar zu einem unlesbaren Zeichen.
+
+**Lösung:** Auf beiden Seiten denselben Zeichensatz einstellen und ihn in `9206` eintragen. Bei UTF-8-Exporten auf ISO 8859-1 (`9206` = `3`) umstellen.
+
+**Im Viewer prüfen:** Über der Tabelle steht, welcher Zeichensatz erkannt wurde und ob er aus Feld 9206 stammt. Stimmen dort die Umlaute, liegt das Problem beim Empfänger.
+
+## Datei wird nicht eingelesen
+
+**Symptom:** Die Praxissoftware oder das Gerät ignoriert die Datei oder meldet einen Formatfehler.
+
+**Häufige Ursachen:**
+
+- **Falsche Zeilenlänge:** Die ersten drei Ziffern jeder Zeile müssen die Länge der ganzen Zeile in Byte angeben – einschließlich CR+LF. Für `0193101Mustermann`: 3 + 4 + 10 + 2 = 19. Umlaute zählen je nach Zeichensatz als ein Byte (CP437, ISO 8859-1) oder zwei Byte (UTF-8).
+- **Falsche Satzlänge:** Feld `8100` enthält die Länge des ganzen Satzes in Byte, immer fünfstellig mit führenden Nullen (`00390`, nicht `390`).
+- **Zeilenende nur LF:** GDT verlangt CR+LF (`0D 0A`). Unix-Zeilenenden brechen viele Importe.
+- **Pflichtfelder fehlen:** In jeder Satzart sind `8000`, `8100`, `9218` und `3000` Pflicht; welche weiteren dazukommen, zeigt die [Satzart-Tabelle](https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#satzarten).
+
+**Im Viewer prüfen:** Die Prüfung meldet jede Zeile mit falscher Länge, eine abweichende Satzlänge, fehlende Pflichtfelder und falsche Zeilenenden – mit Zeilennummer.
+
+## Datei wird nicht gefunden oder überschrieben
+
+**Ursache:** GDT tauscht Dateien über einen Ordner aus, den beide Seiten kennen. Der Dateiname setzt sich laut Spezifikation aus höchstens vier Zeichen für den Empfänger und vier für den Sender zusammen, dazu entweder die feste Endung `.GDT` (z. B. `EDV1EKG1.GDT`) oder eine hochzählende Nummer ab `.001`.
+
+- Stimmen Ordner, Kürzel oder Endung auf einer Seite nicht, sucht der Empfänger nach der falschen Datei.
+- Eine noch nicht gelesene `.GDT`-Datei darf der Sender **nicht überschreiben** – sonst gehen Daten verloren. Abhilfe schafft die hochzählende Endung.
+- Der Empfänger verarbeitet Dateien in der Reihenfolge ihres Eingangs und löscht sie nach dem Lesen.
+- Der Sender schreibt die Datei ohne Pause; liest der Empfänger zu früh, erhält er eine unvollständige Datei.
+
+Mehr zum Ablauf: [Typischer Ablauf der GDT-Anbindung](https://freimoser.github.io/gdt-viewer/wissen/anbindung.html#ablauf).
+
+## Patient wird falsch oder gar nicht zugeordnet
+
+- **Patientennummer:** Feld `3000` ist in jeder Satzart Pflicht und höchstens 10 Zeichen lang. Kann ein Gerät sie nicht übermitteln, sendet es laut Spezifikation den Wert `0` – dann muss die Praxissoftware selbst zuordnen.
+- **GDT-IDs:** Empfänger (`8315`) und Sender (`8316`) werden über achtstellige GDT-IDs erkannt. Stehen zwei gleiche Geräte im selben Raum, brauchen sie unterschiedliche IDs.
+- **Geburtsdatum:** `3103` im Format TTMMJJJJ. Ein vertauschtes Format führt zu Abweichungen beim Abgleich mit den Stammdaten.
+
+## Datum oder Uhrzeit sind falsch
+
+Datumsfelder (`3103`, `6200`, `8432`) haben in GDT 2.1 das Format `TTMMJJJJ`, Uhrzeiten (`6201`, `8439`) das Format `HHMMSS` mit sechs Stellen. Ein ISO-Datum wie `2026-11-04` oder eine vierstellige Uhrzeit wie `0930` sind nicht zulässig; richtig sind `04112026` und `093000`.
+
+## Messwerte fehlen oder sind falsch
+
+- **Komma statt Punkt:** Zahlenfelder wie `8420` verwenden einen Punkt (`37.2`). Mit Komma lesen viele Programme den Wert nicht.
+- **Fehlende Gruppierung:** Jeder Messwert beginnt mit einem Test-Ident `8410`; Bezeichnung (`8411`), Wert (`8420`) und Einheit (`8421`) folgen darauf.
+- **Fehlendes Kennfeld:** In Satzart `6310` ist `8402` Pflicht – es beschreibt die Art der Untersuchung, z. B. `EKG01` oder `BDM01`.
+
+## Texte werden abgeschnitten
+
+Die meisten Textfelder sind auf 60 Zeichen begrenzt, Name und Vorname auf 28. Längere Befunde werden auf mehrere Zeilen desselben Feldes verteilt. Für formatierte Ergebnistabellen gibt Feld `6226` an, wie viele Zeilen `6228` folgen.
+
+## Checkliste zur Fehlersuche
+
+1. Datei im [GDT Viewer](https://freimoser.github.io/gdt-viewer/) öffnen und das Prüfergebnis lesen.
+2. Zeichensatz über der Tabelle mit der Einstellung beider Programme vergleichen.
+3. Mit einer [normgerechten Beispieldatei](https://freimoser.github.io/gdt-viewer/wissen/beispieldateien.html) testen: Funktioniert sie, liegt der Fehler in der eigenen Datei.
+4. Ordner, Dateinamen und GDT-IDs auf beiden Seiten vergleichen.
+5. Erst mit fiktiven Daten testen, dann mit echten.
 
 ---
 

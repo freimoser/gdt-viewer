@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- seo:start -->
+  <title>GDT-Feldkennungen: Liste aller Felder (GDT 2.1) | GDT Viewer</title>
+  <meta name="description" content="Alle GDT-Feldkennungen und Satzarten der GDT-Schnittstelle 2.1 mit Bedeutung, Länge, Format und Beispiel – direkt aus der offiziellen Spezifikation." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#0f1419" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="canonical" href="https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <meta property="og:title" content="GDT-Feldkennungen: Liste aller Felder" />
+  <meta property="og:description" content="Alle Feldkennungen und Satzarten der GDT-Schnittstelle 2.1 mit Länge, Format, Beispiel und Pflichtfeldern." />
+  <meta property="og:url" content="https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html" />
+  <meta property="og:image" content="https://freimoser.github.io/gdt-viewer/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GDT-Feldkennungen: Liste aller Felder" />
+  <meta name="twitter:description" content="Alle Feldkennungen und Satzarten der GDT-Schnittstelle 2.1 mit Länge, Format, Beispiel und Pflichtfeldern." />
+  <meta name="twitter:image" content="https://freimoser.github.io/gdt-viewer/og-image.png" />
+  <meta name="twitter:image:alt" content="GDT Viewer: GDT-Dateien online lesen und Testdaten erzeugen – Beispiel einer Feldtabelle" />
+  <!-- seo:end -->
+  <!-- seo-ld:start -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://freimoser.github.io/gdt-viewer/#organization",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/icon-192.png",
+        "width": 192,
+        "height": 192
+      },
+      "sameAs": [
+        "https://github.com/freimoser/gdt-viewer"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://freimoser.github.io/gdt-viewer/#website",
+      "name": "GDT Viewer",
+      "url": "https://freimoser.github.io/gdt-viewer/",
+      "inLanguage": "de-DE",
+      "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer (GDT) für Praxissoftware und Medizintechnik in Deutschland.",
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#webpage",
+      "url": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html",
+      "name": "GDT-Feldkennungen: Liste aller Felder (GDT 2.1) | GDT Viewer",
+      "description": "Alle GDT-Feldkennungen und Satzarten der GDT-Schnittstelle 2.1 mit Bedeutung, Länge, Format und Beispiel – direkt aus der offiziellen Spezifikation.",
+      "inLanguage": "de-DE",
+      "isPartOf": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://freimoser.github.io/gdt-viewer/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-11-05",
+      "dateModified": "2026-11-05",
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      },
+      "breadcrumb": {
+        "@id": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "GDT Viewer",
+          "item": "https://freimoser.github.io/gdt-viewer/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wissen",
+          "item": "https://freimoser.github.io/gdt-viewer/wissen/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Feldkennungen",
+          "item": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#article",
+      "headline": "GDT-Feldkennungen: Liste aller Felder (GDT 2.1)",
+      "description": "Alle GDT-Feldkennungen und Satzarten der GDT-Schnittstelle 2.1 mit Bedeutung, Länge, Format und Beispiel – direkt aus der offiziellen Spezifikation.",
+      "inLanguage": "de-DE",
+      "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
+      "datePublished": "2026-11-05",
+      "dateModified": "2026-11-05",
+      "author": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      },
+      "publisher": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#organization"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://freimoser.github.io/gdt-viewer/wissen/feldkennungen.html#webpage"
+      },
+      "isPartOf": {
+        "@id": "https://freimoser.github.io/gdt-viewer/#website"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "Gerätedatentransfer",
+        "alternateName": [
+          "GDT",
+          "GDT-Schnittstelle"
+        ]
+      }
+    }
+  ]
+}
+  </script>
+  <!-- seo-ld:end -->
+  <link rel="stylesheet" href="../styles.css?v=03605964" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" sizes="180x180" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Was ist eine GDT-Feldkennung?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Eine Feldkennung ist die vierstellige Zahl an Position 4 bis 7 jeder GDT-Zeile. Sie legt fest, was die Zeile enthält, zum Beispiel 3101 für den Nachnamen oder 8000 für die Satzart." }
+      },
+      {
+        "@type": "Question",
+        "name": "Welche Felder sind in jeder GDT-Datei Pflicht?",
+        "acceptedAnswer": { "@type": "Answer", "text": "In allen Satzarten von GDT 2.1 sind 8000 (Satzart), 8100 (Satzlänge), 9218 (GDT-Version) und 3000 (Patientennummer) Pflicht. 6301 und 6302 verlangen zusätzlich Name, Vorname und Geburtsdatum (3101, 3102, 3103), 6310 das Kennfeld 8402." }
+      },
+      {
+        "@type": "Question",
+        "name": "In welchem Format stehen Datum und Uhrzeit in GDT 2.1?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Datumsfelder wie 3103, 6200 und 8432 haben das Format TTMMJJJJ (z. B. 12041946), Uhrzeitfelder wie 6201 und 8439 das Format HHMMSS mit sechs Stellen (z. B. 132201)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Wie werden Dezimalzahlen in GDT geschrieben?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Mit Punkt als Dezimaltrennzeichen, zum Beispiel 175.50 für die Größe in Feld 3622. Ein Komma ist in Zahlenfeldern nicht zulässig." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- site-header:start -->
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-brand" href="../">
+        <span class="site-brand-mark" aria-hidden="true">GDT</span>
+        <span class="site-brand-name">GDT Viewer</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../">Viewer</a>
+        <a href="./">Wissen</a>
+        <a href="was-ist-gdt.html">Was ist GDT?</a>
+        <a href="feldkennungen.html" aria-current="page">Feldkennungen</a>
+        <a href="beispieldateien.html">Beispieldateien</a>
+        <a href="fehler.html">Fehler beheben</a>
+        <a href="anbindung.html">Anbindung</a>
+      </nav>
+    </div>
+  </header>
+  <script>
+    // Mobile: the link row scrolls sideways – bring the current page's link into view
+    (function () {
+      var nav = document.querySelector(".site-nav");
+      var cur = nav && nav.querySelector("[aria-current]");
+      if (!cur || nav.scrollWidth <= nav.clientWidth) return;
+      var offset = cur.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollLeft = offset - (nav.clientWidth - cur.offsetWidth) / 2;
+    })();
+  </script>
+  <!-- site-header:end -->
+  <div class="page page-content">
+    <main id="main">
+
+    <header class="hero-article">
+      <!-- breadcrumb:start -->
+      <nav class="breadcrumb" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="../">GDT Viewer</a></li>
+          <li><a href="./">Wissen</a></li>
+          <li><span aria-current="page">Feldkennungen</span></li>
+        </ol>
+      </nav>
+      <!-- breadcrumb:end -->
+      <h1>GDT-Feldkennungen: Liste aller Felder (GDT 2.1)</h1>
+      <p class="lead">
+        Jede Zeile einer GDT-Datei beginnt mit einer <strong>vierstelligen Feldkennung</strong>, die festlegt,
+        was die Zeile enthält. Hier stehen alle Feldkennungen und Satzarten der GDT-Schnittstelle in Version 2.1
+        mit Bedeutung, erlaubter Länge, Format und Beispiel – direkt aus der offiziellen Schnittstellenbeschreibung.
+      </p>
+      <p class="meta-line">Aktualisiert: 5. November 2026 · Quelle: GDT-Schnittstellenbeschreibung 2.1 (QMS)</p>
+    </header>
+
+    <nav class="toc" aria-label="Inhaltsverzeichnis">
+      <p class="toc-title">Inhalt</p>
+      <ol>
+        <li><a href="#zeile-lesen">So liest man eine GDT-Zeile</a></li>
+        <li><a href="#satzarten">Satzarten (Feld 8000)</a></li>
+        <li><a href="#satz">Satzkopf und Verwaltung</a></li>
+        <li><a href="#patient">Patientendaten</a></li>
+        <li><a href="#untersuchung">Untersuchung und Befund</a></li>
+        <li><a href="#messwerte">Messwerte und Tests</a></li>
+        <li><a href="#datei">Verweise auf externe Dateien</a></li>
+        <li><a href="#formate">Formate und Regeln</a></li>
+        <li><a href="#gdt3">Felder aus GDT 3.x</a></li>
+        <li><a href="#faq">Häufige Fragen</a></li>
+      </ol>
+    </nav>
+
+    <article class="prose">
+      <h2 id="zeile-lesen">So liest man eine GDT-Zeile</h2>
+      <p>Eine GDT-Zeile besteht aus drei Teilen. Am Beispiel <code>0193101Mustermann</code>:</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Aufbau einer GDT-Zeile">
+        <table>
+          <thead>
+            <tr><th scope="col">Teil</th><th scope="col">Im Beispiel</th><th scope="col">Bedeutung</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Zeilenlänge (3 Ziffern)</td><td><code>019</code></td><td>Länge der ganzen Zeile in Byte, einschließlich Zeilenende CR+LF</td></tr>
+            <tr><td>Feldkennung (4 Ziffern)</td><td><code>3101</code></td><td>Was die Zeile enthält – hier der Name des Patienten</td></tr>
+            <tr><td>Inhalt</td><td><code>Mustermann</code></td><td>Der eigentliche Wert, je nach Feld Text, Ziffern, Datum oder Zahl</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Welche Felder in einer Datei vorkommen dürfen und welche Pflicht sind, hängt von der
+        <strong>Satzart</strong> in Feld <code>8000</code> ab. Der <a href="../">GDT Viewer</a> zeigt die
+        Bedeutung jedes Feldes an und prüft eine Datei automatisch gegen diese Tabellen.
+      </p>
+
+      <!-- spec-tables:start -->
+      <h2 id="satzarten">Satzarten (Feld 8000)</h2>
+      <p>Jeder Satz beginnt mit Feld <code>8000</code>. Nur <code>6300</code> verlangt eine Antwort (<code>6301</code>); alle anderen Satzarten werden ohne Rückmeldung übermittelt.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Satzarten">
+        <table>
+          <thead>
+            <tr><th scope="col">Satzart</th><th scope="col">Bedeutung</th><th scope="col">Richtung</th><th scope="col">Pflichtfelder</th></tr>
+          </thead>
+          <tbody>
+            <tr id="satzart-6300"><td><code>6300</code></td><td>Stammdaten anfordern</td><td>Gerät → Praxissoftware</td><td><code>8000</code>, <code>8100</code>, <code>9218</code>, <code>3000</code></td></tr>
+            <tr id="satzart-6301"><td><code>6301</code></td><td>Stammdaten übermitteln</td><td>Praxissoftware → Gerät</td><td><code>8000</code>, <code>8100</code>, <code>9218</code>, <code>3000</code>, <code>3101</code>, <code>3102</code>, <code>3103</code></td></tr>
+            <tr id="satzart-6302"><td><code>6302</code></td><td>Neue Untersuchung anfordern</td><td>Praxissoftware → Gerät</td><td><code>8000</code>, <code>8100</code>, <code>9218</code>, <code>3000</code>, <code>3101</code>, <code>3102</code>, <code>3103</code></td></tr>
+            <tr id="satzart-6310"><td><code>6310</code></td><td>Daten einer Untersuchung übermitteln</td><td>Gerät → Praxissoftware</td><td><code>8000</code>, <code>8100</code>, <code>9218</code>, <code>3000</code>, <code>8402</code></td></tr>
+            <tr id="satzart-6311"><td><code>6311</code></td><td>Daten einer Untersuchung zeigen</td><td>Praxissoftware → Gerät</td><td><code>8000</code>, <code>8100</code>, <code>9218</code>, <code>3000</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="satz">Satzkopf und Verwaltung</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Satzkopf und Verwaltung">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-8000"><td><code>8000</code></td><td>Satzidentifikation (Satzart)</td><td>genau 4</td><td>Text</td><td><code>6301</code></td></tr>
+            <tr id="feld-8100"><td><code>8100</code></td><td>Satzlänge in Byte</td><td>genau 5</td><td>Ziffern</td><td><code>00747</code></td></tr>
+            <tr id="feld-8315"><td><code>8315</code></td><td>GDT-ID des Empfängers</td><td>genau 8</td><td>Text</td><td><code>ROP200U1</code></td></tr>
+            <tr id="feld-8316"><td><code>8316</code></td><td>GDT-ID des Senders</td><td>genau 8</td><td>Text</td><td><code>PRAX_EDV</code></td></tr>
+            <tr id="feld-9206"><td><code>9206</code></td><td>Verwendeter Zeichensatz (1 = 7 Bit, 2 = IBM CP437, 3 = ISO 8859-1 / CP1252)</td><td>genau 1</td><td>Ziffern</td><td><code>2</code></td></tr>
+            <tr id="feld-9218"><td><code>9218</code></td><td>Version GDT</td><td>genau 5</td><td>Text</td><td><code>02.10</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="patient">Patientendaten</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Patientendaten">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-3000"><td><code>3000</code></td><td>Patientennummer / Patientenkennung</td><td>max. 10</td><td>Text</td><td><code>123456</code></td></tr>
+            <tr id="feld-3100"><td><code>3100</code></td><td>Namenszusatz / Vorsatzwort des Patienten</td><td>max. 15</td><td>Text</td><td><code>von</code></td></tr>
+            <tr id="feld-3101"><td><code>3101</code></td><td>Name des Patienten</td><td>max. 28</td><td>Text</td><td><code>Schmitz</code></td></tr>
+            <tr id="feld-3102"><td><code>3102</code></td><td>Vorname des Patienten</td><td>max. 28</td><td>Text</td><td><code>Erna</code></td></tr>
+            <tr id="feld-3103"><td><code>3103</code></td><td>Geburtsdatum des Patienten</td><td>genau 8</td><td>Datum TTMMJJJJ</td><td><code>12041946</code></td></tr>
+            <tr id="feld-3104"><td><code>3104</code></td><td>Titel des Patienten</td><td>max. 15</td><td>Text</td><td><code>Dr.</code></td></tr>
+            <tr id="feld-3105"><td><code>3105</code></td><td>Versichertennummer des Patienten</td><td>max. 12</td><td>Text</td><td><code>123456M789</code></td></tr>
+            <tr id="feld-3106"><td><code>3106</code></td><td>Wohnort des Patienten (PLZ Ort)</td><td>max. 30</td><td>Text</td><td><code>50859 Köln</code></td></tr>
+            <tr id="feld-3107"><td><code>3107</code></td><td>Straße des Patienten</td><td>max. 28</td><td>Text</td><td><code>Holzweg 106</code></td></tr>
+            <tr id="feld-3108"><td><code>3108</code></td><td>Versichertenart (1 = Mitglied, 3 = Familienversicherter, 5 = Rentner)</td><td>genau 1</td><td>Ziffern</td><td><code>3</code></td></tr>
+            <tr id="feld-3110"><td><code>3110</code></td><td>Geschlecht des Patienten (1 = männlich, 2 = weiblich)</td><td>genau 1</td><td>Ziffern</td><td><code>1</code></td></tr>
+            <tr id="feld-3622"><td><code>3622</code></td><td>Größe des Patienten in cm</td><td>variabel</td><td>Zahl (Punkt)</td><td><code>175.50</code></td></tr>
+            <tr id="feld-3623"><td><code>3623</code></td><td>Gewicht des Patienten in kg</td><td>variabel</td><td>Zahl (Punkt)</td><td><code>90.50</code></td></tr>
+            <tr id="feld-3628"><td><code>3628</code></td><td>Muttersprache des Patienten</td><td>max. 60</td><td>Text</td><td><code>türkisch</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="untersuchung">Untersuchung und Befund</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Untersuchung und Befund">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-6200"><td><code>6200</code></td><td>Tag der Erhebung von Behandlungsdaten</td><td>genau 8</td><td>Datum TTMMJJJJ</td><td><code>12031993</code></td></tr>
+            <tr id="feld-6201"><td><code>6201</code></td><td>Uhrzeit der Erhebung von Behandlungsdaten</td><td>genau 6</td><td>Uhrzeit HHMMSS</td><td><code>132201</code></td></tr>
+            <tr id="feld-6205"><td><code>6205</code></td><td>Aktuelle Diagnose</td><td>max. 60</td><td>Text</td><td><code>Diabetes</code></td></tr>
+            <tr id="feld-6220"><td><code>6220</code></td><td>Befund</td><td>max. 60</td><td>Text</td><td><code>erhöhter Blutdruck</code></td></tr>
+            <tr id="feld-6221"><td><code>6221</code></td><td>Fremdbefund</td><td>max. 60</td><td>Text</td><td><code>Verdacht auf Obstruktion</code></td></tr>
+            <tr id="feld-6226"><td><code>6226</code></td><td>Anzahl der folgenden Zeilen 6228</td><td>max. 4</td><td>Ziffern</td><td><code>2</code></td></tr>
+            <tr id="feld-6227"><td><code>6227</code></td><td>Kommentar</td><td>max. 60</td><td>Text</td><td><code>Belastung abgebrochen</code></td></tr>
+            <tr id="feld-6228"><td><code>6228</code></td><td>Ergebnistabellentext, formatiert</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="messwerte">Messwerte und Tests</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Messwerte und Tests">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-8402"><td><code>8402</code></td><td>Geräte- und verfahrensspezifisches Kennfeld</td><td>max. 6</td><td>Text</td><td><code>EKG01</code></td></tr>
+            <tr id="feld-8410"><td><code>8410</code></td><td>Test-Ident</td><td>max. 20</td><td>Text</td><td><code>FEV1</code></td></tr>
+            <tr id="feld-8411"><td><code>8411</code></td><td>Testbezeichnung</td><td>max. 60</td><td>Text</td><td><code>Obj. refr. cyl. rechts</code></td></tr>
+            <tr id="feld-8418"><td><code>8418</code></td><td>Teststatus (B = bereits berichtet, K = korrigierter Wert)</td><td>genau 1</td><td>Text</td><td><code>B</code></td></tr>
+            <tr id="feld-8420"><td><code>8420</code></td><td>Ergebnis-Wert</td><td>variabel</td><td>Zahl (Punkt)</td><td><code>-3.7</code></td></tr>
+            <tr id="feld-8421"><td><code>8421</code></td><td>Einheit</td><td>max. 60</td><td>Text</td><td><code>dpt</code></td></tr>
+            <tr id="feld-8428"><td><code>8428</code></td><td>Probenmaterial-Ident</td><td>max. 8</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8429"><td><code>8429</code></td><td>Probenmaterial-Index</td><td>genau 2</td><td>Ziffern</td><td>–</td></tr>
+            <tr id="feld-8430"><td><code>8430</code></td><td>Probenmaterial-Bezeichnung</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8431"><td><code>8431</code></td><td>Probenmaterial-Spezifikation</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8432"><td><code>8432</code></td><td>Abnahme-Datum</td><td>genau 8</td><td>Datum TTMMJJJJ</td><td><code>31011994</code></td></tr>
+            <tr id="feld-8437"><td><code>8437</code></td><td>Einheit(en) für Datenstrom</td><td>max. 60</td><td>Text</td><td><code>min, mmHg, mmHg</code></td></tr>
+            <tr id="feld-8438"><td><code>8438</code></td><td>Datenstrom</td><td>max. 60</td><td>Text</td><td><code>(5,120,80),(10,128,92)</code></td></tr>
+            <tr id="feld-8439"><td><code>8439</code></td><td>Abnahme-Zeit</td><td>genau 6</td><td>Uhrzeit HHMMSS</td><td><code>125600</code></td></tr>
+            <tr id="feld-8460"><td><code>8460</code></td><td>Normalwert-Text</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8461"><td><code>8461</code></td><td>Normalwert untere Grenze</td><td>variabel</td><td>Zahl (Punkt)</td><td><code>-15</code></td></tr>
+            <tr id="feld-8462"><td><code>8462</code></td><td>Normalwert obere Grenze</td><td>variabel</td><td>Zahl (Punkt)</td><td><code>12</code></td></tr>
+            <tr id="feld-8470"><td><code>8470</code></td><td>Testbezogene Hinweise</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8480"><td><code>8480</code></td><td>Ergebnis-Text</td><td>max. 60</td><td>Text</td><td>–</td></tr>
+            <tr id="feld-8990"><td><code>8990</code></td><td>Signatur (Name / Kürzel des Durchführenden)</td><td>max. 60</td><td>Text</td><td><code>Dr. Huber</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="datei">Verweise auf externe Dateien</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Verweise auf externe Dateien">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-6302"><td><code>6302</code></td><td>Datei-Archivierungsnummer</td><td>max. 60</td><td>Text</td><td><code>000001</code></td></tr>
+            <tr id="feld-6303"><td><code>6303</code></td><td>Dateiformat</td><td>max. 60</td><td>Text</td><td><code>PDF</code></td></tr>
+            <tr id="feld-6304"><td><code>6304</code></td><td>Dateiinhalt</td><td>max. 60</td><td>Text</td><td><code>Datenanalyse</code></td></tr>
+            <tr id="feld-6305"><td><code>6305</code></td><td>Verweis auf Datei (URL oder UNC-Pfad)</td><td>max. 60</td><td>Text</td><td><code>\\FS\DATA\00712.PDF</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="software">Angaben zur Software</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabelle: Angaben zur Software">
+        <table>
+          <thead>
+            <tr><th scope="col">Feld</th><th scope="col">Bedeutung</th><th scope="col">Länge</th><th scope="col">Format</th><th scope="col">Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr id="feld-0102"><td><code>0102</code></td><td>Softwareverantwortlicher (SV)</td><td>max. 60</td><td>Text</td><td><code>Firma xxx</code></td></tr>
+            <tr id="feld-0103"><td><code>0103</code></td><td>Software</td><td>max. 60</td><td>Text</td><td><code>PraxisMed</code></td></tr>
+            <tr id="feld-0132"><td><code>0132</code></td><td>Release-Stand der Software</td><td>max. 60</td><td>Text</td><td><code>Version 4.30b</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="freie-kategorien">Freie Kategorien (6330–6399)</h2>
+      <p>
+        Für herstellerspezifische Zusatzangaben stehen Wertepaare bereit: gerade Kennungen
+        (<code>6330</code>, <code>6332</code> … <code>6398</code>) enthalten den <strong>Namen</strong>
+        der Kategorie, die direkt folgende ungerade Kennung (<code>6331</code> … <code>6399</code>)
+        ihren <strong>Inhalt</strong> – jeweils maximal 60 Zeichen.
+      </p>
+      <!-- spec-tables:end -->
+
+      <h2 id="formate">Formate und Regeln</h2>
+      <ul>
+        <li><strong>Datum</strong> (Felder 3103, 6200, 8432): <code>TTMMJJJJ</code>, z. B. <code>12041946</code>. Tag 00–31, Monat 00–12; ein Geburtsdatum darf nicht in der Zukunft liegen.</li>
+        <li><strong>Uhrzeit</strong> (Felder 6201, 8439): <code>HHMMSS</code> mit sechs Stellen, z. B. <code>132201</code>. Fehlende Sekunden werden als <code>00</code> angegeben.</li>
+        <li><strong>Ziffern mit fester Länge</strong> werden mit führenden Nullen aufgefüllt – die Satzlänge <code>8100</code> ist deshalb immer fünfstellig, z. B. <code>00747</code>.</li>
+        <li><strong>Dezimalzahlen</strong> (z. B. 3622, 8420) verwenden einen Punkt: <code>175.50</code>, nicht <code>175,50</code>.</li>
+        <li><strong>Textfelder</strong> haben eine Höchstlänge, meist 60 Zeichen; Name und Vorname höchstens 28, die Patientennummer höchstens 10.</li>
+        <li><strong>Zeilenende</strong> ist immer CR+LF (hex <code>0D 0A</code>); beide Zeichen zählen zur Zeilenlänge.</li>
+      </ul>
+
+      <h2 id="gdt3">Felder aus GDT 3.x</h2>
+      <p>
+        GDT 3.x erweitert den Feldkatalog. Die wichtigste Änderung für Parser: Die Satzlänge steht in Feld
+        <code>8004</code> statt <code>8100</code>, die Version in <code>9218</code> lautet <code>03.00</code>
+        oder <code>03.10</code>. Das Zeichensatz-Feld <code>9206</code> gehört nur zu GDT 2.1. Die Tabellen auf
+        dieser Seite beschreiben GDT 2.1; für 3.x-Exporte gilt die jeweilige 3.x-Spezifikation des QMS.
+      </p>
+
+      <h2 id="faq">Häufige Fragen</h2>
+      <div class="faq">
+        <details>
+          <summary>Was ist eine GDT-Feldkennung?</summary>
+          <p>Eine Feldkennung ist die vierstellige Zahl an Position 4 bis 7 jeder GDT-Zeile. Sie legt fest, was die Zeile enthält, zum Beispiel 3101 für den Nachnamen oder 8000 für die Satzart.</p>
+        </details>
+        <details>
+          <summary>Welche Felder sind in jeder GDT-Datei Pflicht?</summary>
+          <p>In allen Satzarten von GDT 2.1 sind 8000 (Satzart), 8100 (Satzlänge), 9218 (GDT-Version) und 3000 (Patientennummer) Pflicht. 6301 und 6302 verlangen zusätzlich Name, Vorname und Geburtsdatum (3101, 3102, 3103), 6310 das Kennfeld 8402.</p>
+        </details>
+        <details>
+          <summary>In welchem Format stehen Datum und Uhrzeit in GDT 2.1?</summary>
+          <p>Datumsfelder wie 3103, 6200 und 8432 haben das Format TTMMJJJJ (z. B. 12041946), Uhrzeitfelder wie 6201 und 8439 das Format HHMMSS mit sechs Stellen (z. B. 132201).</p>
+        </details>
+        <details>
+          <summary>Wie werden Dezimalzahlen in GDT geschrieben?</summary>
+          <p>Mit Punkt als Dezimaltrennzeichen, zum Beispiel 175.50 für die Größe in Feld 3622. Ein Komma ist in Zahlenfeldern nicht zulässig.</p>
+        </details>
+      </div>
+
+      <h2 id="quelle">Quelle</h2>
+      <p>
+        Alle Angaben stammen aus der <em>Schnittstellenbeschreibung zum systemunabhängigen Datentransfer zwischen
+        Praxis-EDV-Systemen und Meßgeräten (GDT), Version 2.1</em> des Qualitätsrings Medizinische Software (QMS),
+        Kapitel 3 (Satztabelle), 4 (Feldtabelle) und 5 (Regeltabelle).
+      </p>
+    </article>
+
+    <div class="cta-box">
+      <p>
+        <strong>Eigene Datei gegen diese Tabelle prüfen</strong>
+        Der GDT Viewer zeigt jede Feldbedeutung an und meldet falsche Längen, fehlende Pflichtfelder und Formatfehler.
+      </p>
+      <a class="btn btn-primary" href="../">GDT-Datei prüfen</a>
+    </div>
+
+    <section class="related">
+      <h2>Weiterlesen</h2>
+      <div class="card-grid">
+        <a class="card-link" href="beispieldateien.html"><h3>Beispieldateien</h3><p>Normgerechte GDT-Dateien für jede Satzart.</p></a>
+        <a class="card-link" href="fehler.html"><h3>GDT-Fehler beheben</h3><p>Umlaute, Längen, Zuordnung – Ursachen und Lösungen.</p></a>
+        <a class="card-link" href="was-ist-gdt.html"><h3>Was ist GDT?</h3><p>Die GDT-Schnittstelle in Kürze erklärt.</p></a>
+      </div>
+    </section>
+
+    </main>
+
+    <!-- site-footer:start -->
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h2>Tool</h2>
+          <ul>
+            <li><a href="../">GDT Viewer</a></li>
+            <li><a href="tool.html">Tool-Hilfe</a></li>
+            <li><a href="https://github.com/freimoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Wissen</h2>
+          <ul>
+            <li><a href="./">Übersicht</a></li>
+            <li><a href="was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="feldkennungen.html">GDT-Feldkennungen</a></li>
+            <li><a href="beispieldateien.html">GDT-Beispieldateien</a></li>
+            <li><a href="fehler.html">GDT-Fehler beheben</a></li>
+            <li><a href="anbindung.html">GDT-Anbindung</a></li>
+            <li><a href="tutorial.html">Tutorial für Anfänger</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Hinweise</h2>
+          <ul>
+            <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
+            <li>Dateiinhalte bleiben im Browser</li>
+            <li>Open Source · Lizenz: MIT</li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
+    </footer>
+    <!-- site-footer:end -->
+  </div>
+</body>
+</html>

@@ -75,7 +75,7 @@
         "height": 630
       },
       "datePublished": "2026-07-20",
-      "dateModified": "2026-07-20",
+      "dateModified": "2026-11-05",
       "about": {
         "@type": "Thing",
         "name": "Gerätedatentransfer",
@@ -120,7 +120,7 @@
       "inLanguage": "de-DE",
       "image": "https://freimoser.github.io/gdt-viewer/og-image.png",
       "datePublished": "2026-07-20",
-      "dateModified": "2026-07-20",
+      "dateModified": "2026-11-05",
       "author": {
         "@id": "https://freimoser.github.io/gdt-viewer/#organization"
       },
@@ -146,7 +146,7 @@
 }
   </script>
   <!-- seo-ld:end -->
-  <link rel="stylesheet" href="../styles.css?v=91d71dba" />
+  <link rel="stylesheet" href="../styles.css?v=03605964" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
@@ -180,9 +180,10 @@
         <a href="../">Viewer</a>
         <a href="./">Wissen</a>
         <a href="was-ist-gdt.html">Was ist GDT?</a>
+        <a href="feldkennungen.html">Feldkennungen</a>
+        <a href="beispieldateien.html">Beispieldateien</a>
+        <a href="fehler.html">Fehler beheben</a>
         <a href="anbindung.html" aria-current="page">Anbindung</a>
-        <a href="tutorial.html">Tutorial</a>
-        <a href="tool.html">Tool-Hilfe</a>
       </nav>
     </div>
   </header>
@@ -216,7 +217,7 @@
         medizinisches Gerät über Dateien. Hier erfahren Sie den typischen Ablauf,
         was konfiguriert werden muss und wo Fehler entstehen – inklusive Checkliste.
       </p>
-      <p class="meta-line">Aktualisiert: 20. Juli 2026 · Für Praxis-IT und Integratoren in Deutschland</p>
+      <p class="meta-line">Aktualisiert: 5. November 2026 · Für Praxis-IT und Integratoren in Deutschland</p>
     </header>
 
     <nav class="toc" aria-label="Inhaltsverzeichnis">
@@ -307,7 +308,7 @@
             </tr>
             <tr>
               <td>Zeichensatz</td>
-              <td>Umlaute (ISO-8859-1 / Windows-1252 / UTF-8)</td>
+              <td>Feld <code>9206</code>: 2 = IBM CP437 (Standard in GDT 2.1), 3 = ISO 8859-1 / Windows-1252 – auf beiden Seiten gleich einstellen</td>
             </tr>
             <tr>
               <td>Sender-/Empfänger-IDs</td>
@@ -354,7 +355,7 @@
             </tr>
             <tr>
               <td>Umlaute kaputt</td>
-              <td>Zeichensatz-Mismatch (Feld <code>9206</code> / Encoding der Datei)</td>
+              <td>Zeichensatz-Mismatch (Feld <code>9206</code> / Encoding der Datei) – siehe <a href="fehler.html#umlaute">Umlaute falsch angezeigt</a></td>
             </tr>
             <tr>
               <td>Parser meldet Längenfehler</td>
@@ -410,6 +411,9 @@
           <ul>
             <li><a href="./">Übersicht</a></li>
             <li><a href="was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="feldkennungen.html">GDT-Feldkennungen</a></li>
+            <li><a href="beispieldateien.html">GDT-Beispieldateien</a></li>
+            <li><a href="fehler.html">GDT-Fehler beheben</a></li>
             <li><a href="anbindung.html">GDT-Anbindung</a></li>
             <li><a href="tutorial.html">Tutorial für Anfänger</a></li>
           </ul>

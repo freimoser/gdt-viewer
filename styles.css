@@ -1184,6 +1184,23 @@ td.col-value {
   letter-spacing: 0.04em;
 }
 
+/* Download / open buttons under each sample file */
+.prose .sample-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.75rem;
+}
+
+.prose .sample-actions a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.prose .sample-actions .btn-secondary {
+  color: var(--accent-hover);
+}
+
 .related {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
