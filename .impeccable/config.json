@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-10-26T22:42:26.512Z",
         "reason": "Claude: render-only template for og-image.png; rendered PNG checked visually, detector misreads the rgba radial glow on #0f1419 as a light background"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "wissen/feldkennungen.html"
+        ],
+        "createdAt": "2026-11-05T05:25:15.592Z",
+        "reason": "Claude: .table-scroll frame is flush by design; table cells carry their own padding (0.65rem 0.85rem), text never touches the border – checked in browser"
       }
     ]
   }
