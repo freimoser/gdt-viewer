@@ -9,6 +9,7 @@ import hashlib, re, pathlib
 root = pathlib.Path(__file__).resolve().parent.parent
 PAGES = {
     "index.html": ("", "viewer"),
+    "datenschutz.html": ("", None),
     "wissen/index.html": ("../", "wissen"),
     "wissen/was-ist-gdt.html": ("../", "was-ist-gdt"),
     "wissen/anbindung.html": ("../", "anbindung"),
@@ -133,8 +134,10 @@ def footer(prefix):
           </ul>
         </div>
         <div>
-          <h2>Hinweise</h2>
+          <h2>Rechtliches</h2>
           <ul>
+            <li><a href="https://freimoser.de/impressum/">Impressum</a></li>
+            <li><a href="{href(p, "datenschutz.html")}">Datenschutz</a></li>
             <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
             <li>Dateiinhalte bleiben im Browser</li>
             <li>Open Source · Lizenz: MIT</li>
